@@ -2,7 +2,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -11,4 +10,3 @@ hs_err_pid*
 
 /build/
 /nbproject/private/
-/dist/
