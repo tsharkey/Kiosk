@@ -45,8 +45,7 @@ public class LoginFrame extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setUndecorated(true);
-		getRootPane()
-				.setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
+		getRootPane().setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
 		getRootPane().setDefaultButton(loginPanel.getLoginButton());
 		// setAlwaysOnTop(true);
 		setVisible(true);
@@ -58,6 +57,7 @@ public class LoginFrame extends JFrame {
         public void actionPerformed(ActionEvent ae) {
 
             if (ae.getSource() == loginPanel.getCancelButton()) {
+                
                 dispose();
                 new DisabilityKiosk(); // cancels open new Kiosk window
             }

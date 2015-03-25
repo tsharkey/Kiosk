@@ -150,7 +150,8 @@ public class AddDeleteAdminFrame extends JFrame
                     }
                     else
                     {
-                        Admin.admins.add(new AdminAccount(unInput.getText(), pwInput.getText()));
+                        String pw = new String(pwInput.getPassword());
+                        Admin.admins.add(new AdminAccount(unInput.getText(), pw));
                         updateList();
                     }
                 }
@@ -167,7 +168,8 @@ public class AddDeleteAdminFrame extends JFrame
 
                     if (entered == JOptionPane.OK_OPTION)
                     {
-                        if (passInput.getText().equals(getAdmin().getPassword()))
+                        String pw = new String(passInput.getPassword());
+                        if (pw.equals(getAdmin().getPassword()))
                         {
                             JPanel adminInput = new JPanel();
                             JTextField unInput = new JTextField(10);
@@ -181,7 +183,7 @@ public class AddDeleteAdminFrame extends JFrame
 
                             if (submitted == JOptionPane.OK_OPTION)
                             {
-                                Admin.admins.set(Admin.admins.indexOf(getAdmin()), new AdminAccount(unInput.getText(), pwInput.getText()));
+                                Admin.admins.set(Admin.admins.indexOf(getAdmin()), new AdminAccount(unInput.getText(), pw));
                                 updateList();
                             }
                         }
@@ -214,7 +216,8 @@ public class AddDeleteAdminFrame extends JFrame
 
                         if (entered == JOptionPane.OK_OPTION)
                         {
-                            if (passInput.getText().equals(getAdmin().getPassword()))
+                            String pw = new String(passInput.getPassword());
+                            if (pw.equals(getAdmin().getPassword()))
                             {
                                 int entered2 = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this account?", "Verification", JOptionPane.YES_NO_OPTION);
 

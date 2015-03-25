@@ -39,24 +39,30 @@ public class StartupManger {
             JTextField unInput = new JTextField(10);
              JPasswordField pwInput = new JPasswordField(10);
             do{
-            JPanel adminInput = new JPanel();
+                JPanel adminInput = new JPanel();
                 adminInput.add(new JLabel("Username: " ));
                 adminInput.add(unInput);
                 adminInput.add(Box.createHorizontalStrut(15));
                 adminInput.add(new JLabel("Password: "));
                 adminInput.add(pwInput);
                 submitted = JOptionPane.showConfirmDialog(null, adminInput, "Please enter new Admin Username & Password.", JOptionPane.OK_CANCEL_OPTION);
-                if (submitted == JOptionPane.OK_OPTION&&!unInput.getText().equals("")&&!pwInput.getText().equals("")) {
-                    Admin.admins.add(new AdminAccount(unInput.getText(), pwInput.getText()));
+                if (submitted == JOptionPane.OK_OPTION && !unInput.getText().equals("") && pwInput.getPassword().length != 0) {
+                    String pw = new String(pwInput.getPassword());
+                    Admin.admins.add(new AdminAccount(unInput.getText(), pw));
                     System.out.println(Admin.admins.toString());//test line
                 }
-                else{
+                else if(submitted != JOptionPane.CANCEL_OPTION){
                       JOptionPane.showMessageDialog(null, "Please enter a Username and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
 
                 }
-            }while(submitted == JOptionPane.CANCEL_OPTION||unInput.getText().equals("")||pwInput.getText().equals(""));
-                new DisabilityKiosk();    
-                new AddDeleteSpecFrame();
+            }while(submitted == JOptionPane.OK_OPTION && (unInput.getText().equals("") || pwInput.getPassword().length == 0));
+        
+            if(submitted == JOptionPane.CANCEL_OPTION) {
+                System.exit(1);
+            }
+            
+            new DisabilityKiosk();    
+            new AddDeleteSpecFrame();
         }
         else{
            new DisabilityKiosk();
