@@ -7,9 +7,9 @@ download git
 ---- http://git-scm.com/downloads
 
 from command line/terminal
-cd to where you want to save the project
+<code>cd</code> to where you want to save the project
 
 -make a new directory for the project
-mkdir kiosk (or what you want to call the project)
+<code>mkdir kiosk</code> (or what you want to call the project)
 
-git clone https://github.com/tsharkey/Kiosk.git
+<code>git clone https://github.com/tsharkey/Kiosk.git</code>
