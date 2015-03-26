@@ -34,10 +34,14 @@ public class StartupManger {
         Admin admin = new Admin();
         Admin.deSerialize();
         SpecialistList.deSerialize();
+        
+        //for the first use of the application
+        //create an administrator account
+        //open the managing-specialist window
         if(Admin.admins.isEmpty()){
             int submitted;
             JTextField unInput = new JTextField(10);
-             JPasswordField pwInput = new JPasswordField(10);
+            JPasswordField pwInput = new JPasswordField(10);
             do{
                 JPanel adminInput = new JPanel();
                 adminInput.add(new JLabel("Username: " ));
@@ -49,6 +53,7 @@ public class StartupManger {
                 if (submitted == JOptionPane.OK_OPTION && !unInput.getText().equals("") && pwInput.getPassword().length != 0) {
                     String pw = new String(pwInput.getPassword());
                     Admin.admins.add(new AdminAccount(unInput.getText(), pw));
+                    Admin.serialize();//add the new administrator account to the file "admins"
                     System.out.println(Admin.admins.toString());//test line
                 }
                 else if(submitted != JOptionPane.CANCEL_OPTION){
@@ -58,14 +63,15 @@ public class StartupManger {
             }while(submitted == JOptionPane.OK_OPTION && (unInput.getText().equals("") || pwInput.getPassword().length == 0));
         
             if(submitted == JOptionPane.CANCEL_OPTION) {
-                System.exit(1);
+                System.exit(0);
             }
             
             new DisabilityKiosk();    
             new AddDeleteSpecFrame();
+            Admin.isAdminWorking = true;
         }
         else{
-           new DisabilityKiosk();
+            new DisabilityKiosk();
         }
     }
     

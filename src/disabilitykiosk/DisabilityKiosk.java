@@ -27,8 +27,8 @@ public class DisabilityKiosk extends JFrame
 {
   //Utilizing Toolkit to retrieve screen width and height
   Toolkit tk = Toolkit.getDefaultToolkit();
-  private final int WINDOW_WIDTH = ((int) tk.getScreenSize().getWidth()); //Width
-  private final int WINDOW_HEIGHT = ((int) tk.getScreenSize().getHeight()); //Height
+  private final int WINDOW_WIDTH = ((int) tk.getScreenSize().getWidth()-100); //Width
+  private final int WINDOW_HEIGHT = ((int) tk.getScreenSize().getHeight()-100); //Height
   //private final LoginWindow login_Window;
   private final GreetingsPanel greetings_Panel;
   //private final InfoPanel info_Panel;
@@ -113,8 +113,16 @@ public class DisabilityKiosk extends JFrame
       {
           if (e.getSource() == submit_Panel.admin)
           {
+              //if there is no admin logging in, call the login window
+              if(!Admin.isAdminWorking){
+                  new LoginFrame();
+              }
+              //else, call the admin window
+              else{
+                  AdminFrame test = new AdminFrame();
+                  test.setVisible(true);
+              }
               setVisible(true);
-              new LoginFrame();
               dispose();
           }
       }

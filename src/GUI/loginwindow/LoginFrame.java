@@ -57,7 +57,6 @@ public class LoginFrame extends JFrame {
         public void actionPerformed(ActionEvent ae) {
 
             if (ae.getSource() == loginPanel.getCancelButton()) {
-                
                 dispose();
                 new DisabilityKiosk(); // cancels open new Kiosk window
             }
@@ -69,6 +68,7 @@ public class LoginFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == loginPanel.getLoginButton()) {
+                            
 				String sUserName = loginPanel.getUsernameText();
 				String sPassWord = loginPanel.getPasswordText();
 
@@ -87,15 +87,15 @@ public class LoginFrame extends JFrame {
 
 				}
 				if (temp) {
-					TestFrame test = new TestFrame();
+                                        Admin.isAdminWorking = true;
+					AdminFrame test = new AdminFrame();
 					test.setVisible(true);
 					dispose();
 
 				} else
-					JOptionPane.showMessageDialog(null,
-							"Incorrect username or password");
-
-			}
+					JOptionPane.showMessageDialog(null, "Incorrect username or password");
+                            }
+                            
 		}
 	}
 } // end of class

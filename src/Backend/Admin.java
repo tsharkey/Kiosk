@@ -39,7 +39,7 @@ public class Admin {
     private File dbFile;
     private Database db;
     public static ArrayList<AdminAccount> admins = new ArrayList<AdminAccount>();
-   
+    public static boolean isAdminWorking = false;//check if an admin is working on the system
 
 	private Cursor cursor;
     
