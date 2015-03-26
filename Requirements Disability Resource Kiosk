@@ -50,7 +50,7 @@ SUPPORTABILITY
 RELIABILITY
  - In case of crash, of fault of the program, the system will allow the user to re-start the game.
  - The application must be tested for new bugs prior to delivery. If bugs are found, they must be fixed prior to delivery date. 
- - The application must have a database (local?) that will store and back upall the input data.
+ - The application must have a database (local?) that will store and back up all the input data.
  
 
 
