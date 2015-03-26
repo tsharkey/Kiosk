@@ -1,4 +1,5 @@
-Disability Resources Kiosk
+OVERVIEW
+Disability Resources Kiosk 
 
 Disability Resources Center at MassBay services many visitors every day. Although majority of their visitors are students (current and prospective), others such as faculty and staff of MassBay also visit the center for meetings, etc.
 
@@ -8,37 +9,49 @@ It is important that this application be implemented with accessibility in mind.
 
 Apply your best judgment (this will be a good exercise to practice your proper English writing) to write and display simple and clear sentences.
 
-This application will present a simple user-friendly interface to visitors to log their visit by providing the following:
 
-Date
-Time
-Name
-Email
-Phone
-Reason
-Follow Up?
+FUNCTIONALITY
 
-* Date and time of visit, which should be filled by the application. 
+ -This application will present a simple user-friendly interface to visitors to log their visit by providing the following:
 
+Date/Time
+* Date and time of visit, which should be filled by the application.
+
+Name/Email/Phone
 * The visitors will fill out their name, email address, and phone number. However, after the first visit, the application should search the database and add the email and phone number automatically. Note that visitors may enter any email address (private or MassBay).
+Reason
+* The reason for the visit should allow the user to select as many reasons as needed. The list of reasons for visit are as follows at this point, but the application should allow the administrator enter a file or edit the list to be displayed in the pull down menu. Note that the list should end with “Others” and allow the user to type the reason
 
-* The reason for the visit should allow the user to select as many reasons as needed. The list of reasons for visit are as follows at this point, but the application should allow the administrator enter a file or edit the list to be displayed in the pull down menu. Note that the list should end with “Others” and allow the user to type the reason.
-
+Follow Up?
 * The Follow Up entry, which means if this visit is a follow up visit, can be yes/no selection.
 
-Once the visitor enters all the required fields (basically all of them) the application should display the next screen that will ask the visitor who she/he would like to meet. It will be very helpful to display the picture of the specialists working at the office, in case the visitor doesn’t remember who he/she met with last time. 
+ - Once the visitor enters all the required fields (basically all of them) the application should display the next screen that will ask the visitor who she/he would like to meet. It will be very helpful to display the picture of the specialists working at the office, in case the visitor doesn’t remember who he/she met with last time. 
+ - Once the visitor clicks submit, the application will display a thank you (or confirmation) message and go back to the first screen. 
 
-
-Once the visitor clicks submit, the application will display a thank you (or confirmation) message and go back to the first screen. 
-In the meantime, the application’s backend will process and enter the input data into the database.
-
-The application should have at least one administrator account, which in phase 1, will only provide the file for the list of reasons or enter it (whichever that has been designed.)
-
-The administrator should be able to 
+USABILITY 
+ -The application should have at least one administrator account, which in phase 1, will only provide the file for the list of reasons or enter it (whichever that has been designed)
+  The administrator should be able to: 
 	•	Log into the application and get the report of all visitors displayed and/or printed. 
 	•	The report should be properly formatted, based on the reason for visit and within each reason category, based on the visitor’s last name in alphabetical order.
 	•	The report should give the option to set the window of time for the report, i.e. today, yesterday, any number of days based on the start and end date input from the user. 
 	•	Set the period for the collection of data. The data should be collected for each semester and at the end of semester the data should be backed up (i.e. saved in a file) and the database cleared.
 	•	To set the location of the kiosk, i.e. Wellesley or Framingham. Therefore, the database should save the location.
-  •	Adding the search capability, so that administrator can search for a specific student’s history of visits
+        •	Adding the search capability, so that administrator can search for a specific student’s history of visits
 	•	Adding the summary of visits, i.e. the number of visits and types of visits, based on Reason column
+
+PERFOMANCE
+ - The application’s backend will process and enter the input data into the database.
+ - The program shall be able to respond to the system’s mouse instructions only - in a prompt or instantaneous manner. (.2 milliseconds)
+ 
+SUPPORTABILITY
+   - The application will be have a desktop version, with the possibility in the future for a Mobile application
+   
+
+RELIABILITY
+ - In case of crash, of fault of the program, the system will allow the user to re-start the game.
+ - The application must be tested for new bugs prior to delivery. If bugs are found, they must be fixed prior to delivery date. 
+ - The application must have a database (local?) that will store and back upall the input data.
+ 
+
+
+
