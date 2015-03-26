@@ -38,19 +38,19 @@ USABILITY
 	•	To set the location of the kiosk, i.e. Wellesley or Framingham. Therefore, the database should save the location.
         •	Adding the search capability, so that administrator can search for a specific student’s history of visits
 	•	Adding the summary of visits, i.e. the number of visits and types of visits, based on Reason column
-
+- The interface must be checked for its navigation simplicity and user friendliness. Keeping in mind who the target users are.
+- A student should not have the opportunity to add a specialist or have access to the "add Specialist" screen.
 PERFOMANCE
  - The application’s backend will process and enter the input data into the database.
  - The program shall be able to respond to the system’s mouse instructions only - in a prompt or instantaneous manner. (.2 milliseconds)
  
 SUPPORTABILITY
-   - The application will be have a desktop version, with the possibility in the future for a Mobile application
+   - The application will be have a desktop version, with the possibility in the future for a Mobile application. 
    
-
 RELIABILITY
  - In case of crash, of fault of the program, the system will allow the user to re-start the game.
  - The application must be tested for new bugs prior to delivery. If bugs are found, they must be fixed prior to delivery date. 
- - The application must have a database (local?) that will store and back up all the input data.
+ - The application must have a database (locally?) that will store and back up all the input data.
  
 
 
