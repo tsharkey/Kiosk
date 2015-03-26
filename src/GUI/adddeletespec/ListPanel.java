@@ -45,7 +45,7 @@ public class ListPanel extends JPanel{
        //ArrayList<String> namesList = new ArrayList<String>();
        
        //get the names of the Specialist objects
-       dlm = new DefaultListModel<>();
+       dlm = new DefaultListModel<String>();
        updateList();
        //one of these lists is used to display the names, they have the same index
        list = new JList(dlm);

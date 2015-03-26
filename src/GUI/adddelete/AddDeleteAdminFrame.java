@@ -48,10 +48,10 @@ public class AddDeleteAdminFrame extends JFrame
     
     private void buildMainFrame()
     {
-        listModel = new DefaultListModel<>();
+        listModel = new DefaultListModel<String>();
         
         updateList();
-        list = new JList<>(listModel);
+        list = new JList<String>(listModel);
         
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
