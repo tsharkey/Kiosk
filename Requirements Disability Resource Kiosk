@@ -48,7 +48,7 @@ SUPPORTABILITY
    - The application will be have a desktop version, with the possibility in the future for a Mobile application. 
    
 RELIABILITY
- - In case of crash, of fault of the program, the system will allow the user to re-start the game.
+ - In case of crash the program should have a "home" button that will allow the user to return to the default screen.
  - The application must be tested for new bugs prior to delivery. If bugs are found, they must be fixed prior to delivery date. 
  - The application must have a database (locally?) that will store and back up all the input data.
  
