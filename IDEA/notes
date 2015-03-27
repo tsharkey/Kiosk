@@ -22,3 +22,8 @@ RELIABILITY
 USABILITY
 - The interface must be checked for its navigation simplicity and user friendliness. Keeping in mind who the target users are.
 - A student should not have the opportunity to add a specialist or have access to the "add Specialist" screen.
+ 
+
+New Bugs
+ 14. needs a new database.
+ 27. Speech button overlap each other when multiple speech text are clicked.
