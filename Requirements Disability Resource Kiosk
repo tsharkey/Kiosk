@@ -5,9 +5,7 @@ Disability Resources Center at MassBay services many visitors every day. Althoug
 
 The kiosk application can help the center collect data that can be used to facilitate their services (i.e. sending appointment reminder to students) as well as summary data required for reporting purposes.
 
-It is important that this application be implemented with accessibility in mind. Specifically, accessibility options such as screen readers and speech to text.
-
-Apply your best judgment (this will be a good exercise to practice your proper English writing) to write and display simple and clear sentences.
+This application will be implemented with accessibility in mind. Specifically, accessibility options such as screen readers and speech to text.
 
 
 FUNCTIONALITY
@@ -18,14 +16,15 @@ Date/Time
 * Date and time of visit, which should be filled by the application.
 
 Name/Email/Phone
-* The visitors will fill out their name, email address, and phone number. However, after the first visit, the application should search the database and add the email and phone number automatically. Note that visitors may enter any email address (private or MassBay).
+* The visitors will fill out their name, email address and phone number. However, after the first visit, the application should search the database and add the email and phone number automatically. Note that visitors may enter any email address (private or MassBay).
+
 Reason
-* The reason for the visit should allow the user to select as many reasons as needed. The list of reasons for visit are as follows at this point, but the application should allow the administrator enter a file or edit the list to be displayed in the pull down menu. Note that the list should end with “Others” and allow the user to type the reason
+* The reason for the visit should allow the user to select as many reasons as needed. The list should end with “Others” and allow the user to type the reason.
 
 Follow Up?
 * The Follow Up entry, which means if this visit is a follow up visit, can be yes/no selection.
 
- - Once the visitor enters all the required fields (basically all of them) the application should display the next screen that will ask the visitor who she/he would like to meet. It will be very helpful to display the picture of the specialists working at the office, in case the visitor doesn’t remember who he/she met with last time. 
+ - Once the visitor enters all the required fields (all of them) the application should display the next screen which will ask the visitor who she/he would like to meet. The specialists screen will display the picture of the specialists working at the office, in case the visitor doesn’t remember who he/she met with last time. 
  - Once the visitor clicks submit, the application will display a thank you (or confirmation) message and go back to the first screen. 
 
 USABILITY 
@@ -36,8 +35,9 @@ USABILITY
 	•	The report should give the option to set the window of time for the report, i.e. today, yesterday, any number of days based on the start and end date input from the user. 
 	•	Set the period for the collection of data. The data should be collected for each semester and at the end of semester the data should be backed up (i.e. saved in a file) and the database cleared.
 	•	To set the location of the kiosk, i.e. Wellesley or Framingham. Therefore, the database should save the location.
-        •	Adding the search capability, so that administrator can search for a specific student’s history of visits
-	•	Adding the summary of visits, i.e. the number of visits and types of visits, based on Reason column
+        •	Search for a specifc student so that the student’s history of visits can be viewed. 
+	•	View a summary of visits, i.e. the number of visits and types of visits, based on a reason column.
+	•	Enter a file or edit the list to be displayed in the pull-down menu in the form that visitors will fill out. 
 - The interface must be checked for its navigation simplicity and user friendliness. Keeping in mind who the target users are.
 - A student should not have the opportunity to add a specialist or have access to the "add Specialist" screen.
 
