@@ -10,25 +10,27 @@ This application will be implemented with accessibility in mind. Specifically, a
 
 FUNCTIONALITY
 
- -This application will present a simple user-friendly interface to visitors to log their visit by providing the following:
+ -This application will present a simple, user-friendly interface to visitors to log their visit. This interface will include a form for the users to fill out that includes the following fields:
 
 Date/Time
 * Date and time of visit, which should be filled by the application.
 
 Name/Email/Phone
-* The visitors will fill out their name, email address and phone number. However, after the first visit, the application should search the database and add the email and phone number automatically. Note that visitors may enter any email address (private or MassBay).
+* The visitors will fill out their name, e-mail address and phone number. However, after the first visit, the application should search the database and add the e-mail and phone number automatically. Note that visitors may enter any e-mail address (private or MassBay).
 
 Reason
 * The reason for the visit should allow the user to select as many reasons as needed. The list should end with “Others” and allow the user to type the reason.
 
-Follow Up?
-* The Follow Up entry, which means if this visit is a follow up visit, can be yes/no selection.
+Follow Up
+* The follow up entry, which means if this visit is a follow up visit, can be yes/no selection.
 
  - Once the visitor enters all the required fields (all of them) the application should display the next screen which will ask the visitor who she/he would like to meet. The specialists screen will display the picture of the specialists working at the office, in case the visitor doesn’t remember who he/she met with last time. 
  - Once the visitor clicks submit, the application will display a thank you (or confirmation) message and go back to the first screen. 
+ - The application shall be implemented with accessibilty in mind as the form includes the following features:
+ 	• Users will have the ability to enlarge and shrink the text of the screen via a slider.
+ 	• Users will have the ability to hear the labels of the form read to them by clicking on buttons next to the labels.
 
-USABILITY 
- -The application should have at least one administrator account, which in phase 1, will only provide the file for the list of reasons or enter it (whichever that has been designed)
+ -The application should have at least one administrator account. 
   The administrator should be able to: 
 	•	Log into the application and get the report of all visitors displayed and/or printed. 
 	•	The report should be properly formatted, based on the reason for visit and within each reason category, based on the visitor’s last name in alphabetical order.
@@ -38,8 +40,15 @@ USABILITY
         •	Search for a specifc student so that the student’s history of visits can be viewed. 
 	•	View a summary of visits, i.e. the number of visits and types of visits, based on a reason column.
 	•	Enter a file or edit the list to be displayed in the pull-down menu in the form that visitors will fill out. 
+	•	Add a specialist to the list of available specialists via an "Add/Delete Specialists" window. The admininstrator will be able to fill in the specialist's first name, last name, photo, e-mail, role and phone number. If a photo is not provided then a default photo will be added by the application.
+	•	Edit the information about an existing specialit in the system. 
+	•	Remove the information about an existing specialist in the system. 
 - The interface must be checked for its navigation simplicity and user friendliness. Keeping in mind who the target users are.
 - A student should not have the opportunity to add a specialist or have access to the "add Specialist" screen.
+
+USABILITY 
+- The application shall be easy for users to use. When a user starts the program it will be clear how the user should use the program.
+- The application shall be difficult to misuse. The forms will perform validation, so that a user cannot enter inapplicable data. 
 
 PERFOMANCE
  - The application’s backend will process and enter the input data into the database.
@@ -53,6 +62,3 @@ RELIABILITY
  - The application must be tested for new bugs prior to delivery. If bugs are found, they must be fixed prior to delivery date. 
  - The application must have a database (locally?) that will store and back up all the input data.
  
-
-
-
