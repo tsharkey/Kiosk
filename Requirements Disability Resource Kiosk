@@ -40,6 +40,7 @@ USABILITY
 	•	Adding the summary of visits, i.e. the number of visits and types of visits, based on Reason column
 - The interface must be checked for its navigation simplicity and user friendliness. Keeping in mind who the target users are.
 - A student should not have the opportunity to add a specialist or have access to the "add Specialist" screen.
+
 PERFOMANCE
  - The application’s backend will process and enter the input data into the database.
  - The program shall be able to respond to the system’s mouse instructions only - in a prompt or instantaneous manner. (.2 milliseconds)

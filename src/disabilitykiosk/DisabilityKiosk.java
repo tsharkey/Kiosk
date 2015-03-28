@@ -36,7 +36,7 @@ public class DisabilityKiosk extends JFrame
   private final LabelsAndFieldsPanel labelsAndFields;
   private final SubmitPanel submit_Panel;
   private Backend.User user;
-  
+
   public DisabilityKiosk()
   {
     //Display a title
@@ -50,14 +50,14 @@ public class DisabilityKiosk extends JFrame
     /*
      * TRYING TO GET RID OF TASK BAR
      */
-                //--Below code code are different options for 
+                //--Below code code are different options for
                 //--creating full screen effect minus taskbar
                 //--no way of testing on my mac so whoever tests
                 //--can delete the code that isn't needed
                 //--don't forget to comment out the setSize method on line 45
                 //--before trying these options though
                 //--lastly, setVisible(true) is on line 107
-    
+
                 //--option 1--//
 //    GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 //    if(gd.isFullScreenSupported()){
@@ -78,7 +78,7 @@ public class DisabilityKiosk extends JFrame
      */
     //Create a Border Layout
     setLayout(new BorderLayout());
-    
+
     //Create the custom panels
     greetings_Panel = new GreetingsPanel();
     /*
@@ -93,20 +93,20 @@ public class DisabilityKiosk extends JFrame
 //    submit_Panel.submitSpeech.addActionListener(new DisabilityKiosk.SubmitSpeechButtonListener());
 //    submit_Panel.closeSpeech.addActionListener(new DisabilityKiosk.CloseSpeechButtonListener());
 //    submit_Panel.adminSpeech.addActionListener(new DisabilityKiosk.AdminSpeechButtonListener());
-    
+
     //Add the componets to the content pane
     add(greetings_Panel, BorderLayout.NORTH);
     add(labelsAndFields, BorderLayout.CENTER);
     //add(info_Panel, BorderLayout.CENTER);
     //add(label_Panel, BorderLayout.WEST);
     add(submit_Panel, BorderLayout.SOUTH);
-    
+
     //set the windows position to the center of the screen
     setLocationRelativeTo(null);
     //Make the window visable
     setVisible(true);
   }
-  
+
   private class AdminButtonListener implements ActionListener
   {
       public void actionPerformed(ActionEvent e)
@@ -127,7 +127,7 @@ public class DisabilityKiosk extends JFrame
           }
       }
     }
-    
+
   private class CloseButtonListener implements ActionListener
   {
       public void actionPerformed(ActionEvent e)
@@ -153,7 +153,7 @@ public class DisabilityKiosk extends JFrame
             else if (labelsAndFields.getLast().length() == 0 )
             {
               flag = false;
-              
+
             }
             else if(labelsAndFields.getFirst().length() == 0)
             {
@@ -174,11 +174,11 @@ public class DisabilityKiosk extends JFrame
                       labelsAndFields.getLocationInput(), labelsAndFields.getEmail(),
                       labelsAndFields.getFirst(), labelsAndFields.getLast(),
                       labelsAndFields.getRole(), labelsAndFields.getPhone());
-              
+
               setVisible(false);
               new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);
             }
-          
+
             if(flag == false)
             {
               JOptionPane.showMessageDialog(null,"Please Enter the Correct Information","Incomplete",JOptionPane.ERROR_MESSAGE);

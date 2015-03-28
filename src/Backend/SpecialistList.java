@@ -38,7 +38,7 @@ public class SpecialistList{
         specs.add(s);
     }
     
-    public void deleteAdmin(String username)
+    public void deleteSpecialist(String username)
     {
     	for (Specialist s : specs)
     	{
