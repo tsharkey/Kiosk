@@ -73,7 +73,7 @@ public class LabelsAndFieldsPanel extends JPanel{
         setVisible(true);
     }
     
-    /*
+    /**
      * Build panel method
      */
     private void buildPanel(){

@@ -54,7 +54,7 @@ public class StartupManger {
                     String pw = new String(pwInput.getPassword());
                     Admin.admins.add(new AdminAccount(unInput.getText(), pw));
                     Admin.serialize();//add the new administrator account to the file "admins"
-                    System.out.println(Admin.admins.toString());//test line
+                    //System.out.println(Admin.admins.toString());//test line
                 }
                 else if(submitted != JOptionPane.CANCEL_OPTION){
                       JOptionPane.showMessageDialog(null, "Please enter a Username and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
