@@ -12,6 +12,8 @@ We would also need to divide the bugs and new features into those categories.**
 
 
 FUNCTIONALITY
+- Adding the search capability, so that administrator can search for a specific student’s history of visits
+- Adding the summary of visits, i.e. the number of visits and types of visits, based on reason column in the administrator's screen
 PERFORMANCE
  - The application’s backend will process and enter the input data into the database.
  - The program shall be able to respond to the system’s mouse instructions only - in a prompt or instantaneous manner. (.2 milliseconds)
