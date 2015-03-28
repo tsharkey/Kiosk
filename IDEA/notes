@@ -11,8 +11,8 @@ We would also need to divide the bugs and new features into those categories.**
 
 
 
-
-PERFOMANCE
+FUNCTIONALITY
+PERFORMANCE
  - The application’s backend will process and enter the input data into the database.
  - The program shall be able to respond to the system’s mouse instructions only - in a prompt or instantaneous manner. (.2 milliseconds)
 RELIABILITY
@@ -27,3 +27,4 @@ USABILITY
 New Bugs
  14. needs a new database.
  27. Speech button overlap each other when multiple speech text are clicked.
+ - Forms need to be validated (ex: only numbers permitted in phone number field, e-mail addresses in e-mail field of form).
