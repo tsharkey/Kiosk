@@ -54,3 +54,35 @@ Bugs and Improvements
   26. there is no all choose in the drop downs in the report window.
  
   27. Speech button overlap each other when multiple speech text are clicked.
+
+
+
+Visual-
+-the specialistSelectorWindow is bugged if there is no Specialist in the program.
+-the "Okay" button when choosing a photo is bugged
+-the slider for text size in the main window changes size when you use it
+-cannot escape login window without entering correct login credentials
+-there is no way to go back to viewing all dates in the report window after choosing a specific date, unless you reopen the window.
+-there is no way to go back to viewing all reasons in the report window after choosing a specific reason
+-the main window should use setExtendedState(Frame.MAXIMIZED_BOTH) instead of its current size declaration
+-if you create a specialist with empty text fields, you cannot submit requests to see that specialist, the submit button won't do anything
+-Database connection bug? 
+-The font size on the Specialist selection window is small for the page.
+-the edit button on the if there is no image throws an exception.
+-the specialist page should come up before the main window is opened.
+-if there is no Specialist still allows you into the specialist selection window.
+-need a button to turn off and on the auto text to speech.
+-cannot exit login window without logging in.
+-there is a redundant close button.
+-speech button for admin, close, and submit are redundant.
+-submit button should be below the text area for easier access.
+-there is no all choose in the drop downs in the report window.
+-Speech button overlap each other when multiple speech text are clicked.
+
+Backend-
+-text to speech listeners need their own thread, the rest of the program is inaccessible while the audio is playing.
+-there is a null pointer exception if there are no pictures for any of the specialists
+-uploading a picture in add specialist gives a "picture too large" message
+-Text Fields are not Validated. User can enter whichever text they want and the program will accept it.
+-Check database (might not be saving inputs after user logs out)
+-There is no “Thank you” message displayed after the user click submit.
