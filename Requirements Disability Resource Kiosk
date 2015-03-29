@@ -56,6 +56,8 @@ PERFOMANCE
  
 SUPPORTABILITY
    - The application will be have a desktop version, with the possibility in the future for a Mobile application. 
+   - The application will come with a text file on assisting new user on how to use this application.
+   - The application will be well documented and commented for assist future change and upgrade.
    
 RELIABILITY
  - In case of crash the program should have a "home" button that will allow the user to return to the default screen.
