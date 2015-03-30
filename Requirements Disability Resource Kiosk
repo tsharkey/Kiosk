@@ -26,7 +26,7 @@ Follow Up
 
  - Once the visitor enters all the required fields (all of them) the application should display the next screen which will ask the visitor who she/he would like to meet. The specialists screen will display the picture of the specialists working at the office, in case the visitor doesn’t remember who he/she met with last time. 
  - Once the visitor clicks submit, the application will display a thank you (or confirmation) message and go back to the first screen. 
- - The application shall be implemented with accessibilty in mind as the form includes the following features:
+ - The application shall be implemented with accessibility in mind as the form includes the following features:
  	• Users will have the ability to enlarge and shrink the text of the screen via a slider.
  	• Users will have the ability to hear the labels of the form read to them by clicking on buttons next to the labels.
 
