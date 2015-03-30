@@ -50,7 +50,7 @@ USABILITY
 - The application shall be easy for users to use. When a user starts the program it will be clear how the user should use the program.
 - The application shall be difficult to misuse. The forms will perform validation, so that a user cannot enter inapplicable data. 
 
-PERFOMANCE
+PERFORMANCE
  - The application’s backend will process and enter the input data into the database.
  - The program shall be able to respond to the system’s mouse instructions only - in a prompt or instantaneous manner. (.2 milliseconds)
  
