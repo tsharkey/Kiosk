@@ -4,7 +4,6 @@
 # Package Files #
 *.war
 *.ear
-*.jar
 
 #intellij
 *.iml
