@@ -70,7 +70,8 @@ public class DisabilityKiosk extends JFrame
                 //--option 2--//
 //    this.setSize(this.getToolkit().getScreenSize());
                 //--option 3--//
-    setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+    //setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+    setExtendedState(Frame.MAXIMIZED_BOTH);
     setUndecorated(true);
     
     /*
@@ -88,7 +89,7 @@ public class DisabilityKiosk extends JFrame
     labelsAndFields = new LabelsAndFieldsPanel();
     submit_Panel = new SubmitPanel();
     submit_Panel.admin.addActionListener(new DisabilityKiosk.AdminButtonListener());
-    submit_Panel.close.addActionListener(new DisabilityKiosk.CloseButtonListener());
+//    submit_Panel.close.addActionListener(new DisabilityKiosk.CloseButtonListener());
     submit_Panel.submit.addActionListener(new DisabilityKiosk.SubmitButtonListener());
 //    submit_Panel.submitSpeech.addActionListener(new DisabilityKiosk.SubmitSpeechButtonListener());
 //    submit_Panel.closeSpeech.addActionListener(new DisabilityKiosk.CloseSpeechButtonListener());
