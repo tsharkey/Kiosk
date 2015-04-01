@@ -161,14 +161,6 @@ public class SpecInfoPanel extends JPanel{
     public String getFullName(){
         return firstT.getText()+" "+lastT.getText();
     }
-    public void clear(){
-        firstT.setText("");
-        lastT.setText("");
-        emailT.setText("");
-        phoneT.setText("");
-        roleT.setText("");
-        photoT.setText("");
-    }
     
     public String getEmailText(){
         return emailT.getText();
@@ -182,6 +174,8 @@ public class SpecInfoPanel extends JPanel{
     public String getPhoto(){
         return photoT.getText();
     }
+
+    //not sure what this does
     public void setEditUser(Specialist a){
         firstT.setText(a.getfName());
         lastT.setText(a.getLname());
@@ -191,6 +185,22 @@ public class SpecInfoPanel extends JPanel{
         if(photoT.getText().equals(""))
         photoT.setText(a.getPhoto().getDescription());
     }
+
+    /**
+     * Clear all text fields
+     */
+    public void clear(){
+        firstT.setText("");
+        lastT.setText("");
+        emailT.setText("");
+        phoneT.setText("");
+        roleT.setText("");
+        photoT.setText("");
+    }
+
+    /**
+     * Select photo from file as icon
+     */
     private class Listener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == fileselector){

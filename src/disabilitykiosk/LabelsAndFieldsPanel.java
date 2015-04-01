@@ -243,7 +243,7 @@ public class LabelsAndFieldsPanel extends JPanel{
       "Schedule An Appointment with Disability Specialist","Meet with a Disability Specialist","Take Test with Accommodations","Drop Off/Pick Up Notes",
       "Academic Advising (Course Selection, Add/Drop, Withdrawal)","Fill Out Accommodation Forms","Address Problems with Specific Accommodations",
       "Address Specific Course Assignment or Issue","Alternative Format for Texts and Handouts",
-      "Professional Consultation (Faculty, Staff, Administration, Department)","Other"}; 
+      "Professional Consultation (Faculty, Staff, Administration, Department)","All of the Above", "Other"};
         reasonI  = new JComboBox(reasons);
         reasonI.addFocusListener(new MyFocusListener());
         reasonI.setFont(textFieldFont);
