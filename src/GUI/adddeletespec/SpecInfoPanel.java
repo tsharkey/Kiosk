@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -163,13 +165,39 @@ public class SpecInfoPanel extends JPanel{
     }
     
     public String getEmailText(){
-        return emailT.getText();
+        //regular expression
+        String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher match = pattern.matcher(this.emailT.getText());
+
+        //if input is an email
+        if(match.matches()){
+            return emailT.getText();
+        }
+
+        //if false email
+        return "";
+
     }
     public String getRoleText(){
         return roleT.getText();
     }
     public String getPhoneText(){
-        return phoneT.getText();
+        String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(this.phoneT.getText());
+
+
+        if(matcher.matches())
+        {
+            return matcher.replaceFirst("$1$2$3");
+        }
+
+        // invalid phone number
+        return "";
     }
     public String getPhoto(){
         return photoT.getText();

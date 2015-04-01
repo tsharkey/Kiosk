@@ -139,20 +139,28 @@ public class AddDeleteSpecFrame extends JFrame{
                         }
                     if (exists)
                     {
-                        JOptionPane.showMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showInternalMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if(specInfoPanel.getFirstName().equals("") || specInfoPanel.getLastName().equals("")
+                            || specInfoPanel.getRoleText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete", JOptionPane.ERROR_MESSAGE);
                     }
                     else if(specInfoPanel.getPhoto().equals(""))
                     {
-                                SpecialistList.specs.add(new Specialist(specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
-                                updateList();
-                                specInfoPanel.clear();
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Image Missing", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if(specInfoPanel.getPhoneText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if(specInfoPanel.getEmailText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid E-mail", JOptionPane.ERROR_MESSAGE);
                     }
                     else
                             {
                                 ImageIcon i = new ImageIcon(specInfoPanel.getPhoto());
                                 if(i.getIconHeight()>250||i.getIconWidth()>250){
                                     
-                                      JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
+                                      JOptionPane.showInternalMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
 
                                 }
                                 else{
