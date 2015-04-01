@@ -47,6 +47,12 @@ public class LabelsAndFieldsPanel extends JPanel{
     private ImageIcon microphone = new ImageIcon("src/microphone.jpg");
     private JSlider textSlider;
     public JCheckBox cancelSpeech;
+    
+    /*
+     * Stores whether or not phone and e-mail fields have valid input.
+     */
+    private boolean phoneIsValid;
+    private boolean emailIsValid;
      
   /*
    * Numbers for enlarging text
@@ -320,7 +326,12 @@ public class LabelsAndFieldsPanel extends JPanel{
         grid.gridy = 0;
         grid.ipadx = 40;
         grid.gridheight = 4;
-        add(cancelSpeech, grid);  
+        add(cancelSpeech, grid);
+        
+        // set booleans to false
+        phoneIsValid = false; 
+        emailIsValid = false;
+        
     }
     //Getters
     public String getFirst(){
@@ -333,40 +344,10 @@ public class LabelsAndFieldsPanel extends JPanel{
         return this.roleI.getSelectedItem().toString();
     }
     public String getEmail(){
-      
-      // regular expression
-      String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
- 
-      Pattern pattern = Pattern.compile(regex);
-
-      Matcher matcher = pattern.matcher(this.emailI.getText());
-      
-      // if valid, return e-mail as is
-      if (matcher.matches()) {
         return this.emailI.getText();
-      }
-      
-      // invalid e-mail
-      return "";
     }
-
-    
     public String getPhone(){
-        // regular expression
-        String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
-           
-        Pattern pattern = Pattern.compile(regex);
- 
-        Matcher matcher = pattern.matcher(this.phoneI.getText());
-           
-        
-        if(matcher.matches())
-        {
-          return matcher.replaceFirst("$1$2$3");
-        }
-           
-        // invalid phone number
-        return "";
+        return this.phoneI.getText();
     }
     public String getReason(){
         return this.reasonI.getSelectedItem().toString();
@@ -598,5 +579,50 @@ public class LabelsAndFieldsPanel extends JPanel{
             
         
              
+         }
+         
+         
+         /**
+          * 
+          */
+         private String getValidPhoneNumber(String input) {
+           
+           // regular expression
+           String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+           
+           Pattern pattern = Pattern.compile(regex);
+ 
+           Matcher matcher = pattern.matcher(input);
+           
+           // if valid, return phone number without extra characters
+           if(matcher.matches())
+           {
+             return matcher.replaceFirst("$1$2$3");
+           }
+           
+           // number not valid
+           return "";
+         }
+         
+         /**
+          * 
+          */
+         private boolean isNumberValid(String input) {
+           
+           // regular expression
+           String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+           
+           Pattern pattern = Pattern.compile(regex);
+ 
+           Matcher matcher = pattern.matcher(input);
+           
+           // if valid return true
+           if(matcher.matches())
+           {
+             return true;
+           }
+           
+           // number not valid
+           return false; 
          }
 }
