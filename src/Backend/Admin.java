@@ -34,6 +34,9 @@ import java.util.TreeSet;
  *
  * @author Audi
  */
+
+
+//TODO: This class will need access to the SqlStatement Class
 public class Admin {
 
     private File dbFile;
