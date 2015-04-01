@@ -1,33 +1,40 @@
 
 Bugs and Improvements
 
+
 Visual-(Henrique, Viet, Catherine, Hannah, Brendan s., Gena)
+
+Open:
+-there is a redundant close button.(?)
+-speech button for admin, close, and submit are redundant. (?)
 -the specialistSelectorWindow is bugged if there is no Specialist in the program. (?)
 -the "Okay" button when choosing a photo is bugged (?)
 -there is a null pointer exception if there are no pictures for any of the specialists
--the slider for text size in the main window changes size when you use it. (Henrique)
--cannot escape login window without entering correct login credentials - (Viet) (FIXED)
 -there is no way to go back to viewing all dates in the report window after choosing a specific date, unless you reopen the window.
 -there is no way to go back to viewing all reasons in the report window after choosing a specific reason
+-the edit button on the if there is no image throws an exception.
+-Add something to remind the admin to logout.
+-When editing a specialist's first and last name, the change won't reflect on the list immediately. need to reopen the window to see the change.
+-text to speech listeners need their own thread, the rest of the program is inaccessible while the audio is playing. (?)
+-the slider for text size in the main window changes size when you use it. (Henrique)
+-The font size on the Specialist selection window is small for the page. (Henrique)
+
+Fixed:
+-cannot escape login window without entering correct login credentials - (Viet) (FIXED)
 -the main window should use setExtendedState(Frame.MAXIMIZED_BOTH) instead of its current size declaration. (Hannah)(FIXED)
 -if you create a specialist with empty text fields, you cannot submit requests to see that specialist, the submit button won't do anything. (Catherine)(FIXED)
--The font size on the Specialist selection window is small for the page. (Henrique)
--the edit button on the if there is no image throws an exception. 
--the specialist page should come up before the main window is opened. - (Viet) (FIXED) 
+-the specialist page should come up before the main window is opened. - (Viet) (FIXED)
 -if there is no Specialist still allows you into the specialist selection window. (FIXED)
 -need a button to turn off and on the auto text to speech. (Already implemented)
 -cannot exit login window without logging in. - (Viet) (FIXED)
--there is a redundant close button.(?)
--speech button for admin, close, and submit are redundant. (?)
 -submit button should be below the text area for easier access. (Catherine)(FIXED)
 -there is no all choose in the drop downs in the report window. (Catherine)(FIXED)
 -Speech button overlap each other when multiple speech text are clicked. (Viet) (FIXED)
 -Text Fields are not Validated, especially email and phone-number. User can enter whichever text they want and the program will accept it. (Hannah) (FIXED)
--Add something to remind the admin to logout.
--When editing a specialist's first and last name, the change won't reflect on the list immediately. need to reopen the window to see the change.
 -There is no “Thank you” message displayed after the user click submit. (FIXED)
--text to speech listeners need their own thread, the rest of the program is inaccessible while the audio is playing. (?)
+
 
 Backend-(Brendan C., Sean, Parth, John, Tom, Maria)
+
 -Database connection bug?
 -Check database (might not be saving inputs after user logs out)
