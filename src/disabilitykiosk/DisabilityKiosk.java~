@@ -146,20 +146,26 @@ public class DisabilityKiosk extends JFrame
       {
           if(!SpecialistList.getSpecialList().isEmpty()){
           boolean flag = true;
-            if( labelsAndFields.getFirst().length() == 0 || labelsAndFields.getLast().length() == 0 )
+            if( labelsAndFields.getEmail().length() == 0 )
             {
               flag = false;
-              JOptionPane.showMessageDialog(null,"Please Enter the Correct Information","Incomplete",JOptionPane.ERROR_MESSAGE);
-            } else if (labelsAndFields.getEmail().length() == 0)
-            {
-              flag = false; 
-              JOptionPane.showMessageDialog(null,"Please Enter a Valid E-mail Address","Invalid E-mail",JOptionPane.ERROR_MESSAGE);
             }
-            else if (labelsAndFields.getPhone().length() == 0)
+            else if (labelsAndFields.getLast().length() == 0 )
             {
-              flag = false; 
-              JOptionPane.showMessageDialog(null,"Please Enter a Valid Phone Number","Invalid Phone",JOptionPane.ERROR_MESSAGE);
-            } else if( flag = true)
+              flag = false;
+
+            }
+            else if(labelsAndFields.getFirst().length() == 0)
+            {
+              flag = false;
+            }
+            else if( labelsAndFields.getPhone().length() == 0)
+            {
+              JOptionPane.showMessageDialog(null,"Please Enter a Valid Phone Number","Incomplete",JOptionPane.ERROR_MESSAGE);
+              flag  = false;
+              
+            }
+            else if( flag = true)
             {
               boolean temp;
                 if(labelsAndFields.followUpI.getSelectedItem() == "Yes")
@@ -173,6 +179,11 @@ public class DisabilityKiosk extends JFrame
 
               setVisible(false);
               new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);
+            }
+
+            if(flag == false)
+            {
+              JOptionPane.showMessageDialog(null,"Please Enter the Correct Information","Incomplete",JOptionPane.ERROR_MESSAGE);
             }
       }
             else{
