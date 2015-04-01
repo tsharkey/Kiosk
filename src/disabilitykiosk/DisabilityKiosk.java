@@ -145,7 +145,7 @@ public class DisabilityKiosk extends JFrame
       public void actionPerformed(ActionEvent e)
       {
           if(!SpecialistList.getSpecialList().isEmpty()){
-          boolean flag = true;
+            boolean flag = true;
             if( labelsAndFields.getEmail().length() == 0 )
             {
               flag = false;
@@ -183,10 +183,10 @@ public class DisabilityKiosk extends JFrame
             {
               JOptionPane.showMessageDialog(null,"Please Enter the Correct Information","Incomplete",JOptionPane.ERROR_MESSAGE);
             }
-      }
-            else{
-    JOptionPane.showMessageDialog(null,"No Specailist in List","Incomplete",JOptionPane.ERROR_MESSAGE);
-  }
+          }
+          else{
+              JOptionPane.showMessageDialog(null,"No Specailist in List","Incomplete",JOptionPane.ERROR_MESSAGE);
+          }
 }
   }
 }

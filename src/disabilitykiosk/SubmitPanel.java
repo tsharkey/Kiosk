@@ -21,7 +21,7 @@ public class SubmitPanel extends JPanel
         super(new GridLayout(0,5,10,10));
         //crete 5 panels for lame formatting
         panel_1 = new JPanel(new GridLayout(0,1));
-        panel_2 = new JPanel();
+        panel_2 = new JPanel(new GridLayout(0,1);
         panel_3 = new JPanel(new GridLayout(0,1));
         panel_4 = new JPanel();
         panel_5 = new JPanel(new GridLayout(0,1));
@@ -43,7 +43,7 @@ public class SubmitPanel extends JPanel
 
         //add them to each panel
 //        panel_1.add(submitSpeech);
-        panel_1.add(submit);
+        panel_3.add(submit);
 
       //  panel_3.add(closeSpeech);
       //  panel_3.add(close);
