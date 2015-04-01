@@ -70,7 +70,8 @@ public class DisabilityKiosk extends JFrame
                 //--option 2--//
 //    this.setSize(this.getToolkit().getScreenSize());
                 //--option 3--//
-    setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+    //setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+    setExtendedState(Frame.MAXIMIZED_BOTH);
     setUndecorated(true);
     
     /*
