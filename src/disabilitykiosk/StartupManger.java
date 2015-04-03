@@ -8,7 +8,12 @@ package disabilitykiosk;
 
 import Backend.*;
 import GUI.adddeletespec.AddDeleteSpecFrame;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
@@ -25,6 +30,34 @@ import javax.swing.JTextField;
 public class StartupManger {
     
     public StartupManger(){
+
+
+        //establishing the connection to the database
+        MysqlDataSource dataSource = new MysqlDataSource();
+
+        //user information
+        dataSource.setUser("kiosk");
+        dataSource.setPassword("massbaysp2015");
+        dataSource.setURL("jdbc:mysql://107.170.166.28:3306/kioskdb2");
+
+        //make the connection and create the statement
+        try{
+            Connection conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+
+            //sql statement
+            ResultSet rs = stmt.executeQuery("SELECT * FROM USER");
+            //iterate over the result set and use getString() by column name
+            while(rs.next()){
+                String s = rs.getString("fName");
+                System.out.println(s);
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+            System.out.println("error");
+        }
+
+
         try {
             Data data = new Data();
         } catch (IOException ex) {
