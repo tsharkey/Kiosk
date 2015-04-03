@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -161,27 +163,47 @@ public class SpecInfoPanel extends JPanel{
     public String getFullName(){
         return firstT.getText()+" "+lastT.getText();
     }
-    public void clear(){
-        firstT.setText("");
-        lastT.setText("");
-        emailT.setText("");
-        phoneT.setText("");
-        roleT.setText("");
-        photoT.setText("");
-    }
     
     public String getEmailText(){
-        return emailT.getText();
+        //regular expression
+        String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher match = pattern.matcher(this.emailT.getText());
+
+        //if input is an email
+        if(match.matches()){
+            return emailT.getText();
+        }
+
+        //if false email
+        return "";
+
     }
     public String getRoleText(){
         return roleT.getText();
     }
     public String getPhoneText(){
-        return phoneT.getText();
+        String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(this.phoneT.getText());
+
+
+        if(matcher.matches())
+        {
+            return matcher.replaceFirst("$1$2$3");
+        }
+
+        // invalid phone number
+        return "";
     }
     public String getPhoto(){
         return photoT.getText();
     }
+
+    //not sure what this does
     public void setEditUser(Specialist a){
         firstT.setText(a.getfName());
         lastT.setText(a.getLname());
@@ -191,6 +213,22 @@ public class SpecInfoPanel extends JPanel{
         if(photoT.getText().equals(""))
         photoT.setText(a.getPhoto().getDescription());
     }
+
+    /**
+     * Clear all text fields
+     */
+    public void clear(){
+        firstT.setText("");
+        lastT.setText("");
+        emailT.setText("");
+        phoneT.setText("");
+        roleT.setText("");
+        photoT.setText("");
+    }
+
+    /**
+     * Select photo from file as icon
+     */
     private class Listener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == fileselector){

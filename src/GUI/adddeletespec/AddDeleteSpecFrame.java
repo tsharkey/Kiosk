@@ -27,7 +27,7 @@ import javax.swing.ListSelectionModel;
 public class AddDeleteSpecFrame extends JFrame{
     private final int WINDOW_WIDTH = 800;
     private final int WINDOW_HEIGHT = 500;
-    private SpecInfoPanel infoPanel;
+    private SpecInfoPanel specInfoPanel;
     private JPanel buttonPanel;
     private JButton addBtn, editBtn, deleteBtn;
     private JList<String> list;
@@ -62,13 +62,13 @@ public class AddDeleteSpecFrame extends JFrame{
         scroll = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
         JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll.setPreferredSize(new Dimension(300, 490));
-        infoPanel = new SpecInfoPanel();
+        specInfoPanel = new SpecInfoPanel();
         //listPanel = new ListPanel();
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         
         setLayout(new BorderLayout());
         add(scroll, BorderLayout.CENTER);
-        //add(infoPanel, BorderLayout.EAST);
+        //add(specInfoPanel, BorderLayout.EAST);
 //        add(submitPanel, BorderLayout.SOUTH);
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
@@ -126,62 +126,70 @@ public class AddDeleteSpecFrame extends JFrame{
     private class submitOrDeleteListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             if (e.getSource() == addBtn){
-                                int submitted = JOptionPane.showConfirmDialog(null, infoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
-                   if (submitted == JOptionPane.OK_OPTION){
-                                boolean exists = false;
+                int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
+                boolean flag = true;
+                if (submitted == JOptionPane.OK_OPTION){
+                        boolean exists = false;
                         for (Specialist a : SpecialistList.specs)
                         {
-                            if (a.getFullName().equals(infoPanel.getFullName()))
+                            if (a.getFullName().equals(specInfoPanel.getFullName()))
                             {
                                 exists = true;
                             }
                         }
                     if (exists)
                     {
-                        JOptionPane.showMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showInternalMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
                     }
-                    else
-                        if(infoPanel.getPhoto().equals(""))
+                    else if(specInfoPanel.getFirstName().equals("") || specInfoPanel.getLastName().equals("")
+                            || specInfoPanel.getRoleText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if(specInfoPanel.getPhoto().equals(""))
                     {
-                                SpecialistList.specs.add(new Specialist(infoPanel.getEmailText(),infoPanel.getFirstName(),infoPanel.getLastName(),infoPanel.getRoleText(),infoPanel.getPhoneText()));
-                                updateList();
-                                infoPanel.clear();
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Image Missing", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if(specInfoPanel.getPhoneText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if(specInfoPanel.getEmailText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid E-mail", JOptionPane.ERROR_MESSAGE);
                     }
                     else
                             {
-                                ImageIcon i = new ImageIcon(infoPanel.getPhoto());
+                                ImageIcon i = new ImageIcon(specInfoPanel.getPhoto());
                                 if(i.getIconHeight()>250||i.getIconWidth()>250){
                                     
-                                      JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
+                                      JOptionPane.showInternalMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
 
                                 }
                                 else{
-                                SpecialistList.specs.add(new Specialist(infoPanel.getPhoto(), infoPanel.getEmailText(),infoPanel.getFirstName(),infoPanel.getLastName(),infoPanel.getRoleText(),infoPanel.getPhoneText()));
+                                SpecialistList.specs.add(new Specialist(specInfoPanel.getPhoto(), specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
                                 updateList();
-                                infoPanel.clear();
+                                specInfoPanel.clear();
                                 }
                     }
                    }
             }
             if (e.getSource() == editBtn){
                 if(getSpecialist()!=null){
-                infoPanel.setEditUser(getSpecialist());
-                int submitted = JOptionPane.showConfirmDialog(null, infoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
+                specInfoPanel.setEditUser(getSpecialist());
+                int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
                 if (submitted == JOptionPane.OK_OPTION){
-                    if(infoPanel.getPhoto().equals("")){
-                     SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(infoPanel.getEmailText(),infoPanel.getFirstName(),infoPanel.getLastName(),infoPanel.getRoleText(),infoPanel.getPhoneText()));
+                    if(specInfoPanel.getPhoto().equals("")){
+                     SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
                      updateList();
-                     infoPanel.clear();
+                     specInfoPanel.clear();
                     }
                     else{
-                        ImageIcon j = new ImageIcon(infoPanel.getPhoto());
+                        ImageIcon j = new ImageIcon(specInfoPanel.getPhoto());
                                 if(j.getIconHeight()>250||j.getIconWidth()>250){
                                     
                                       JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
 
                                 }
                                 else{
-                                    SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(infoPanel.getPhoto(),infoPanel.getEmailText(),infoPanel.getFirstName(),infoPanel.getLastName(),infoPanel.getRoleText(),infoPanel.getPhoneText()));
+                                    SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getPhoto(),specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
                                 }
                     }
                 }

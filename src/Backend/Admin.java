@@ -34,6 +34,9 @@ import java.util.TreeSet;
  *
  * @author Audi
  */
+
+
+//TODO: This class will need access to the SqlStatement Class
 public class Admin {
 
     private File dbFile;
@@ -41,7 +44,7 @@ public class Admin {
     public static ArrayList<AdminAccount> admins = new ArrayList<AdminAccount>();
     public static boolean isAdminWorking = false;//check if an admin is working on the system
 
-	private Cursor cursor;
+ private Cursor cursor;
     
     /*
      *   The GUI should catch any IOException thrown by the class
@@ -52,23 +55,23 @@ public class Admin {
     
     public void addAdmin(String username, String password)
     {
-    	admins.add(new AdminAccount(username, password));
+     admins.add(new AdminAccount(username, password));
     }
     
     public void deleteAdmin(String username)
     {
-    	for (AdminAccount addmin : admins)
-    	{
-    		if(addmin.getUsername() == username)
-    		{
-    			admins.remove(addmin);
-    		}	
-    	}
+     for (AdminAccount addmin : admins)
+     {
+      if(addmin.getUsername() == username)
+      {
+       admins.remove(addmin);
+      } 
+     }
     }
 
     public ArrayList<AdminAccount> getAdmins() {
-		return admins;
-	}
+  return admins;
+ }
     
     //prints out the whole table as given
     public void readTable(Table tab) throws IOException {
@@ -112,7 +115,7 @@ public class Admin {
     }
     
     public static void serialize() {
-    	try{
+     try{
             FileOutputStream fos= new FileOutputStream("admins");
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             //System.out.println("lol");
@@ -125,7 +128,7 @@ public class Admin {
     }
     
     public static void deSerialize() {
-    	try
+     try
         {
             FileInputStream fis = new FileInputStream("admins");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -148,7 +151,7 @@ public class Admin {
 
     public void deleteAll(String query)
             throws IOException {
-    	Data.open();
+     Data.open();
         Table table = Data.chooseTable(query);
         for (Row row : table) {
             table.deleteRow(row);

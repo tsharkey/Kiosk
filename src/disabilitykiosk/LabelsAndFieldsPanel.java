@@ -23,6 +23,8 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  *
@@ -34,10 +36,10 @@ public class LabelsAndFieldsPanel extends JPanel{
      * Labels, text fields and combo box
      */
     JTextField firstI, lastI, emailI;
-	JTextField phoneI;
+ JTextField phoneI;
     JComboBox reasonI;
-	JComboBox followUpI;
-	JComboBox roleI;
+ JComboBox followUpI;
+ JComboBox roleI;
         JComboBox locationI;
     private JLabel date, time, first, last, email, phone, reason, followUp, role, dateI, timeI, location;
     private JButton firstButton, locationButton, lastButton, emailButton, phoneButton, reasonButton, followUpButton, roleButton;
@@ -45,6 +47,7 @@ public class LabelsAndFieldsPanel extends JPanel{
     private ImageIcon microphone = new ImageIcon("src/microphone.jpg");
     private JSlider textSlider;
     public JCheckBox cancelSpeech;
+     
   /*
    * Numbers for enlarging text
    */
@@ -240,7 +243,7 @@ public class LabelsAndFieldsPanel extends JPanel{
       "Schedule An Appointment with Disability Specialist","Meet with a Disability Specialist","Take Test with Accommodations","Drop Off/Pick Up Notes",
       "Academic Advising (Course Selection, Add/Drop, Withdrawal)","Fill Out Accommodation Forms","Address Problems with Specific Accommodations",
       "Address Specific Course Assignment or Issue","Alternative Format for Texts and Handouts",
-      "Professional Consultation (Faculty, Staff, Administration, Department)","Other"}; 
+      "Professional Consultation (Faculty, Staff, Administration, Department)","All of the Above", "Other"};
         reasonI  = new JComboBox(reasons);
         reasonI.addFocusListener(new MyFocusListener());
         reasonI.setFont(textFieldFont);
@@ -317,8 +320,7 @@ public class LabelsAndFieldsPanel extends JPanel{
         grid.gridy = 0;
         grid.ipadx = 40;
         grid.gridheight = 4;
-        add(cancelSpeech, grid);
-        
+        add(cancelSpeech, grid);  
     }
     //Getters
     public String getFirst(){
@@ -331,10 +333,40 @@ public class LabelsAndFieldsPanel extends JPanel{
         return this.roleI.getSelectedItem().toString();
     }
     public String getEmail(){
+      
+      // regular expression
+      String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+ 
+      Pattern pattern = Pattern.compile(regex);
+
+      Matcher matcher = pattern.matcher(this.emailI.getText());
+      
+      // if valid, return e-mail as is
+      if (matcher.matches()) {
         return this.emailI.getText();
+      }
+      
+      // invalid e-mail
+      return "";
     }
+
+    
     public String getPhone(){
-        return this.phoneI.getText();
+        // regular expression
+        String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+           
+        Pattern pattern = Pattern.compile(regex);
+ 
+        Matcher matcher = pattern.matcher(this.phoneI.getText());
+           
+        
+        if(matcher.matches())
+        {
+          return matcher.replaceFirst("$1$2$3");
+        }
+           
+        // invalid phone number
+        return "";
     }
     public String getReason(){
         return this.reasonI.getSelectedItem().toString();
@@ -587,5 +619,4 @@ public class LabelsAndFieldsPanel extends JPanel{
         
              
          }
-         
 }

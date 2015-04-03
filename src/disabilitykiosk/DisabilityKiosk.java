@@ -70,7 +70,8 @@ public class DisabilityKiosk extends JFrame
                 //--option 2--//
 //    this.setSize(this.getToolkit().getScreenSize());
                 //--option 3--//
-    setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+    //setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+    setExtendedState(Frame.MAXIMIZED_BOTH);
     setUndecorated(true);
     
     /*
@@ -88,7 +89,7 @@ public class DisabilityKiosk extends JFrame
     labelsAndFields = new LabelsAndFieldsPanel();
     submit_Panel = new SubmitPanel();
     submit_Panel.admin.addActionListener(new DisabilityKiosk.AdminButtonListener());
-    submit_Panel.close.addActionListener(new DisabilityKiosk.CloseButtonListener());
+//    submit_Panel.close.addActionListener(new DisabilityKiosk.CloseButtonListener());
     submit_Panel.submit.addActionListener(new DisabilityKiosk.SubmitButtonListener());
 //    submit_Panel.submitSpeech.addActionListener(new DisabilityKiosk.SubmitSpeechButtonListener());
 //    submit_Panel.closeSpeech.addActionListener(new DisabilityKiosk.CloseSpeechButtonListener());
@@ -146,24 +147,20 @@ public class DisabilityKiosk extends JFrame
       {
           if(!SpecialistList.getSpecialList().isEmpty()){
           boolean flag = true;
-            if( labelsAndFields.getEmail().length() == 0 )
+            if( labelsAndFields.getFirst().length() == 0 || labelsAndFields.getLast().length() == 0 )
             {
               flag = false;
-            }
-            else if (labelsAndFields.getLast().length() == 0 )
+              JOptionPane.showMessageDialog(null,"Please Enter the Correct Information","Incomplete",JOptionPane.ERROR_MESSAGE);
+            } else if (labelsAndFields.getEmail().length() == 0)
             {
-              flag = false;
-
+              flag = false; 
+              JOptionPane.showMessageDialog(null,"Please Enter a Valid E-mail Address","Invalid E-mail",JOptionPane.ERROR_MESSAGE);
             }
-            else if(labelsAndFields.getFirst().length() == 0)
+            else if (labelsAndFields.getPhone().length() == 0)
             {
-              flag = false;
-            }
-            else if( labelsAndFields.getPhone().length() == 0)
-            {
-              flag  = false;
-            }
-            else if( flag = true)
+              flag = false; 
+              JOptionPane.showMessageDialog(null,"Please Enter a Valid Phone Number","Invalid Phone",JOptionPane.ERROR_MESSAGE);
+            } else if( flag = true)
             {
               boolean temp;
                 if(labelsAndFields.followUpI.getSelectedItem() == "Yes")
@@ -178,15 +175,10 @@ public class DisabilityKiosk extends JFrame
               setVisible(false);
               new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);
             }
-
-            if(flag == false)
-            {
-              JOptionPane.showMessageDialog(null,"Please Enter the Correct Information","Incomplete",JOptionPane.ERROR_MESSAGE);
-            }
-      }
-            else{
-    JOptionPane.showMessageDialog(null,"No Specailist in List","Incomplete",JOptionPane.ERROR_MESSAGE);
-  }
+          }
+          else{
+              JOptionPane.showMessageDialog(null,"No Specialist in List","Incomplete",JOptionPane.ERROR_MESSAGE);
+          }
 }
   }
 }

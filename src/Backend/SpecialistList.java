@@ -32,7 +32,7 @@ public class SpecialistList{
     
     public void addSpecialist(String photo, String email, String fName, String lname, String role, String phone)
     {
-    	specs.add(new Specialist(photo,email,fName,lname, role, phone));
+     specs.add(new Specialist(photo,email,fName,lname, role, phone));
     }
     public void addSpecialist(Specialist s){
         specs.add(s);
@@ -40,22 +40,22 @@ public class SpecialistList{
     
     public void deleteSpecialist(String username)
     {
-    	for (Specialist s : specs)
-    	{
-    		if(s.getfName().equals(username))
-    		{
-    			specs.remove(s);
-    		}	
-    	}
+     for (Specialist s : specs)
+     {
+      if(s.getfName().equals(username))
+      {
+       specs.remove(s);
+      } 
+     }
     }
 
     public static ArrayList<Specialist> getSpecialList() {
-		return specs;
-	}
+  return specs;
+ }
     
     
     public static void serialize() {
-    	try{
+     try{
             FileOutputStream fos= new FileOutputStream("specs");
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             //System.out.println("lol");
@@ -68,7 +68,7 @@ public class SpecialistList{
     }
     
     public static void deSerialize() {
-    	try
+     try
         {
             FileInputStream fis = new FileInputStream("specs");
             ObjectInputStream ois = new ObjectInputStream(fis);

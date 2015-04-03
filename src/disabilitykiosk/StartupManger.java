@@ -31,6 +31,7 @@ public class StartupManger {
             Logger.getLogger(StartupManger.class.getName()).log(Level.SEVERE, null, ex);
         }
         SpecialistList s = new SpecialistList();
+          
         Admin admin = new Admin();
         Admin.deSerialize();
         SpecialistList.deSerialize();
