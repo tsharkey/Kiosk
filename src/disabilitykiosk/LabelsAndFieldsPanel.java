@@ -273,7 +273,7 @@ public class LabelsAndFieldsPanel extends JPanel{
         
         //location
         locationButton = new JButton();
-        locationButton.addActionListener(new followUpButtonListener());
+        locationButton.addActionListener(new locationButtonListener());
         locationButton.setIcon(microphone);
         location = new JLabel("Location: ");
         location.setFont(font);
@@ -429,6 +429,12 @@ public class LabelsAndFieldsPanel extends JPanel{
             Speech s = new Speech(text);
             new Thread(s).start();
         }
+           if (e.getSource() == locationI && cancelSpeech.isSelected() == true)
+        {
+            String text = "Please enter your location in the drop down list";
+            Speech s = new Speech(text);
+            new Thread(s).start();
+        }
         }
         public void focusLost(FocusEvent e)
         {}
@@ -529,6 +535,20 @@ public class LabelsAndFieldsPanel extends JPanel{
     }
   }
          }
+         private class locationButtonListener implements ActionListener
+         {
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource() == locationButton)
+           {
+
+            String text = "Please select your location from drop down list";
+            Speech s = new Speech(text);
+            new Thread(s).start();
+
+            }
+       }
+    }
          /*
           * Setting up thread for time and date
           */

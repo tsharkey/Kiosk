@@ -61,7 +61,7 @@ public class SpecialistSelectionWindow extends JFrame {
             Icon picture = specialistsList.get(i).getPhoto();
             String name = specialistsList.get(i).getfName() + " " + specialistsList.get(i).getLname();
             JRadioButtonMenuItem rButton = new JRadioButtonMenuItem(name, picture, true);
-            rButton.setFont(new Font("serif",Font.BOLD, 30));
+            rButton.setFont(new Font("ariel",Font.BOLD, 100));
             rButton.isBorderPainted();
             radioButtons.add(rButton);
         }
