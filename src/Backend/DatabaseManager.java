@@ -31,7 +31,22 @@ public DatabaseManager() {
     vt = new VisitsTable(con);
 }
 
-public void addUser(String str) {
+public void addUser(String[] str) {
     ut.addUser(str);
+}
+
+public void addSpecialist(){
+    
+    st.addSpecialist(String[] args)
+}
+
+public void addVisit(String[] args){
+    
+    
+}
+
+public ResultSet getAllUsers(){
+    
+    return ut.getAllUsers();
 }
 }

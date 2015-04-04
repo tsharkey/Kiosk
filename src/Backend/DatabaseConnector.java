@@ -12,9 +12,11 @@ import java.sql.Statement;
  * @author Sean Johnston
  */
 public class DatabaseConnector {
-    
-}
 
+
+public DatabaseConnector(){
+
+}
 
 
 public Connection getConnection() {
@@ -44,5 +46,8 @@ public Connection getConnection() {
         } catch(Exception e){
             e.printStackTrace();
             System.out.println("error");
+            return null;
         }
+        return null;
+}
 }
