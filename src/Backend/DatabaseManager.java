@@ -37,7 +37,7 @@ public void addUser(String[] str) {
 
 public void addSpecialist(){
     
-    st.addSpecialist(String[] args)
+    st.addSpecialist();
 }
 
 public void addVisit(String[] args){
@@ -45,8 +45,64 @@ public void addVisit(String[] args){
     
 }
 
-public ResultSet getAllUsers(){
+public void addAdmin(){
+    
+}
+//Since the only information stored in the db about admins
+//is username and password, what does this method return?
+public ResultSet getAdmin(){
+    
+}
+
+public ResultSet getUser(){
+    
+}
+
+public ResultSet getSpecialist(){
+    
+    
+}
+
+public ResultSet getVisit(){
+    
+}
+
+public ResultSet getUserTable(){
     
     return ut.getAllUsers();
+}
+
+public ResultSet getSpecialistTable(){
+    
+}
+
+public ResultSet getVisitsTable(){
+    
+}
+
+//Get all visits between date range
+public ResultSet getVisitsInDateRange(){
+    
+}
+
+//Get all the visits specific to one student
+public ResultSet getVisits(){
+    
+}
+
+public void deleteUser(){
+    
+}
+
+public void deleteSpecialist(){
+    
+}
+
+public void deleteVisit(){
+    
+}
+
+public void deleteAdmin(){
+    
 }
 }
