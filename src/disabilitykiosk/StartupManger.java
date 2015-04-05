@@ -26,10 +26,6 @@ import javax.swing.JTextField;
 public class StartupManger {
     
     public StartupManger(){
-
-        VisitsTable vt = new VisitsTable();
-        vt.addVisit("test", 1, "test@test.com", "test", "Wellesley");
-
         try {
             Data data = new Data();
         } catch (IOException ex) {
@@ -72,12 +68,12 @@ public class StartupManger {
                 System.exit(0);
             }
             
-            new DisabilityKiosk();    
+            new DisabilityKiosk();
             new AddDeleteSpecFrame();
             Admin.isAdminWorking = true;
         }
         else{
-            new DisabilityKiosk();
+           new DisabilityKiosk();
         }
     }
     

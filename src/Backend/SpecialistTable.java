@@ -5,39 +5,67 @@
  */
 package Backend;
 
+import java.sql.*;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 /**
  *
  * @author Sean
  */
 public class SpecialistTable {
-    
-    private Connection conn = null;
-    private Statement stmt = null;
-    
-    public SpecialistTable(Connection conn){
-        
-        this.conn = conn;
-        
+    private DatabaseConnector dc;
+
+    public SpecialistTable(){
+        dc = new DatabaseConnector();
+    }
+
+    //adds a specialist, TODO: the password needs to be hashed out, I don't know how to do this- TOM
+    public void addSpecialist(String photo, String password, String email){
         try{
-        stmt = conn.createStatement();
-        }
-        catch(Exception e){
+            Statement stmt = dc.getConnection().createStatement();
+            String insert = "INSERT INTO SPECIALIST" +
+                            "VALUES('" + photo + "', '" + password + "', '" + email +"')";
+            stmt.executeUpdate(insert);
+        }catch(Exception e){
             e.printStackTrace();
-            System.out.println("error");
-            
         }
     }
-    
-    public void addSpecialist(String[] args){
-        
+
+    //deletes a specialist
+    public void deleteSpecialist(String email){
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            String delete = "DELETE FROM SPECIALIST" +
+                            "WHERE email = '" + email + "'";
+            stmt.executeUpdate(delete);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
-    
+
+    //returns a single specialist based on email
+    public ResultSet getSpecialist(String email){
+        ResultSet rs = null;
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            String getOneSpecialist = "SELECT * FROM SPECIALIST WHERE email = '" + email +"'";
+            rs = stmt.executeQuery(getOneSpecialist);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    //returns all specialists
+    public ResultSet getAllSpecialists(){
+        ResultSet rs = null;
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            String getSpecialists = "SELECT * FROM SPECIALIST";
+            rs = stmt.executeQuery(getSpecialists);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
     
 }

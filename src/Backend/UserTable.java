@@ -45,8 +45,8 @@ public class UserTable {
                             "WHERE email = '" + email + "'";
             stmt.execute(deleteUserTable);
             if(deleteVisits){
-                String deleteVisitsTable = "DELETE FROM USER " +
-                                           "WHERE email = " + email;
+                String deleteVisitsTable = "DELETE FROM VISITS " +
+                                           "WHERE email = '" + email +"'";
                 stmt.executeUpdate(deleteVisitsTable);
             }
 
@@ -73,7 +73,7 @@ public class UserTable {
         ResultSet rs = null;
         try{
             Statement stmt = dc.getConnection().createStatement();
-            String getUser = "SELECT * FROM USER WHERE email = '" + email +"')";
+            String getUser = "SELECT * FROM USER WHERE email = '" + email +"'";
             rs = stmt.executeQuery(getUser);
         }catch(Exception e){
             e.printStackTrace();

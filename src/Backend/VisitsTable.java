@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Backend;
-import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 /**
  *
@@ -17,6 +17,7 @@ public class VisitsTable {
         dc = new DatabaseConnector();
     }
 
+    //creates a new visit, the email must match an already existing email in the user database
     public void addVisit(String reason, int followUp, String email, String specialist, String location){
         try{
             Statement stmt = dc.getConnection().createStatement();
@@ -27,5 +28,32 @@ public class VisitsTable {
             e.printStackTrace();
         }
         
+    }
+
+    //deletes a visit based on date and email
+    public void deleteVisit(String email, String date, String time){
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            String delete = "DELETE FROM VISITS" +
+                            "WHERE visitDate = '" + date + "'and visitTime = '" + time + "' and email = '" + email + "'";
+            stmt.executeUpdate(delete);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    //takes in a start and end date to return a set of visits between the ranges
+    public ResultSet visitsByDate(String startDate, String endDate){
+        ResultSet rs = null;
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            String visits = "SELECT * FROM VISITS"+
+                            "WHERE visitDate between '"+startDate+"' and '"+endDate+"'";
+            rs = stmt.executeQuery(visits);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return rs;
     }
 }
