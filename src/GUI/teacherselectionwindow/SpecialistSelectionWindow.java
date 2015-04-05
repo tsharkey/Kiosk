@@ -1,8 +1,10 @@
 package GUI.teacherselectionwindow;
 
 import Backend.Data;
+import Backend.SpecialistTable;
 import Backend.User;
 import disabilitykiosk.DisabilityKiosk;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,8 +14,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -23,7 +27,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 /**
  *
- * @author Sarah Ben-Kiki
+ * @author Sarah Ben-Kiki, Brendan
  */
 public class SpecialistSelectionWindow extends JFrame {
 
@@ -35,7 +39,8 @@ public class SpecialistSelectionWindow extends JFrame {
     private JPanel panel1, panel2; //panel3, panel4;
     private ArrayList<JRadioButtonMenuItem> radioButtons;
     private ButtonGroup bg = new ButtonGroup();
-    private ArrayList<Backend.Specialist> SPECIALISTS;
+    private ArrayList<String> specName;
+    private ArrayList<String> specPhoto;
     //private Border blackline = BorderFactory.createLineBorder(Color.black);
 
     public SpecialistSelectionWindow(User user) {
@@ -55,11 +60,14 @@ public class SpecialistSelectionWindow extends JFrame {
     private void buildPanel1() {
         panel1 = new JPanel();
         panel1.setBorder(BorderFactory.createEmptyBorder(100, 300,60,300));
-        ArrayList<Backend.Specialist> specialistsList = Backend.SpecialistList.specs;
+        
         radioButtons = new ArrayList<JRadioButtonMenuItem>();
-        for (int i = 0; i < specialistsList.size(); i++) {
-            Icon picture = specialistsList.get(i).getPhoto();
-            String name = specialistsList.get(i).getfName() + " " + specialistsList.get(i).getLname();
+        specPhoto = SpecialistTable.getSpecialistPhotos();
+        specName = SpecialistTable.getSpecialistNames();
+        
+        for (int i = 0; i < specName.size(); i++) {
+        	ImageIcon picture = new ImageIcon(specPhoto.get(i));
+            String name = specName.get(i);
             JRadioButtonMenuItem rButton = new JRadioButtonMenuItem(name, picture, true);
             rButton.setFont(new Font("ariel",Font.BOLD, 100));
             rButton.isBorderPainted();
@@ -81,11 +89,6 @@ public class SpecialistSelectionWindow extends JFrame {
         submit.addActionListener(new SpecialistSelectionWindow.RadioButtonListener());
         submit.setPreferredSize(new Dimension(100, 50));
         panel2.add(submit);
-    }
-
-    public ArrayList<Backend.Specialist> getSpecialists() {
-        SPECIALISTS = Backend.SpecialistList.getSpecialList();
-        return SPECIALISTS;
     }
 
     public JRadioButtonMenuItem getSelection(ButtonGroup group) {
