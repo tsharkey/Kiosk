@@ -91,7 +91,7 @@ public class SpecialistTable {
     public static boolean verifyPassword(String email, String password)
     {
     	boolean isValid = false;
-    	if(PasswordHash.sanitizeEmail(email) == false){
+    	if(SqlStatements.sanitizeEmail(email) == false){
     		return isValid;
     	}
     	
