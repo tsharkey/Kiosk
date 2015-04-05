@@ -1,13 +1,10 @@
 package GUI.adddeletespec;
 
-import Backend.Specialist;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JButton;
@@ -204,6 +201,7 @@ public class SpecInfoPanel extends JPanel{
     }
 
     //not sure what this does
+    /*
     public void setEditUser(Specialist a){
         firstT.setText(a.getfName());
         lastT.setText(a.getLname());
@@ -213,7 +211,8 @@ public class SpecInfoPanel extends JPanel{
         if(photoT.getText().equals(""))
         photoT.setText(a.getPhoto().getDescription());
     }
-
+    */
+    
     /**
      * Clear all text fields
      */
