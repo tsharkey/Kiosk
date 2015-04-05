@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 /**
+ * LabelsAndFieldsPanel is the panel contains all the fields and labels to field out as a form for their visits.
  *
  * @author Spconway 4/26/2014
  */
@@ -67,7 +68,7 @@ public class LabelsAndFieldsPanel extends JPanel{
     public Font textFieldFont = new Font("SERIF", Font.PLAIN, 18);
     
     Thread t = null;
-    /*
+    /**
      * Constructor
      */
     public LabelsAndFieldsPanel(){
@@ -321,7 +322,8 @@ public class LabelsAndFieldsPanel extends JPanel{
         grid.ipadx = 40;
         grid.gridheight = 4;
         add(cancelSpeech, grid);  
-    }
+    }//end of buildPanel
+
     //Getters
     public String getFirst(){
         return this.firstI.getText();
@@ -350,7 +352,10 @@ public class LabelsAndFieldsPanel extends JPanel{
       return "";
     }
 
-    
+    /**
+     * Validate and returns the phone number user inputted
+     * @return
+     */
     public String getPhone(){
         // regular expression
         String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
@@ -367,10 +372,16 @@ public class LabelsAndFieldsPanel extends JPanel{
            
         // invalid phone number
         return "";
-    }
+    }//end of getPhone
+
     public String getReason(){
         return this.reasonI.getSelectedItem().toString();
     }
+
+    /**
+     * Check if the the visit is a followup visit
+     * @return
+     */
     public int getFollowUp(){
         if(this.followUpI.getSelectedItem().toString()== "Yes"){
             return 1;
@@ -380,9 +391,12 @@ public class LabelsAndFieldsPanel extends JPanel{
             return 0;
         }
     }
+
     public String getLocationInput(){
         return this.locationI.getSelectedItem().toString();
     }
+
+
     private class SliderListener implements ChangeListener{
         @Override
         public void stateChanged(ChangeEvent e){
@@ -403,6 +417,10 @@ public class LabelsAndFieldsPanel extends JPanel{
             
         }
     }
+
+    /**
+     * Listener for Text to Speech fields and labels
+     */
         public class MyFocusListener implements FocusListener
     {
         public void focusGained(FocusEvent e)
@@ -471,7 +489,7 @@ public class LabelsAndFieldsPanel extends JPanel{
         public void focusLost(FocusEvent e)
         {}
     }
-        
+
     private class firstButtonListener implements ActionListener
 {
     public void actionPerformed(ActionEvent e)

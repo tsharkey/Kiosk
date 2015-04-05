@@ -50,6 +50,9 @@ public class Admin {
      *   The GUI should catch any IOException thrown by the class
      */
 
+    /**
+     * Constructor for Admin
+     */
     public Admin() {
     }
     
@@ -69,6 +72,10 @@ public class Admin {
      }
     }
 
+    /**
+     * Get the list of admin
+     * @return
+     */
     public ArrayList<AdminAccount> getAdmins() {
   return admins;
  }
@@ -212,6 +219,7 @@ public class Admin {
         db.close();
         db = null;
     }
+
 
     Set<String> getTableNames() throws IOException {
         Set<String> ts = db.getTableNames();
