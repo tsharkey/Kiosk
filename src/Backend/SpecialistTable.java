@@ -84,4 +84,22 @@ public class SpecialistTable {
         }
         return (count == 0) ? true : false;
     }
+    
+        // verify password
+    public static boolean verifyPassword(String email, String password)
+    {
+    	boolean isValid = false;
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            String getHash = "SELECT hash FROM SPECIALIST WHERE hash = (SELECT hash FROM SPECIALIST WHERE email='" + email +"')";
+            ResultSet rs = stmt.executeQuery(getHash);
+            if(rs.next()){ // making sure email exist with hash
+            	isValid = PasswordHash.validatePassword(password, rs.getString("hash"));
+            }
+            rs.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return isValid;
+    }
 }
