@@ -57,8 +57,6 @@ public class SqlStatements{
         return rs;
     }
     
-    
-    
     // sanitize email input to prevent SQL injection
     public static boolean sanitizeEmail(String email)
     {
