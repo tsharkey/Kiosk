@@ -186,16 +186,12 @@ public class DisabilityKiosk extends JFrame
                 temp = true;
               else
                 temp = false;
-//               user = new User(labelsAndFields.getFollowUp(), labelsAndFields.getReason(),
-//                      labelsAndFields.getLocationInput(), labelsAndFields.getEmail(),
-//                      labelsAndFields.getFirst(), labelsAndFields.getLast(),
-//                      labelsAndFields.getRole(), labelsAndFields.getPhone());
+
+                //adding the data to the database
                 UserTable ut = new UserTable();
                 VisitsTable vt = new VisitsTable();
-
                 ut.addUser(labelsAndFields.getFirst(), labelsAndFields.getLast(), labelsAndFields.getEmail(), labelsAndFields.getPhone(), labelsAndFields.getRole());
                 vt.addVisit(labelsAndFields.getReason(), labelsAndFields.getFollowUp(), labelsAndFields.getEmail(), "fix this", labelsAndFields.getLocationInput());
-
               setVisible(false);
               new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);
             }
