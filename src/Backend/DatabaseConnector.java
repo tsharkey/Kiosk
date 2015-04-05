@@ -32,22 +32,12 @@ public Connection getConnection() {
         //make the connection and create the statement
         try{
             Connection conn = dataSource.getConnection();
-            Statement stmt = conn.createStatement();
-
-            //sql statement
-            ResultSet rs = stmt.executeQuery("SELECT * FROM USER");
-            //iterate over the result set and use getString() by column name
-            while(rs.next()){
-                String s = rs.getString("fName");
-                System.out.println(s);
-
-             return conn;
-            }
-        } catch(Exception e){
+            return conn;
+        }catch(Exception e){
             e.printStackTrace();
             System.out.println("error");
             return null;
         }
-        return null;
-}
+
+    }
 }
