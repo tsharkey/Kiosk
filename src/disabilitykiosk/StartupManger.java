@@ -8,6 +8,7 @@ package disabilitykiosk;
 
 import Backend.*;
 import GUI.adddeletespec.AddDeleteSpecFrame;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,11 +31,12 @@ public class StartupManger {
         } catch (IOException ex) {
             Logger.getLogger(StartupManger.class.getName()).log(Level.SEVERE, null, ex);
         }
-        SpecialistList s = new SpecialistList();
+        //SpecialistList s = new SpecialistList();
+        SpecialistTable s = new SpecialistTable();
           
         Admin admin = new Admin();
         Admin.deSerialize();
-        SpecialistList.deSerialize();
+        //SpecialistList.deSerialize();
         
         //for the first use of the application
         //create an administrator account
@@ -67,12 +69,12 @@ public class StartupManger {
                 System.exit(0);
             }
             
-            new DisabilityKiosk();    
+            new DisabilityKiosk();
             new AddDeleteSpecFrame();
             Admin.isAdminWorking = true;
         }
         else{
-            new DisabilityKiosk();
+           new DisabilityKiosk();
         }
     }
     

@@ -145,7 +145,8 @@ public class DisabilityKiosk extends JFrame
   {
       public void actionPerformed(ActionEvent e)
       {
-          if(!SpecialistList.getSpecialList().isEmpty()){
+          if(!SpecialistTable.isEmpty()){
+          //if(!SpecialistList.getSpecialList().isEmpty()){
           boolean flag = true;
             if( labelsAndFields.getFirst().length() == 0 || labelsAndFields.getLast().length() == 0 )
             {

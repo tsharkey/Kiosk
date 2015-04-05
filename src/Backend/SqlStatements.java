@@ -1,5 +1,8 @@
 package Backend;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
  * Created by Tom on 4/1/15.
@@ -7,11 +10,11 @@ import java.sql.*;
  * These are sample methods of what the code might look like for making the updates to the db
  */
 public class SqlStatements{
-    private Connection connection;
+    private MysqlDataSource dataSource;
+    private Connection conn;
 
-    //should take in the db connection from the admin or should it be made here
+
     public SqlStatements(){
-        //init the connection
 
     }
 
@@ -19,9 +22,9 @@ public class SqlStatements{
     public void makeInsert(String insertString){
         String insert = insertString;
         try{
-            Statement stmt = connection.createStatement();
+            Statement stmt = conn.createStatement();
             stmt.executeUpdate(insert);
-        } catch (SQLException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
 
@@ -31,9 +34,9 @@ public class SqlStatements{
     public void makeDelete(String deleteString){
         String delete = deleteString;
         try{
-            Statement stmt = connection.createStatement();
+            Statement stmt = conn.createStatement();
             stmt.executeUpdate(delete);
-        } catch(SQLException e){
+        } catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -44,11 +47,11 @@ public class SqlStatements{
         String query = sqlStatement;
         ResultSet rs = null;
         try{
-            Statement stmt = connection.createStatement();
+            Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             return rs;
 
-        }  catch (SQLException e ) {
+        }  catch (Exception e ) {
             e.printStackTrace();
         }
         return rs;
