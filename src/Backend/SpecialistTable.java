@@ -12,7 +12,7 @@ import java.sql.*;
  * @author Sean, Brendan
  */
 public class SpecialistTable {
-    private DatabaseConnector dc;
+    static private DatabaseConnector dc;
 
     public SpecialistTable(){
         dc = new DatabaseConnector();
