@@ -20,7 +20,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- *
+ * DisabilityKiosk class is the main window of the Kiosk program.
+ * It allows user to input information for their meeting with a supervisor.
+ * It allows administrator to go to their login window.
  * @author Jacob Dwyer
  */
 public class DisabilityKiosk extends JFrame
@@ -37,6 +39,9 @@ public class DisabilityKiosk extends JFrame
   private final SubmitPanel submit_Panel;
   private Backend.User user;
 
+    /**
+     * Constructor of DisabilityKiosk
+     */
   public DisabilityKiosk()
   {
     //Display a title
@@ -108,6 +113,10 @@ public class DisabilityKiosk extends JFrame
     setVisible(true);
   }
 
+    /**
+     * Administer button
+     * goes to admin login window
+     */
   private class AdminButtonListener implements ActionListener
   {
       public void actionPerformed(ActionEvent e)
@@ -129,6 +138,10 @@ public class DisabilityKiosk extends JFrame
       }
     }
 
+    /**
+     * ActionListener for the close button
+     * goes to admin login window
+     */
   private class CloseButtonListener implements ActionListener
   {
       public void actionPerformed(ActionEvent e)
@@ -141,6 +154,11 @@ public class DisabilityKiosk extends JFrame
           }
       }
     }
+
+    /**
+     * ActionListener for the Submit button
+     * validates all inputs
+     */
   private class SubmitButtonListener implements ActionListener
   {
       public void actionPerformed(ActionEvent e)
