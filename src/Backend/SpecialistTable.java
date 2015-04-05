@@ -18,12 +18,13 @@ public class SpecialistTable {
         dc = new DatabaseConnector();
     }
 
-    //adds a specialist, TODO: the password needs to be hashed out, I don't know how to do this- TOM
-    public void addSpecialist(String photo, String password, String email){
+    // adds a specialist
+    public void addSpecialist(String photo, String password, String email)
+    {
         try{
             Statement stmt = dc.getConnection().createStatement();
             String insert = "INSERT INTO SPECIALIST" +
-                            "VALUES('" + photo + "', '" + password + "', '" + email +"')";
+                            "VALUES('" + photo + "', '" + PasswordHash.createHash(password) + "', '" + email +"')";
             stmt.executeUpdate(insert);
         }catch(Exception e){
             e.printStackTrace();
