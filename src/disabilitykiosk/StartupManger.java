@@ -27,6 +27,9 @@ public class StartupManger {
     
     public StartupManger(){
 
+        VisitsTable vt = new VisitsTable();
+        vt.addVisit("test", 1, "test@test.com", "test", "Wellesley");
+
         try {
             Data data = new Data();
         } catch (IOException ex) {

@@ -4,11 +4,7 @@
  * and open the template in the editor.
  */
 package Backend;
-
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 /**
  *
@@ -17,11 +13,19 @@ import java.sql.Statement;
 public class VisitsTable {
     private DatabaseConnector dc;
     
-    public VisitsTable(Connection conn){
+    public VisitsTable(){
         dc = new DatabaseConnector();
     }
 
-    public void addVisit(String[] args){
+    public void addVisit(String reason, int followUp, String email, String specialist, String location){
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            String insert = "INSERT INTO VISITS(visitDate, visitTime, reason, followUp, email, ID, specialist, location)"
+                           +"VALUES(null, null, '"+reason+"', "+followUp+",'"+email+"', null, '"+specialist+"', '"+location+"')";
+            stmt.executeUpdate(insert);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         
     }
 }
