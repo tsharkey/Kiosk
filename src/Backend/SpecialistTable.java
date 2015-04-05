@@ -85,7 +85,7 @@ public class SpecialistTable {
         return (count == 0) ? true : false;
     }
     
-        // verify password
+    // verify password
     public static boolean verifyPassword(String email, String password)
     {
     	boolean isValid = false;
