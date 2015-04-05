@@ -9,7 +9,7 @@ import java.sql.*;
 
 /**
  *
- * @author Sean
+ * @author Sean, Brendan
  */
 public class SpecialistTable {
     private DatabaseConnector dc;
@@ -68,4 +68,20 @@ public class SpecialistTable {
         return rs;
     }
     
+    // checks if specialist table is empty
+    public static boolean isEmpty()
+    {
+    	int count = 0;
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            String getSpecialistCount = "SELECT COUNT(*) AS count FROM SPECIALIST";
+            ResultSet rs = stmt.executeQuery(getSpecialistCount);
+            rs.next();
+            count = rs.getInt("count");
+            rs.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return (count == 0) ? true : false;
+    }
 }
