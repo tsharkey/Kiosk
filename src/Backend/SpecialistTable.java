@@ -103,4 +103,38 @@ public class SpecialistTable {
         }
         return isValid;
     }
+    
+    // returns string ArrayList with ordered photo file names
+    public static ArrayList<String> getSpecialistPhotos()
+    {
+    	ArrayList<String> specPhotos = new ArrayList<String>();
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT photo FROM SPECIALIST");
+            while(rs.next()){
+            	specPhotos.add(rs.getString("photo"));
+            }
+            rs.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return specPhotos;
+    }
+    
+    // returns string ArrayList with ordered first+last names
+    public static ArrayList<String> getSpecialistNames()
+    {
+    	ArrayList<String> specNames = new ArrayList<String>();
+        try{
+            Statement stmt = dc.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT CONCAT(fName, ' ', lName) AS name FROM USER INNER JOIN SPECIALIST ON USER.email=SPECIALIST.email");
+            while(rs.next()){
+            	specNames.add(rs.getString("name"));
+            }
+            rs.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return specNames;
+    }
 }
