@@ -3,6 +3,7 @@ package GUI.teacherselectionwindow;
 import Backend.Data;
 import Backend.SpecialistTable;
 import Backend.User;
+
 import disabilitykiosk.DisabilityKiosk;
 
 import java.awt.BorderLayout;
@@ -14,16 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Icon;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.*;
 
 /**
  *
