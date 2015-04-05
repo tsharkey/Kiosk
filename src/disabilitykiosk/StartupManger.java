@@ -31,11 +31,12 @@ public class StartupManger {
         } catch (IOException ex) {
             Logger.getLogger(StartupManger.class.getName()).log(Level.SEVERE, null, ex);
         }
-        SpecialistList s = new SpecialistList();
+        //SpecialistList s = new SpecialistList();
+        SpecialistTable s = new SpecialistTable();
           
         Admin admin = new Admin();
         Admin.deSerialize();
-        SpecialistList.deSerialize();
+        //SpecialistList.deSerialize();
         
         //for the first use of the application
         //create an administrator account
