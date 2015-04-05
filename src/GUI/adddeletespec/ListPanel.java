@@ -1,10 +1,10 @@
 package GUI.adddeletespec;
 
-import Backend.Specialist;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -12,9 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import Backend.SpecialistTable;
+
 /**
  *
- * @author Spconway 4/26/2014
+ * @author Spconway, Brendan
  */
 public class ListPanel extends JPanel{
     
@@ -23,11 +25,9 @@ public class ListPanel extends JPanel{
     //Need to make passT a JPassword field but after that we need to add another
     //JPassword field to confirm password and check that both JPassword fields match
     
-    private ArrayList<Specialist> specs = new ArrayList<Specialist>(Backend.SpecialistList.getSpecialList());
+    //private ArrayList<Specialist> specs = new ArrayList<Specialist>(Backend.SpecialistList.getSpecialList());
     
     private JList list;
-    
-    
     private DefaultListModel dlm;
     private JScrollPane scroll;
     
@@ -63,14 +63,13 @@ public class ListPanel extends JPanel{
        add(scroll, BorderLayout.CENTER);
        setVisible(true);
     }
+    
     public void updateList()
     {
         dlm.clear();
-        for (Specialist a : Backend.SpecialistList.specs)
-        {
-            dlm.addElement(a.getFullName());
+        ArrayList<String> names = SpecialistTable.getSpecialistNames();
+        for(String name : names){
+        	dlm.addElement(name);
         }
     }
-    
-    
 }
