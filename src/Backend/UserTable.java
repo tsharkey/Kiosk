@@ -5,10 +5,7 @@
  */
 package Backend;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
-import java.io.IOException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 /**
@@ -22,14 +19,14 @@ public class UserTable {
         dc = new DatabaseConnector();
     }
 
-    public void addUser(String[] args){
+    public void addUser(String _fName, String _lName, String _email, String _phone, String _role){
 
         try
         {
             Statement stmt = dc.getConnection().createStatement();
-            String insertion = "insert into USER(fName, lName, email, phone, role) "
-                    + "VALUES("+args[1]+", "+args[2]+", "+args[3]+
-                    ", "+args[4]+", "+args[5]+")";
+            String insertion = "INSERT INTO USER(fName, lName, email, phone, role)"
+                    + "VALUES('"+_fName+"', '"+_lName+"', '"+_email+
+                    "', '"+_phone+"', '"+_role+"')";
             stmt.executeUpdate(insertion);
         }
 
@@ -44,8 +41,8 @@ public class UserTable {
         try{
             Statement stmt = dc.getConnection().createStatement();
             String deleteUserTable = "DELETE FROM USER " +
-                            "WHERE email = " + email;
-            stmt.executeUpdate(deleteUserTable);
+                            "WHERE email = '" + email + "'";
+            stmt.execute(deleteUserTable);
             if(deleteVisits){
                 String deleteVisitsTable = "DELETE FROM USER " +
                                            "WHERE email = " + email;

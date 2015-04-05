@@ -8,12 +8,8 @@ package disabilitykiosk;
 
 import Backend.*;
 import GUI.adddeletespec.AddDeleteSpecFrame;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
@@ -30,6 +26,7 @@ import javax.swing.JTextField;
 public class StartupManger {
     
     public StartupManger(){
+
         try {
             Data data = new Data();
         } catch (IOException ex) {
