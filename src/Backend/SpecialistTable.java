@@ -91,6 +91,10 @@ public class SpecialistTable {
     public static boolean verifyPassword(String email, String password)
     {
     	boolean isValid = false;
+    	if(PasswordHash.sanitizeEmail(email) == false){
+    		return isValid;
+    	}
+    	
         try{
             Statement stmt = dc.getConnection().createStatement();
             String getHash = "SELECT hash FROM SPECIALIST WHERE hash = (SELECT hash FROM SPECIALIST WHERE email='" + email +"')";
