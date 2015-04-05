@@ -104,7 +104,7 @@ public class DisabilityKiosk extends JFrame
 
     //set the windows position to the center of the screen
     setLocationRelativeTo(null);
-    //Make the window visable
+    //Make the window visible
     setVisible(true);
   }
 
@@ -168,10 +168,15 @@ public class DisabilityKiosk extends JFrame
                 temp = true;
               else
                 temp = false;
-               user = new User(labelsAndFields.getFollowUp(), labelsAndFields.getReason(),
-                      labelsAndFields.getLocationInput(), labelsAndFields.getEmail(),
-                      labelsAndFields.getFirst(), labelsAndFields.getLast(),
-                      labelsAndFields.getRole(), labelsAndFields.getPhone());
+//               user = new User(labelsAndFields.getFollowUp(), labelsAndFields.getReason(),
+//                      labelsAndFields.getLocationInput(), labelsAndFields.getEmail(),
+//                      labelsAndFields.getFirst(), labelsAndFields.getLast(),
+//                      labelsAndFields.getRole(), labelsAndFields.getPhone());
+                UserTable ut = new UserTable();
+                VisitsTable vt = new VisitsTable();
+
+                ut.addUser(labelsAndFields.getFirst(), labelsAndFields.getLast(), labelsAndFields.getEmail(), labelsAndFields.getPhone(), labelsAndFields.getRole());
+                vt.addVisit(labelsAndFields.getReason(), labelsAndFields.getFollowUp(), labelsAndFields.getEmail(), "fix this", labelsAndFields.getLocationInput());
 
               setVisible(false);
               new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);

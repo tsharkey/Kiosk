@@ -371,13 +371,13 @@ public class LabelsAndFieldsPanel extends JPanel{
     public String getReason(){
         return this.reasonI.getSelectedItem().toString();
     }
-    public boolean getFollowUp(){
+    public int getFollowUp(){
         if(this.followUpI.getSelectedItem().toString()== "Yes"){
-            return true;
+            return 1;
         }else if(this.followUpI.getSelectedItem().toString()== "No"){
-            return false;
+            return 0;
         }else{
-            return false;
+            return 0;
         }
     }
     public String getLocationInput(){
