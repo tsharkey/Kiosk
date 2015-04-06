@@ -77,7 +77,9 @@ public class LoginFrame extends JFrame {
      * PARAMETER AND COMPARE THAT TO EVERY USERNAME AND PASSWORD IN
      * THE DATABASE AND RETURN TRUE OR FALSE
      */
-    
+
+                //allow login for everyone.
+                // only true temporarily: the admin table isn't implemented yet.
     boolean temp = true;
     for (AdminAccount add : Admin.admins) {
      if ((add.getUsername().equals(sUserName))
@@ -87,7 +89,7 @@ public class LoginFrame extends JFrame {
 
     }
     if (temp) {
-                                        Admin.isAdminWorking = true;
+     Admin.isAdminWorking = true;
      AdminFrame test = new AdminFrame();
      test.setVisible(true);
      dispose();
