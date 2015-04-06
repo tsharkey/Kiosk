@@ -49,7 +49,7 @@ public class ReportWindow extends JFrame {
     private JButton addDeleteAdminBtn;
     private JButton closeBtn;
 
-    private final String[] reasons = {"All Students", "New, Prospective Student/Group","Disclose and Document Disability (In-take)","Placement Testing with Accommodation",
+    private final String[] reasons = {"New, Prospective Student/Group","Disclose and Document Disability (In-take)","Placement Testing with Accommodation",
             "Schedule An Appointment with Disability Specialist","Meet with a Disability Specialist","Take Test with Accommodations","Drop Off/Pick Up Notes",
             "Academic Advising (Course Selection, Add/Drop, Withdrawal)","Fill Out Accommodation Forms","Address Problems with Specific Accommodations",
             "Address Specific Course Assignment or Issue","Alternative Format for Texts and Handouts",

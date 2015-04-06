@@ -19,38 +19,38 @@ import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
 
-	private final int WINDOW_WIDTH = 500;
-	private final int WINDOW_HEIGHT = 200;
-	private LoginPanel loginPanel;
+ private final int WINDOW_WIDTH = 500;
+ private final int WINDOW_HEIGHT = 200;
+ private LoginPanel loginPanel;
 
-	public LoginFrame() {
-		setTitle("ADMINISTRATOR LOG-IN"); // set title
-		buildLoginWindow(); // build window
-	}
+ public LoginFrame() {
+  setTitle("ADMINISTRATOR LOG-IN"); // set title
+  buildLoginWindow(); // build window
+ }
 
-	private void buildLoginWindow() {
+ private void buildLoginWindow() {
 
-		loginPanel = new LoginPanel();
-		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+  loginPanel = new LoginPanel();
+  setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		LoginButtonListener onClick = new LoginButtonListener();
+  LoginButtonListener onClick = new LoginButtonListener();
 
-		loginPanel.getLoginButton().addActionListener(onClick);
+  loginPanel.getLoginButton().addActionListener(onClick);
 
         CancelButtonListener close = new CancelButtonListener();
 
         loginPanel.getCancelButton().addActionListener(close);
 
-		add(loginPanel);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setUndecorated(true);
-		getRootPane().setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
-		getRootPane().setDefaultButton(loginPanel.getLoginButton());
-		// setAlwaysOnTop(true);
-		setVisible(true);
-		setResizable(false);
-	}
+  add(loginPanel);
+  setLocationRelativeTo(null);
+  setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+  setUndecorated(true);
+  getRootPane().setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
+  getRootPane().setDefaultButton(loginPanel.getLoginButton());
+  // setAlwaysOnTop(true);
+  setVisible(true);
+  setResizable(false);
+ }
 
     private class CancelButtonListener implements ActionListener {
 
@@ -63,40 +63,40 @@ public class LoginFrame extends JFrame {
         }
     }
 
-	private class LoginButtonListener implements ActionListener {
+ private class LoginButtonListener implements ActionListener {
 
-		public void actionPerformed(ActionEvent e) {
+  public void actionPerformed(ActionEvent e) {
 
-			if (e.getSource() == loginPanel.getLoginButton()) {
+   if (e.getSource() == loginPanel.getLoginButton()) {
                             
-				String sUserName = loginPanel.getUsernameText();
-				String sPassWord = loginPanel.getPasswordText();
+    String sUserName = loginPanel.getUsernameText();
+    String sPassWord = loginPanel.getPasswordText();
 
-				/*
-				 * NEED METHOD THAT WILL ACCEPT USERNAME AND PASSWORD AS
-				 * PARAMETER AND COMPARE THAT TO EVERY USERNAME AND PASSWORD IN
-				 * THE DATABASE AND RETURN TRUE OR FALSE
-				 */
+    /*
+     * NEED METHOD THAT WILL ACCEPT USERNAME AND PASSWORD AS
+     * PARAMETER AND COMPARE THAT TO EVERY USERNAME AND PASSWORD IN
+     * THE DATABASE AND RETURN TRUE OR FALSE
+     */
+    
+    boolean temp = true;
+    for (AdminAccount add : Admin.admins) {
+     if ((add.getUsername().equals(sUserName))
+       && (add.getPassword().equals(sPassWord))) {
+      temp = true;
+     }
 
-				boolean temp = false;
-				for (AdminAccount add : Admin.admins) {
-					if ((add.getUsername().equals(sUserName))
-							&& (add.getPassword().equals(sPassWord))) {
-						temp = true;
-					}
-
-				}
-				if (temp) {
+    }
+    if (temp) {
                                         Admin.isAdminWorking = true;
-					AdminFrame test = new AdminFrame();
-					test.setVisible(true);
-					dispose();
+     AdminFrame test = new AdminFrame();
+     test.setVisible(true);
+     dispose();
 
-				} else
-					JOptionPane.showMessageDialog(null, "Incorrect username or password");
+    } else
+     JOptionPane.showMessageDialog(null, "Incorrect username or password");
                             }
                             
-		}
-	}
+  }
+ }
 } // end of class
 
