@@ -19,26 +19,23 @@ import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
 
- private final int WINDOW_WIDTH = 500;
- private final int WINDOW_HEIGHT = 200;
- private LoginPanel loginPanel;
+	private final int WINDOW_WIDTH = 500;
+	private final int WINDOW_HEIGHT = 200;
+	private LoginPanel loginPanel;
 
-    /**
-     * Constructor
-     */
 	public LoginFrame() {
 		setTitle("ADMINISTRATOR LOG-IN"); // set title
 		buildLoginWindow(); // build window
 	}
 
- private void buildLoginWindow() {
+	private void buildLoginWindow() {
 
-  loginPanel = new LoginPanel();
-  setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		loginPanel = new LoginPanel();
+		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  LoginButtonListener onClick = new LoginButtonListener();
+		LoginButtonListener onClick = new LoginButtonListener();
 
-  loginPanel.getLoginButton().addActionListener(onClick);
+		loginPanel.getLoginButton().addActionListener(onClick);
 
         CancelButtonListener close = new CancelButtonListener();
 
@@ -53,12 +50,8 @@ public class LoginFrame extends JFrame {
 		// setAlwaysOnTop(true);
 		setVisible(true);
 		setResizable(false);
-	}//end of Constructor
+	}
 
-
-    /**
-     *
-     */
     private class CancelButtonListener implements ActionListener {
 
         public void actionPerformed(ActionEvent ae) {
@@ -70,25 +63,22 @@ public class LoginFrame extends JFrame {
         }
     }
 
- private class LoginButtonListener implements ActionListener {
+	private class LoginButtonListener implements ActionListener {
 
-  public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) {
 
-   if (e.getSource() == loginPanel.getLoginButton()) {
+			if (e.getSource() == loginPanel.getLoginButton()) {
                             
-    String sUserName = loginPanel.getUsernameText();
-    String sPassWord = loginPanel.getPasswordText();
+				String sUserName = loginPanel.getUsernameText();
+				String sPassWord = loginPanel.getPasswordText();
 
-    /*
-     * NEED METHOD THAT WILL ACCEPT USERNAME AND PASSWORD AS
-     * PARAMETER AND COMPARE THAT TO EVERY USERNAME AND PASSWORD IN
-     * THE DATABASE AND RETURN TRUE OR FALSE
-     */
+				/*
+				 * NEED METHOD THAT WILL ACCEPT USERNAME AND PASSWORD AS
+				 * PARAMETER AND COMPARE THAT TO EVERY USERNAME AND PASSWORD IN
+				 * THE DATABASE AND RETURN TRUE OR FALSE
+				 */
 
-                //allow login for everyone.
-                // only true temporarily: the admin table isn't implemented yet.
-                //need to change to check with admin table
-				boolean temp = true;
+				boolean temp = false;
 				for (AdminAccount add : Admin.admins) {
 					if ((add.getUsername().equals(sUserName))
 							&& (add.getPassword().equals(sPassWord))) {
@@ -97,17 +87,16 @@ public class LoginFrame extends JFrame {
 
 				}
 				if (temp) {
-                    Admin.isAdminWorking = true;
+                                        Admin.isAdminWorking = true;
 					AdminFrame test = new AdminFrame();
 					test.setVisible(true);
 					dispose();
 
 				} else
 					JOptionPane.showMessageDialog(null, "Incorrect username or password");
-
                             }
                             
-  }
- }
+		}
+	}
 } // end of class
 
