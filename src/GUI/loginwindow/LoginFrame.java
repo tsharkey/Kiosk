@@ -23,6 +23,9 @@ public class LoginFrame extends JFrame {
 	private final int WINDOW_HEIGHT = 200;
 	private LoginPanel loginPanel;
 
+    /**
+     * Constructor
+     */
 	public LoginFrame() {
 		setTitle("ADMINISTRATOR LOG-IN"); // set title
 		buildLoginWindow(); // build window
@@ -50,8 +53,11 @@ public class LoginFrame extends JFrame {
 		// setAlwaysOnTop(true);
 		setVisible(true);
 		setResizable(false);
-	}
+	}//end of Constructor
 
+    /**
+     *
+     */
     private class CancelButtonListener implements ActionListener {
 
         public void actionPerformed(ActionEvent ae) {
@@ -89,7 +95,7 @@ public class LoginFrame extends JFrame {
 
 				}
 				if (temp) {
-                                        Admin.isAdminWorking = true;
+                    Admin.isAdminWorking = true;
 					AdminFrame test = new AdminFrame();
 					test.setVisible(true);
 					dispose();
