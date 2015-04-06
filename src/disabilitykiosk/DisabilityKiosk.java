@@ -113,6 +113,10 @@ public class DisabilityKiosk extends JFrame
     setVisible(true);
   }
 
+    public void initLogin() {
+        new DatabaseInitFrame();
+    }
+
     /**
      * Administer button
      * goes to admin login window

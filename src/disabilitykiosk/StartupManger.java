@@ -8,6 +8,7 @@ package disabilitykiosk;
 
 import Backend.*;
 import GUI.adddeletespec.AddDeleteSpecFrame;
+import GUI.loginwindow.DatabaseInitFrame;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -68,13 +69,14 @@ public class StartupManger {
             if(submitted == JOptionPane.CANCEL_OPTION) {
                 System.exit(0);
             }
-            
-            new DisabilityKiosk();
+
+            new DatabaseInitFrame();
+//            new DisabilityKiosk();
             new AddDeleteSpecFrame();
             Admin.isAdminWorking = true;
         }
         else{
-           new DisabilityKiosk();
+           new DatabaseInitFrame();
         }
     }
     
