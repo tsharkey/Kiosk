@@ -78,7 +78,9 @@ public class LoginFrame extends JFrame {
 				 * THE DATABASE AND RETURN TRUE OR FALSE
 				 */
 
-				boolean temp = false;
+                //allow login for everyone.
+                // only true temporarily: the admin table isn't implemented yet.
+				boolean temp = true;
 				for (AdminAccount add : Admin.admins) {
 					if ((add.getUsername().equals(sUserName))
 							&& (add.getPassword().equals(sPassWord))) {

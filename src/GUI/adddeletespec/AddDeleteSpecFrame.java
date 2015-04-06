@@ -173,7 +173,7 @@ public class AddDeleteSpecFrame extends JFrame{
             }
             if (e.getSource() == editBtn){
                 if(getSpecialist()!=null){
-                specInfoPanel.setEditUser(getSpecialist());
+//                specInfoPanel.setEditUser(getSpecialist());
                 int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
                 if (submitted == JOptionPane.OK_OPTION){
                     if(specInfoPanel.getPhoto().equals("")){

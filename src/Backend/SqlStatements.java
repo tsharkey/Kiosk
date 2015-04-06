@@ -2,6 +2,9 @@ package Backend;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
