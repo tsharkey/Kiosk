@@ -23,10 +23,13 @@ public class LoginFrame extends JFrame {
  private final int WINDOW_HEIGHT = 200;
  private LoginPanel loginPanel;
 
- public LoginFrame() {
-  setTitle("ADMINISTRATOR LOG-IN"); // set title
-  buildLoginWindow(); // build window
- }
+    /**
+     * Constructor
+     */
+	public LoginFrame() {
+		setTitle("ADMINISTRATOR LOG-IN"); // set title
+		buildLoginWindow(); // build window
+	}
 
  private void buildLoginWindow() {
 
@@ -41,17 +44,21 @@ public class LoginFrame extends JFrame {
 
         loginPanel.getCancelButton().addActionListener(close);
 
-  add(loginPanel);
-  setLocationRelativeTo(null);
-  setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-  setUndecorated(true);
-  getRootPane().setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
-  getRootPane().setDefaultButton(loginPanel.getLoginButton());
-  // setAlwaysOnTop(true);
-  setVisible(true);
-  setResizable(false);
- }
+		add(loginPanel);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setUndecorated(true);
+		getRootPane().setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
+		getRootPane().setDefaultButton(loginPanel.getLoginButton());
+		// setAlwaysOnTop(true);
+		setVisible(true);
+		setResizable(false);
+	}//end of Constructor
 
+
+    /**
+     *
+     */
     private class CancelButtonListener implements ActionListener {
 
         public void actionPerformed(ActionEvent ae) {
@@ -80,22 +87,24 @@ public class LoginFrame extends JFrame {
 
                 //allow login for everyone.
                 // only true temporarily: the admin table isn't implemented yet.
-    boolean temp = true;
-    for (AdminAccount add : Admin.admins) {
-     if ((add.getUsername().equals(sUserName))
-       && (add.getPassword().equals(sPassWord))) {
-      temp = true;
-     }
+                //need to change to check with admin table
+				boolean temp = true;
+				for (AdminAccount add : Admin.admins) {
+					if ((add.getUsername().equals(sUserName))
+							&& (add.getPassword().equals(sPassWord))) {
+						temp = true;
+					}
 
-    }
-    if (temp) {
-     Admin.isAdminWorking = true;
-     AdminFrame test = new AdminFrame();
-     test.setVisible(true);
-     dispose();
+				}
+				if (temp) {
+                    Admin.isAdminWorking = true;
+					AdminFrame test = new AdminFrame();
+					test.setVisible(true);
+					dispose();
 
-    } else
-     JOptionPane.showMessageDialog(null, "Incorrect username or password");
+				} else
+					JOptionPane.showMessageDialog(null, "Incorrect username or password");
+
                             }
                             
   }
