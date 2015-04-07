@@ -33,31 +33,31 @@ public class LoginFrame extends JFrame {
 
  private void buildLoginWindow() {
 
-  loginPanel = new LoginPanel();
-  setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+     loginPanel = new LoginPanel();
+     setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  LoginButtonListener onClick = new LoginButtonListener();
+     LoginButtonListener onClick = new LoginButtonListener();
 
-  loginPanel.getLoginButton().addActionListener(onClick);
+     loginPanel.getLoginButton().addActionListener(onClick);
 
-        CancelButtonListener close = new CancelButtonListener();
+     CancelButtonListener close = new CancelButtonListener();
 
-        loginPanel.getCancelButton().addActionListener(close);
+     loginPanel.getCancelButton().addActionListener(close);
 
-		add(loginPanel);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setUndecorated(true);
-		getRootPane().setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
-		getRootPane().setDefaultButton(loginPanel.getLoginButton());
-		// setAlwaysOnTop(true);
-		setVisible(true);
-		setResizable(false);
-	}//end of Constructor
+     add(loginPanel);
+     setLocationRelativeTo(null);
+     setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+     setUndecorated(true);
+     getRootPane().setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
+     getRootPane().setDefaultButton(loginPanel.getLoginButton());
+     // setAlwaysOnTop(true);
+     setVisible(true);
+     setResizable(false);
+ }//end of Constructor
 
 
     /**
-     *
+     * Cancel login into AdminFrame, returns to DisabilityKiosk
      */
     private class CancelButtonListener implements ActionListener {
 
@@ -70,42 +70,40 @@ public class LoginFrame extends JFrame {
         }
     }
 
+    /**
+     * Checks the input username and password with database.
+     * if any pairs match, allow access into AdminFrame.
+     */
  private class LoginButtonListener implements ActionListener {
 
   public void actionPerformed(ActionEvent e) {
 
    if (e.getSource() == loginPanel.getLoginButton()) {
-                            
-    String sUserName = loginPanel.getUsernameText();
-    String sPassWord = loginPanel.getPasswordText();
 
-    /*
-     * NEED METHOD THAT WILL ACCEPT USERNAME AND PASSWORD AS
-     * PARAMETER AND COMPARE THAT TO EVERY USERNAME AND PASSWORD IN
-     * THE DATABASE AND RETURN TRUE OR FALSE
-     */
+       String sUserName = loginPanel.getUsernameText();
+       String sPassWord = loginPanel.getPasswordText();
 
-                //allow login for everyone.
-                // only true temporarily: the admin table isn't implemented yet.
-                //need to change to check with admin table
-				boolean temp = true;
-				for (AdminAccount add : Admin.admins) {
-					if ((add.getUsername().equals(sUserName))
-							&& (add.getPassword().equals(sPassWord))) {
-						temp = true;
-					}
+       //allow login for everyone.
+       // only true temporarily: the admin table isn't implemented yet.
+       //TODO change to check with admin table
+       boolean temp = true;
+       for (AdminAccount add : Admin.admins) {
+           if ((add.getUsername().equals(sUserName))
+                   && (add.getPassword().equals(sPassWord))) {
+               temp = true;
+           }
 
-				}
-				if (temp) {
-                    Admin.isAdminWorking = true;
-					AdminFrame test = new AdminFrame();
-					test.setVisible(true);
-					dispose();
+       }
+       if (temp) {
+           Admin.isAdminWorking = true;
+           AdminFrame test = new AdminFrame();
+           test.setVisible(true);
+           dispose();
 
-				} else
-					JOptionPane.showMessageDialog(null, "Incorrect username or password");
+       } else
+           JOptionPane.showMessageDialog(null, "Incorrect username or password");
 
-                            }
+   }
                             
   }
  }

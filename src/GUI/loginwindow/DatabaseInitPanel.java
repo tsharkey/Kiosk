@@ -124,8 +124,7 @@ public class DatabaseInitPanel extends JPanel{
     }
 
     public String getHostText() {
-        System.out.println(hostText.getText());
         return hostText.getText();
     }
 
-}
+}//End of class

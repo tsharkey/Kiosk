@@ -72,16 +72,11 @@ public class DatabaseInitFrame extends JFrame{
 
                 String sUserName = initPanel.getUsernameText();
                 String sPassWord = initPanel.getPasswordText();
-
-				/*
-				 * NEED METHOD THAT WILL ACCEPT USERNAME AND PASSWORD AS
-				 * PARAMETER AND COMPARE THAT TO EVERY USERNAME AND PASSWORD IN
-				 * THE DATABASE AND RETURN TRUE OR FALSE
-				 */
+                String sHost = initPanel.getHostText();
 
                 //allow login for everyone.
-                // only true temporarily: the admin table isn't implemented yet.
-                // check the user name and password to connect to database
+                // only true temporarily: the admin table isn't fully implemented yet.
+                // TODO check the user name and password to connect to database
                 boolean temp = true;
                 for (AdminAccount add : Admin.admins) {
                     if ((add.getUsername().equals(sUserName))
@@ -103,4 +98,4 @@ public class DatabaseInitFrame extends JFrame{
 
         }
     }
-}
+}//End of class

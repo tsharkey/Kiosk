@@ -26,7 +26,8 @@ import javax.swing.JTextField;
  */
 public class StartupManger {
     
-    public StartupManger(){
+    public StartupManger() {
+        //access database code?
         try {
             Data data = new Data();
         } catch (IOException ex) {
@@ -34,21 +35,21 @@ public class StartupManger {
         }
         //SpecialistList s = new SpecialistList();
         SpecialistTable s = new SpecialistTable();
-          
+
         Admin admin = new Admin();
         Admin.deSerialize();
         //SpecialistList.deSerialize();
-        
+
         //for the first use of the application
         //create an administrator account
         //open the managing-specialist window
-        if(Admin.admins.isEmpty()){
+        if (Admin.admins.isEmpty()) {
             int submitted;
             JTextField unInput = new JTextField(10);
             JPasswordField pwInput = new JPasswordField(10);
-            do{
+            do {
                 JPanel adminInput = new JPanel();
-                adminInput.add(new JLabel("Username: " ));
+                adminInput.add(new JLabel("Username: "));
                 adminInput.add(unInput);
                 adminInput.add(Box.createHorizontalStrut(15));
                 adminInput.add(new JLabel("Password: "));
@@ -59,14 +60,14 @@ public class StartupManger {
                     Admin.admins.add(new AdminAccount(unInput.getText(), pw));
                     Admin.serialize();//add the new administrator account to the file "admins"
                     //System.out.println(Admin.admins.toString());//test line
-                }
-                else if(submitted != JOptionPane.CANCEL_OPTION){
-                      JOptionPane.showMessageDialog(null, "Please enter a Username and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                } else if (submitted != JOptionPane.CANCEL_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Please enter a Username and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
 
                 }
-            }while(submitted == JOptionPane.OK_OPTION && (unInput.getText().equals("") || pwInput.getPassword().length == 0));
-        
-            if(submitted == JOptionPane.CANCEL_OPTION) {
+            }
+            while (submitted == JOptionPane.OK_OPTION && (unInput.getText().equals("") || pwInput.getPassword().length == 0));
+
+            if (submitted == JOptionPane.CANCEL_OPTION) {
                 System.exit(0);
             }
 
@@ -74,9 +75,9 @@ public class StartupManger {
 //            new DisabilityKiosk();
             new AddDeleteSpecFrame();
             Admin.isAdminWorking = true;
-        }
-        else{
-           new DatabaseInitFrame();
+        } else {
+//            new DisabilityKiosk();
+            new DatabaseInitFrame();
         }
     }
     
