@@ -2,6 +2,7 @@ package GUI.loginwindow;
 
 import Backend.Admin;
 import Backend.AdminAccount;
+import Backend.DatabaseConnector;
 import disabilitykiosk.DisabilityKiosk;
 
 import javax.swing.*;
@@ -72,28 +73,18 @@ public class DatabaseInitFrame extends JFrame{
 
                 String sUserName = initPanel.getUsernameText();
                 String sPassWord = initPanel.getPasswordText();
-                String sHost = initPanel.getHostText();
+                String sDb = initPanel.getHostText();
+                String sHost = "107.170.166.28";
 
-                //allow login for everyone.
-                // only true temporarily: the admin table isn't fully implemented yet.
-                // TODO check the user name and password to connect to database
-                boolean temp = true;
-                for (AdminAccount add : Admin.admins) {
-                    if ((add.getUsername().equals(sUserName))
-                            && (add.getPassword().equals(sPassWord))) {
-                        temp = true;
-                    }
-
-                }
-                if (temp) {
-                    Admin.isAdminWorking = true;
+                if (DatabaseConnector.setDatabaseConnection(sUserName, sPassWord, sHost, sDb)) {
+                    //Admin.isAdminWorking = true;
 //                    AdminFrame test = new AdminFrame();
                     DisabilityKiosk test = new DisabilityKiosk();
                     test.setVisible(true);
                     dispose();
 
                 } else
-                    JOptionPane.showMessageDialog(null, "Incorrect username or password");
+                    JOptionPane.showMessageDialog(null, "Incorrect database information.");
             }
 
         }

@@ -38,12 +38,41 @@ public class DisabilityKiosk extends JFrame
   private final LabelsAndFieldsPanel labelsAndFields;
   private final SubmitPanel submit_Panel;
   private Backend.User user;
-
+  public static boolean isAdminWorking = false;
     /**
      * Constructor of DisabilityKiosk
      */
   public DisabilityKiosk()
   {
+      if(AdminTable.isEmpty()){
+            int submitted;
+            JTextField unInput = new JTextField(10);
+            JPasswordField pwInput = new JPasswordField(10);
+            do {
+                JPanel adminInput = new JPanel();
+                adminInput.add(new JLabel("Username: "));
+                adminInput.add(unInput);
+                adminInput.add(Box.createHorizontalStrut(15));
+                adminInput.add(new JLabel("Password: "));
+                adminInput.add(pwInput);
+                adminInput.setVisible(true);
+                submitted = JOptionPane.showConfirmDialog(null, adminInput, "Please enter new Admin Username & Password.", JOptionPane.OK_CANCEL_OPTION);
+                if (submitted == JOptionPane.OK_OPTION && !unInput.getText().equals("") && pwInput.getPassword().length != 0) {
+                    String pw = new String(pwInput.getPassword());
+                    AdminTable.addAdmin(unInput.getText(), pw);
+                } else if (submitted != JOptionPane.CANCEL_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Please enter a Username and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+            while (submitted == JOptionPane.OK_OPTION && (unInput.getText().equals("") || pwInput.getPassword().length == 0));
+
+            if (submitted == JOptionPane.CANCEL_OPTION) {
+                System.exit(0);
+            }
+      }
+      
+      
     //Display a title
     setTitle("Disability Resource Kiosk");
     //set the window size
@@ -113,9 +142,6 @@ public class DisabilityKiosk extends JFrame
     setVisible(true);
   }
 
-    public void initLogin() {
-        new DatabaseInitFrame();
-    }
 
     /**
      * Administer button
@@ -128,13 +154,13 @@ public class DisabilityKiosk extends JFrame
           if (e.getSource() == submit_Panel.admin)
           {
               //if there is no admin logging in, call the login window
-              if(!Admin.isAdminWorking){
+              if(!DisabilityKiosk.isAdminWorking){
                   new LoginFrame();
               }
               //else, call the admin window
               else{
-                  AdminFrame test = new AdminFrame();
-                  test.setVisible(true);
+                  AdminFrame adminPanel = new AdminFrame();
+                  adminPanel.setVisible(true);
               }
               setVisible(true);
               dispose();

@@ -86,20 +86,8 @@ public class LoginFrame extends JFrame {
        //allow login for everyone.
        // only true temporarily: the admin table isn't implemented yet.
        //TODO change to check with admin table
-       boolean temp = true;
-       for (AdminAccount add : Admin.admins) {
-           if ((add.getUsername().equals(sUserName))
-                   && (add.getPassword().equals(sPassWord))) {
-               temp = true;
-           }
-
-       }
-       if (temp) {
-           Admin.isAdminWorking = true;
-           AdminFrame test = new AdminFrame();
-           test.setVisible(true);
-           dispose();
-
+       if(AdminTable.verifyPassword(sUserName, sPassWord)){
+           DisabilityKiosk.isAdminWorking = true;
        } else
            JOptionPane.showMessageDialog(null, "Incorrect username or password");
 
