@@ -54,8 +54,8 @@ public class SpecialistSelectionWindow extends JFrame {
         panel1.setBorder(BorderFactory.createEmptyBorder(100, 300,60,300));
         
         radioButtons = new ArrayList<JRadioButtonMenuItem>();
-        specPhoto = SpecialistTable.getSpecialistPhotos();
-        specName = SpecialistTable.getSpecialistNames();
+        specPhoto = SpecialistTable.getPhotos();
+        specName = SpecialistTable.getNames();
         
         for (int i = 0; i < specName.size(); i++) {
         	ImageIcon picture = new ImageIcon(specPhoto.get(i));
