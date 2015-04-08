@@ -9,6 +9,7 @@ package GUI.loginwindow;
 import disabilitykiosk.*;
 import Backend.Admin;
 import Backend.AdminAccount;
+import Backend.AdminTable;
 import Backend.SpecialistList;
 import GUI.adddeletespec.AddDeleteSpecFrame;
 import GUI.reportwindow.*;
@@ -22,7 +23,7 @@ import java.io.IOException;
 
 public class AdminFrame extends JFrame {
 
- private final int WINDOW_WIDTH = 500;
+    private final int WINDOW_WIDTH = 500;
     private final int WINDOW_HEIGHT = 100;
 
     private JButton reportButton = new JButton("VIEW REPORT");
@@ -30,7 +31,7 @@ public class AdminFrame extends JFrame {
     private JButton createNewAdmin = new JButton("NEW ADMIN");//allow the admin to create another admin
     private JButton specialist = new JButton("ADD SPECIALIST"); //creates a adddeletespecframe -Brendan S
     private JButton logout = new JButton("LOG OUT");
-    
+
     public AdminFrame() {
 
         setLayout(new GridLayout());
@@ -52,13 +53,13 @@ public class AdminFrame extends JFrame {
         // close kiosk button link
         CloseKioskButtonListener close = new CloseKioskButtonListener();
         getCloseKioskButton().addActionListener(close);
-        
+
         //button helps creating another admin account
         getCreateAdminButton().addActionListener(new CreateAdminButtonListener());
-        
+
         //Brendan S 
         getSpecialistButton().addActionListener(new SpecialistButtonListener());
-        
+
         //log out
         getLogoutButton().addActionListener(new LogoutButtonListener());
 
@@ -79,27 +80,26 @@ public class AdminFrame extends JFrame {
     public final JButton getCloseKioskButton() {
         return closeKioskButton;
     }
-    
+
     public final JButton getCreateAdminButton() {
         return createNewAdmin;
     }
-    
-    public final JButton getLogoutButton(){
+
+    public final JButton getLogoutButton() {
         return logout;
     }
-    
-    public final JButton getSpecialistButton() {
-  return specialist;
- }
 
+    public final JButton getSpecialistButton() {
+        return specialist;
+    }
 
     // action listeners for each button
-
     public class CloseKioskButtonListener implements ActionListener {
+
         public void actionPerformed(ActionEvent ee) {
             if (ee.getSource() == getCloseKioskButton()) {
-             Admin.serialize();
-                SpecialistList.serialize();
+                //Admin.serialize();
+                //SpecialistList.serialize();
                 dispose();
                 // close app
                 System.exit(0);
@@ -114,16 +114,16 @@ public class AdminFrame extends JFrame {
             if (e.getSource() == getReportButton()) {
                 // this button goes to the report window
                 try {
-     new ReportWindow();
-    } catch (IOException e1) {
-     // TODO Auto-generated catch block
-     e1.printStackTrace();
-    }
+                    new ReportWindow();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
                 dispose();
             }
         }
     }
-    
+
     //create another admin account, and return to admin window
     private class CreateAdminButtonListener implements ActionListener {
 
@@ -132,65 +132,67 @@ public class AdminFrame extends JFrame {
             int submitted;
             JTextField userName = new JTextField(10);
             JPasswordField password = new JPasswordField(10);
-            do{
+            boolean new_admin_created = false;
+            do {
                 JPanel adminInput = new JPanel();
-                adminInput.add(new JLabel("Username: " ));
-                
+                adminInput.add(new JLabel("Username: "));
+
                 adminInput.add(userName);
                 adminInput.add(Box.createHorizontalStrut(15));
-                 
+
                 adminInput.add(new JLabel("Password: "));
-                
+
                 adminInput.add(password);
                 submitted = JOptionPane.showConfirmDialog(null, adminInput, "Please enter new Admin Username & Password.", JOptionPane.OK_CANCEL_OPTION);
                 if (submitted == JOptionPane.OK_OPTION && !userName.getText().equals("") && password.getPassword().length != 0) {
                     String pw = new String(password.getPassword());
-                    Admin.admins.add(new AdminAccount(userName.getText(), pw));
-                    Admin.serialize();//add the new administrator account to the file "admins"
-                    System.out.println(Admin.admins.toString());//test line
-                    //get back to admin window
-                    AdminFrame test = new AdminFrame();
-                    test.setVisible(true);
+                    if (!AdminTable.admin_exist(userName.getText())) {
+                        AdminTable.addAdmin(userName.getText(), pw);
+                        new_admin_created = true;
+                        JOptionPane.showMessageDialog(null, "New admin created", "Notice", JOptionPane.INFORMATION_MESSAGE);
+                        //get back to admin window
+                        AdminFrame test = new AdminFrame();
+                        test.setVisible(true);
+                    }
+                    else{
+                        
+                    }
+                } else if (submitted != JOptionPane.CANCEL_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Please enter a Username and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 }
-                else if(submitted != JOptionPane.CANCEL_OPTION){
-                      JOptionPane.showMessageDialog(null, "Please enter a Username and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            } while (submitted == JOptionPane.OK_OPTION && (userName.getText().equals("") || password.getPassword().length == 0) && new_admin_created == true);
 
-                }
-            }while(submitted == JOptionPane.OK_OPTION && (userName.getText().equals("") || password.getPassword().length == 0));
-            
-            if(submitted == JOptionPane.CANCEL_OPTION){
+            if (submitted == JOptionPane.CANCEL_OPTION) {
                 dispose();
                 //get back to admin window
                 AdminFrame test = new AdminFrame();
-  test.setVisible(true);
+                test.setVisible(true);
             }
         }
     }
-    
+
     //current admin logs out, return to main window of the application
-    private class LogoutButtonListener implements ActionListener{
+    private class LogoutButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Admin.isAdminWorking = false;
-            System.exit(1);
+            DisabilityKiosk.isAdminWorking = false;
+            System.exit(0);
             new DisabilityKiosk();
         }
-        
-    }
-    
-    private class SpecialistButtonListener implements ActionListener{
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
-   new AddDeleteSpecFrame();
-   
-  }
-     
     }
-    
+
+    private class SpecialistButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new AddDeleteSpecFrame();
+
+        }
+
+    }
+
     //we should add more buttons to give the admin more rights.
-    
-    
 } // end of class
 
