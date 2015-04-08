@@ -79,7 +79,7 @@ public class DatabaseInitFrame extends JFrame{
                 // only true temporarily: the admin table isn't fully implemented yet.
                 // TODO check the user name and password to connect to database
                 boolean temp = true;
-                for ( add : Admin.admins) {
+                for (AdminAccount add : Admin.admins) {
                     if ((add.getUsername().equals(sUserName))
                             && (add.getPassword().equals(sPassWord))) {
                         temp = true;
