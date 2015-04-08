@@ -48,8 +48,10 @@ public class AdminTable {
 		}
 		return isValid;
 	}
-	
-	//update password for existing user
+
+    /**
+     * update password for existing admin
+     */
 	public static boolean updatePassword(String user, String newPassword)
 	{
 		int updateCount = 0;
@@ -60,14 +62,22 @@ public class AdminTable {
 		}
 		return (updateCount != 0) ? true : false;
 	}
-	
-	// returns a list of admins
+
+    /**
+     * returns a list of admins
+     *
+     * @return
+     */
     public static ArrayList<String> getAdmins()
     {
     	return DatabaseConnector.executeQueryStrings("user", "SELECT user FROM ADMIN");
     }
-    
-    // checks if admin table is empty
+
+    /**
+     * checks if admin table is empty
+     *
+     * @return
+     */
     public static boolean isEmpty()
     {
     	int count = DatabaseConnector.executeQueryInt("count", "SELECT COUNT(*) AS count FROM ADMIN");

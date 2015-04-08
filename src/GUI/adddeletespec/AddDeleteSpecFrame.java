@@ -2,12 +2,15 @@ package GUI.adddeletespec;
 
 import Backend.Specialist;
 import Backend.SpecialistList;
+import Backend.SpecialistTable;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,6 +30,7 @@ import javax.swing.ListSelectionModel;
 public class AddDeleteSpecFrame extends JFrame{
     private final int WINDOW_WIDTH = 800;
     private final int WINDOW_HEIGHT = 500;
+    private ArrayList<String> specNames;
     private SpecInfoPanel specInfoPanel;
     private JPanel buttonPanel;
     private JButton addBtn, editBtn, deleteBtn;
@@ -34,7 +38,7 @@ public class AddDeleteSpecFrame extends JFrame{
     private DefaultListModel<String> dlm;
     private JScrollPane scroll;
     
-    Specialist spec;
+    SpecialistTable spec;
     
     public AddDeleteSpecFrame(){
         //Window title
@@ -50,7 +54,10 @@ public class AddDeleteSpecFrame extends JFrame{
         //Block resizing
         setResizable(false);
     }
-    
+
+    /**
+     *
+     */
     private void buildMainFrame(){
         dlm = new DefaultListModel<String>();
         updateList();
@@ -111,7 +118,7 @@ public class AddDeleteSpecFrame extends JFrame{
         if (list.getSelectedValue() != null)
         {
             String target = list.getSelectedValue();
-            
+
             for (Specialist a : SpecialistList.specs)
             {
                 if (target.equals(a.getFullName()))

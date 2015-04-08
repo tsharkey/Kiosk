@@ -4,6 +4,7 @@ import Backend.Admin;
 import Backend.AdminAccount;
 import Backend.DatabaseConnector;
 import disabilitykiosk.DisabilityKiosk;
+import Backend.AdminTable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
