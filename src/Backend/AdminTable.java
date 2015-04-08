@@ -72,7 +72,26 @@ public class AdminTable {
     {
     	return DatabaseConnector.executeQueryStrings("user", "SELECT user FROM ADMIN");
     }
-
+    
+    /**
+     * check if the admin exist in the database
+     * 
+     * @param admin
+     * @return
+     */
+    public static boolean admin_exist(String admin){
+        boolean exist = false;
+        ArrayList<String> admins = getAdmins();
+        if(admins.size() > 0){
+            for(int i = 0; i < admins.size(); i++){
+                if(admins.get(i).equals(admin)){
+                    exist =true;
+                }
+            }
+        }
+        return exist;
+    }
+    
     /**
      * checks if admin table is empty
      *
