@@ -14,8 +14,10 @@ public class VisitData{
     private String email;
     private String specialist;
     private String location;
+    private String firstName;
+    private String lastName;
 
-    public VisitData(Date visitDate, Date visitTime, String reason, boolean followUp, String email, String specialist, String location){
+    public VisitData(Date visitDate, Date visitTime, String reason, boolean followUp, String email, String specialist, String location, String firstName, String lastName){
         this.visitDate = visitDate;
         this.visitTime = visitTime;
         this.reason = reason;
@@ -23,6 +25,8 @@ public class VisitData{
         this.email = email;
         this.specialist = specialist;
         this.location = location;
+        this.firstName = firstName;
+        this.lastName = lastName;
 
     }
 
@@ -52,5 +56,13 @@ public class VisitData{
 
     public String getLocation(){
         return location;
+    }
+
+    public String getFirstName(){
+        return firstName;
+    }
+
+    public String getLastName(){
+        return lastName;
     }
 }
