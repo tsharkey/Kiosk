@@ -192,6 +192,7 @@ public class AdminFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Admin.isAdminWorking = false;
+            System.exit(1);
             new DisabilityKiosk();
         }
         

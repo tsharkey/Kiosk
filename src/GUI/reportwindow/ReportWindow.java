@@ -67,6 +67,7 @@ public class ReportWindow extends JFrame {
         buildPanels();
         setVisible(true);
     }
+
     public void buildPanels() throws IOException {
         //Setting up northPanel
         northPanel = new JPanel();

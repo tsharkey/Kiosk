@@ -3,6 +3,7 @@ package GUI.loginwindow;
 import Backend.Admin;
 import Backend.AdminAccount;
 import disabilitykiosk.DisabilityKiosk;
+import Backend.AdminTable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -78,12 +79,11 @@ public class DatabaseInitFrame extends JFrame{
                 // only true temporarily: the admin table isn't fully implemented yet.
                 // TODO check the user name and password to connect to database
                 boolean temp = true;
-                for (AdminAccount add : Admin.admins) {
+                for ( add : Admin.admins) {
                     if ((add.getUsername().equals(sUserName))
                             && (add.getPassword().equals(sPassWord))) {
                         temp = true;
                     }
-
                 }
                 if (temp) {
                     Admin.isAdminWorking = true;
