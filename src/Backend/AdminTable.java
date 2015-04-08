@@ -1,93 +1,76 @@
 package Backend;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 
-//checking the commit
 /**
- * Created by Parth Patel and John Cyzeski, Maria del Mar Moncaleano
+ * This class handles interfacing with the MySQL database with regards to the
+ * ADMIN table
+ * 
+ * @author Parth Patel, John Cyzeski, Maria del Mar Moncaleano, Brendan Casey
+ * 
+ * TODO: vulnerable to SQL injections -> sanitize inputs
  */
-public class AdminTable
-{
 
-    private DatabaseConnector dc;
+public class AdminTable {
 
-        public AdminTable()
-        {
-            dc = new DatabaseConnector();
-        }
-
-        //Adds an Admin
-        public void addAdmin(String user, String password)
-        {
-            try
-            {
-                Statement stmt = dc.getConnection().createStatement();
-                String insertion = "INSERT INTO ADMIN\" + " +
-                        "VALUES('" + user + "', '" + PasswordHash.createHash(password) + "')";
-                stmt.executeUpdate(insertion);
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        //Deletes an Admin
-        public void deleteAdmin(String user, String password){
-            try
-            {
-                Statement stmt = dc.getConnection().createStatement();
-                String deleteUserTable = "DELETE FROM ADMIN " +
-                        "WHERE user = '" + user + "'";
-                stmt.execute(deleteUserTable);
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        //returns all of the Admins
-        public ResultSet getAllAdmins()
-        {
-            ResultSet rs = null;
-            try
-            {
-                Statement stmt = dc.getConnection().createStatement();
-                String getAllAdmins = "SELECT * FROM ADMIN";
-                rs = stmt.executeQuery(getAllAdmins);
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-            return rs;
-        }
-
-        //verify password   TODO implement the sanitizerUser in the SqlStatements to check the input for the user
-        public boolean verifyPassword(String user, String password)
-        {
-            boolean isValid = false;
-           // if(SqlStatement.sanitizeUser(user) == false)
-           // {
-           //     return isValid;
-           // }
-            try
-            {
-                Statement stmt = dc.getConnection().createStatement();
-                String getHash = "SELECT hash FROM ADMIN WHERE hash = SELECT hash FROM ADMIN WHERE user='" + user +"')";
-                ResultSet rs = stmt.executeQuery(getHash);
-                if(rs.next())
-                {
-                    isValid = PasswordHash.validatePassword(password, rs.getString("hash"));
-                }
-                rs.close();
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-            return isValid;
-        }
+	// Adds an Admin
+	public static boolean addAdmin(String user, String password) {
+		int insertCount = 0;
+		try {
+			insertCount = DatabaseConnector.executeUpdate("INSERT INTO ADMIN\" + " + "VALUES('" + user
+					+ "', '" + PasswordHash.createHash(password) + "')");
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+		return (insertCount != 0) ? true : false;
+	}
+	
+	// Deletes an Admin
+    public static boolean deleteAdmin(String user)
+    {
+    	int insertCount = DatabaseConnector.executeUpdate("DELETE FROM ADMIN " +
+                "WHERE user = '" + user + "'");
+    	return (insertCount != 0) ? true : false;
     }
 
-
+	// check the input for the user
+	public static boolean verifyPassword(String user, String password) {
+		boolean isValid = false;
+		String hash = DatabaseConnector.executeQueryString(1, "SELECT hash FROM ADMIN WHERE hash = (SELECT hash FROM ADMIN WHERE user='" + user +"')");
+		if(hash != null){
+			try {
+				isValid = PasswordHash.validatePassword(password, hash);
+			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+				e.printStackTrace();
+			}
+		}
+		return isValid;
+	}
+	
+	//update password for existing user
+	public static boolean updatePassword(String user, String newPassword)
+	{
+		int updateCount = 0;
+		try {
+			updateCount = DatabaseConnector.executeUpdate("UPDATE ADMIN SET hash='" + PasswordHash.createHash(newPassword) + "' WHERE user = '" + user +"'");
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+		return (updateCount != 0) ? true : false;
+	}
+	
+	// returns a list of admins
+    public static ArrayList<String> getAdmins()
+    {
+    	return DatabaseConnector.executeQueryStrings("user", "SELECT user FROM ADMIN");
+    }
+    
+    // checks if admin table is empty
+    public static boolean isEmpty()
+    {
+    	int count = DatabaseConnector.executeQueryInt("count", "SELECT COUNT(*) AS count FROM ADMIN");
+    	return (count == 0) ? true : false;
+    }
+}
