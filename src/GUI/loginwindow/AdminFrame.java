@@ -22,10 +22,10 @@ import java.io.IOException;
 
 public class AdminFrame extends JFrame {
 
-	private final int WINDOW_WIDTH = 500;
+ private final int WINDOW_WIDTH = 500;
     private final int WINDOW_HEIGHT = 100;
 
-    private JButton launchKioskButton = new JButton("LAUNCH KIOSK");
+    //private JButton launchKioskButton = new JButton("LAUNCH KIOSK");
     private JButton reportButton = new JButton("VIEW REPORT");
     private JButton closeKioskButton = new JButton("CLOSE KIOSK");
     private JButton createNewAdmin = new JButton("NEW ADMIN");//allow the admin to create another admin
@@ -36,7 +36,7 @@ public class AdminFrame extends JFrame {
 
         setLayout(new GridLayout());
         JPanel button = new JPanel();
-        button.add(launchKioskButton);
+        //button.add(launchKioskButton);
         button.add(createNewAdmin);
         button.add(closeKioskButton);
         button.add(reportButton);
@@ -52,8 +52,8 @@ public class AdminFrame extends JFrame {
         getReportButton().addActionListener(onClick);
 
         // launch kiosk button link
-        LaunchKioskButtonListener click = new LaunchKioskButtonListener();
-        getLaunchKioskButton().addActionListener(click);
+        /*LaunchKioskButtonListener click = new LaunchKioskButtonListener();
+        getLaunchKioskButton().addActionListener(click);*/
 
         // close kiosk button link
         CloseKioskButtonListener close = new CloseKioskButtonListener();
@@ -99,8 +99,8 @@ public class AdminFrame extends JFrame {
     }
     
     public final JButton getSpecialistButton() {
-		return specialist;
-	}
+  return specialist;
+ }
 
 
     // action listeners for each button
@@ -117,7 +117,7 @@ public class AdminFrame extends JFrame {
     public class CloseKioskButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent ee) {
             if (ee.getSource() == getCloseKioskButton()) {
-            	Admin.serialize();
+             Admin.serialize();
                 SpecialistList.serialize();
                 dispose();
                 // close app
@@ -133,11 +133,11 @@ public class AdminFrame extends JFrame {
             if (e.getSource() == getReportButton()) {
                 // this button goes to the report window
                 try {
-					new ReportWindow();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+     new ReportWindow();
+    } catch (IOException e1) {
+     // TODO Auto-generated catch block
+     e1.printStackTrace();
+    }
                 dispose();
             }
         }
@@ -181,7 +181,7 @@ public class AdminFrame extends JFrame {
                 dispose();
                 //get back to admin window
                 AdminFrame test = new AdminFrame();
-		test.setVisible(true);
+  test.setVisible(true);
             }
         }
     }
@@ -199,12 +199,12 @@ public class AdminFrame extends JFrame {
     
     private class SpecialistButtonListener implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new AddDeleteSpecFrame();
-			
-		}
-    	
+  @Override
+  public void actionPerformed(ActionEvent e) {
+   new AddDeleteSpecFrame();
+   
+  }
+     
     }
     
     //we should add more buttons to give the admin more rights.
