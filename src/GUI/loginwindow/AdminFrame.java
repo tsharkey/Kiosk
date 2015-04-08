@@ -10,6 +10,7 @@ import disabilitykiosk.*;
 import Backend.Admin;
 import Backend.AdminAccount;
 import Backend.SpecialistList;
+import GUI.adddeletespec.AddDeleteSpecFrame;
 import GUI.reportwindow.*;
 
 import javax.swing.*;
@@ -21,13 +22,14 @@ import java.io.IOException;
 
 public class AdminFrame extends JFrame {
 
-    private final int WINDOW_WIDTH = 500;
+	private final int WINDOW_WIDTH = 500;
     private final int WINDOW_HEIGHT = 100;
 
     private JButton launchKioskButton = new JButton("LAUNCH KIOSK");
     private JButton reportButton = new JButton("VIEW REPORT");
     private JButton closeKioskButton = new JButton("CLOSE KIOSK");
     private JButton createNewAdmin = new JButton("NEW ADMIN");//allow the admin to create another admin
+    private JButton specialist = new JButton("ADD SPECIALIST"); //creates a adddeletespecframe -Brendan S
     private JButton logout = new JButton("LOG OUT");
     
     public AdminFrame() {
@@ -38,6 +40,7 @@ public class AdminFrame extends JFrame {
         button.add(createNewAdmin);
         button.add(closeKioskButton);
         button.add(reportButton);
+        button.add(specialist);
         button.add(logout);
 
         add(button);
@@ -58,6 +61,9 @@ public class AdminFrame extends JFrame {
         
         //button helps creating another admin account
         getCreateAdminButton().addActionListener(new CreateAdminButtonListener());
+        
+        //Brendan S 
+        getSpecialistButton().addActionListener(new SpecialistButtonListener());
         
         //log out
         getLogoutButton().addActionListener(new LogoutButtonListener());
@@ -91,6 +97,11 @@ public class AdminFrame extends JFrame {
     public final JButton getLogoutButton(){
         return logout;
     }
+    
+    public final JButton getSpecialistButton() {
+		return specialist;
+	}
+
 
     // action listeners for each button
     public class LaunchKioskButtonListener implements ActionListener {
@@ -184,6 +195,16 @@ public class AdminFrame extends JFrame {
             new DisabilityKiosk();
         }
         
+    }
+    
+    private class SpecialistButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new AddDeleteSpecFrame();
+			
+		}
+    	
     }
     
     //we should add more buttons to give the admin more rights.

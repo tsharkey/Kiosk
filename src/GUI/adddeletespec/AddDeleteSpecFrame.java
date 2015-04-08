@@ -141,18 +141,18 @@ public class AddDeleteSpecFrame extends JFrame{
                     {
                         JOptionPane.showInternalMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
                     }
-                    else if(specInfoPanel.getFirstName().equals("") || specInfoPanel.getLastName().equals("")
-                            || specInfoPanel.getRoleText().equals("")){
+                    else if(specInfoPanel.getFirstName().length() == 0 || specInfoPanel.getLastName().length() == 0
+                            || specInfoPanel.getRoleText().length() == 0){
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete", JOptionPane.ERROR_MESSAGE);
                     }
-                    else if(specInfoPanel.getPhoto().equals(""))
+                    else if(specInfoPanel.getPhoto().length() == 0)
                     {
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Image Missing", JOptionPane.ERROR_MESSAGE);
                     }
-                    else if(specInfoPanel.getPhoneText().equals("")){
+                    else if(specInfoPanel.getPhoneText().length() == 0){
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
                     }
-                    else if(specInfoPanel.getEmailText().equals("")) {
+                    else if(specInfoPanel.getEmailText().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid E-mail", JOptionPane.ERROR_MESSAGE);
                     }
                     else
@@ -176,7 +176,7 @@ public class AddDeleteSpecFrame extends JFrame{
 //                specInfoPanel.setEditUser(getSpecialist());
                 int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
                 if (submitted == JOptionPane.OK_OPTION){
-                    if(specInfoPanel.getPhoto().equals("")){
+                    if(specInfoPanel.getPhoto().length() == 0){
                      SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
                      updateList();
                      specInfoPanel.clear();

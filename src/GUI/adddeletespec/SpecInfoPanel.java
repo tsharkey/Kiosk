@@ -234,7 +234,8 @@ public class SpecInfoPanel extends JPanel{
                 JFileChooser fc = new JFileChooser();
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Img File", "jpg", "png"); // create a filter
                 fc.setFileFilter(filter);
-                int f = fc.showDialog(SpecInfoPanel.this,"");
+                //Brendan S
+                int f = fc.showDialog(SpecInfoPanel.this,"OK");
                 if(f == JFileChooser.APPROVE_OPTION){
                     photoT.setText(fc.getSelectedFile().getAbsolutePath());
                 }
