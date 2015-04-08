@@ -1,90 +1,78 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Backend;
+package backend;
 
-import java.sql.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 
 /**
+ * This class handles interfacing with SpecialistTable inside the database.
  *
- * @author Sean, Brendan
+ * @author Sean Johnston, Brendan Casey
+ * TODO: - vulnerable to SQL injections
  */
 public class SpecialistTable {
-    static private DatabaseConnector dc;
-
-    public SpecialistTable(){
-        dc = new DatabaseConnector();
-    }
-
+	
     // adds a specialist
-    public void addSpecialist(String photo, String password, String email)
+	// return false if failed
+    public static boolean addSpecialist(String fName, String lName, String phone,
+    		String email, String password, String photo)
     {
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            String insert = "INSERT INTO SPECIALIST" +
-                            "VALUES('" + photo + "', '" + PasswordHash.createHash(password) + "', '" + email +"')";
-            stmt.executeUpdate(insert);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+    	if(UserTable.addUser(fName, lName, phone, email, "Specialist") != true){
+    		return false;// cannot add user or they already exist, attempt to update instead?
+    	}
+    	return insertSpecialist(email, password, photo);
+    }
+    
+    // insert specialist with photo, photo can be null
+    public static boolean insertSpecialist(String email, String password, String photo)
+    {
+    	int insertCount = 0;
+    	try {
+    		insertCount = DatabaseConnector.executeUpdate("INSERT INTO SPECIALIST " +
+			        "VALUES(" + ((photo != null) ? ("'" + photo + "', ") : "NULL, ") +  "'" + PasswordHash.createHash(password) + "', '" + email +"')");
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+    	return (insertCount != 0) ? true : false;
     }
 
     //deletes a specialist
-    public void deleteSpecialist(String email){
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            String delete = "DELETE FROM SPECIALIST" +
-                            "WHERE email = '" + email + "'";
-            stmt.executeUpdate(delete);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+    public static boolean deleteSpecialist(String email)
+    {
+    	int insertCount = DatabaseConnector.executeUpdate("DELETE FROM USER " +
+                "WHERE email = '" + email + "'");
+    	return (insertCount != 0) ? true : false;
     }
 
-    //returns a single specialist based on email
-    public ResultSet getSpecialist(String email){
-        ResultSet rs = null;
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            String getOneSpecialist = "SELECT * FROM SPECIALIST WHERE email = '" + email +"'";
-            rs = stmt.executeQuery(getOneSpecialist);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return rs;
-    }
-
-    //returns all specialists
-    public ResultSet getAllSpecialists(){
-        ResultSet rs = null;
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            String getSpecialists = "SELECT * FROM SPECIALIST";
-            rs = stmt.executeQuery(getSpecialists);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return rs;
+    //updates a single specialist based on email
+    //does it need ability to change name, phone?
+    public static boolean updateSpecialist(String email, String column, String update){
+    	int updateCount = 0;
+    	switch(column){
+    		case "photo":
+    			updateCount = DatabaseConnector.executeUpdate("UPDATE SPECIALIST SET photo='" + update + "' WHERE email = '" + email +"'");
+    			break;
+    		case "hash":
+				try {
+					updateCount = DatabaseConnector.executeUpdate("UPDATE SPECIALIST SET hash='" + PasswordHash.createHash(update) + "' WHERE email = '" + email +"'");
+				} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+					e.printStackTrace();
+				}
+    			break;
+    		case "email":
+    			updateCount = DatabaseConnector.executeUpdate("UPDATE USER SET email='" + update + "' WHERE email = '" + email +"'");
+    			break;
+       		default:
+    			break;
+    	}
+    	return (updateCount != 0) ? true : false;
     }
     
     // checks if specialist table is empty
     public static boolean isEmpty()
     {
-    	int count = 0;
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            String getSpecialistCount = "SELECT COUNT(*) AS count FROM SPECIALIST";
-            ResultSet rs = stmt.executeQuery(getSpecialistCount);
-            rs.next();
-            count = rs.getInt("count");
-            rs.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return (count == 0) ? true : false;
+    	int count = DatabaseConnector.executeQueryInt("count", "SELECT COUNT(*) AS count FROM SPECIALIST");
+    	return (count == 0) ? true : false;
     }
     
     // verify password
@@ -95,51 +83,32 @@ public class SpecialistTable {
     		return isValid;
     	}
     	
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            String getHash = "SELECT hash FROM SPECIALIST WHERE hash = (SELECT hash FROM SPECIALIST WHERE email='" + email +"')";
-            ResultSet rs = stmt.executeQuery(getHash);
-            if(rs.next()){ // making sure email exist with hash
-            	isValid = PasswordHash.validatePassword(password, rs.getString("hash"));
-            }
-            rs.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+    	String hash = DatabaseConnector.executeQueryString(1, "SELECT hash FROM SPECIALIST WHERE hash = (SELECT hash FROM SPECIALIST WHERE email='" + email +"')");
+    	if(hash != null){
+	    	try {
+				isValid = PasswordHash.validatePassword(password, hash);
+			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+				e.printStackTrace();
+			}
+    	}
         return isValid;
     }
     
     // returns string ArrayList with ordered photo file names
-    public static ArrayList<String> getSpecialistPhotos()
+    public static ArrayList<String> getPhotos()
     {
-    	ArrayList<String> specPhotos = new ArrayList<String>();
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT photo FROM SPECIALIST");
-            while(rs.next()){
-            	specPhotos.add(rs.getString("photo"));
-            }
-            rs.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return specPhotos;
+    	return DatabaseConnector.executeQueryStrings("photo", "SELECT photo FROM SPECIALIST");
+    }
+    
+    // returns string ArrayList with ordered phone numbers
+    public static ArrayList<String> getPhones()
+    {
+    	return DatabaseConnector.executeQueryStrings("phone", "SELECT phone AS phone FROM USER INNER JOIN SPECIALIST ON USER.email=SPECIALIST.email");
     }
     
     // returns string ArrayList with ordered first+last names
-    public static ArrayList<String> getSpecialistNames()
+    public static ArrayList<String> getNames()
     {
-    	ArrayList<String> specNames = new ArrayList<String>();
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT CONCAT(fName, ' ', lName) AS name FROM USER INNER JOIN SPECIALIST ON USER.email=SPECIALIST.email");
-            while(rs.next()){
-            	specNames.add(rs.getString("name"));
-            }
-            rs.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return specNames;
+    	return DatabaseConnector.executeQueryStrings("name", "SELECT CONCAT(fName, ' ', lName) AS name FROM USER INNER JOIN SPECIALIST ON USER.email=SPECIALIST.email");
     }
 }
