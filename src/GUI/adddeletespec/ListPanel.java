@@ -67,7 +67,7 @@ public class ListPanel extends JPanel{
     public void updateList()
     {
         dlm.clear();
-        ArrayList<String> names = SpecialistTable.getSpecialistNames();
+        ArrayList<String> names = SpecialistTable.getNames();
         for(String name : names){
         	dlm.addElement(name);
         }
