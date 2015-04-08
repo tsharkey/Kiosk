@@ -1,4 +1,4 @@
-package backend;
+package Backend;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -28,11 +28,11 @@ public class SpecialistTable {
     {
     	int insertCount = 0;
     	try {
-    		insertCount = DatabaseConnector.executeUpdate("INSERT INTO SPECIALIST " +
+	    	insertCount = DatabaseConnector.executeUpdate("INSERT INTO SPECIALIST " +
 			        "VALUES(" + ((photo != null) ? ("'" + photo + "', ") : "NULL, ") +  "'" + PasswordHash.createHash(password) + "', '" + email +"')");
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			e.printStackTrace();
-		}
+	} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+		e.printStackTrace();
+	}
     	return (insertCount != 0) ? true : false;
     }
 
@@ -53,11 +53,11 @@ public class SpecialistTable {
     			updateCount = DatabaseConnector.executeUpdate("UPDATE SPECIALIST SET photo='" + update + "' WHERE email = '" + email +"'");
     			break;
     		case "hash":
-				try {
-					updateCount = DatabaseConnector.executeUpdate("UPDATE SPECIALIST SET hash='" + PasswordHash.createHash(update) + "' WHERE email = '" + email +"'");
-				} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-					e.printStackTrace();
-				}
+			try {
+				updateCount = DatabaseConnector.executeUpdate("UPDATE SPECIALIST SET hash='" + PasswordHash.createHash(update) + "' WHERE email = '" + email +"'");
+			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+				e.printStackTrace();
+			}
     			break;
     		case "email":
     			updateCount = DatabaseConnector.executeUpdate("UPDATE USER SET email='" + update + "' WHERE email = '" + email +"'");
@@ -86,10 +86,10 @@ public class SpecialistTable {
     	String hash = DatabaseConnector.executeQueryString(1, "SELECT hash FROM SPECIALIST WHERE hash = (SELECT hash FROM SPECIALIST WHERE email='" + email +"')");
     	if(hash != null){
 	    	try {
-				isValid = PasswordHash.validatePassword(password, hash);
-			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-				e.printStackTrace();
-			}
+			isValid = PasswordHash.validatePassword(password, hash);
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
     	}
         return isValid;
     }
