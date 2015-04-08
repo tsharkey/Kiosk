@@ -1,85 +1,85 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Backend;
 
+import java.util.ArrayList;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
 /**
  *
- * @author Sean Johnston
+ * @author Sean Johnston, Brendan Casey
  */
 public class UserTable {
-    private DatabaseConnector dc;
-
-    public UserTable(){
-        dc = new DatabaseConnector();
-    }
 
     //adding a user to database
-    public void addUser(String _fName, String _lName, String _email, String _phone, String _role){
-        //make the connection to the database then create the statement and execute it
-        try
-        {
-            Statement stmt = dc.getConnection().createStatement();
-            String insertion = "INSERT INTO USER(fName, lName, email, phone, role)"
-                    + "VALUES('"+_fName+"', '"+_lName+"', '"+_email+
-                    "', '"+_phone+"', '"+_role+"')";
-            stmt.executeUpdate(insertion);
-        }
-
-        catch(Exception e){
-          e.printStackTrace();
-        }
+    public static boolean addUser(String _fName, String _lName, String _phone, String _email, String _role)
+    {
+    	int insertCount = DatabaseConnector.executeUpdate("INSERT INTO USER "
+                + "VALUES('"+_fName+"', '"+_lName+"', '"+_email+ "', '"+_phone+"', '"+_role+"')");
+    	return (insertCount != 0) ? true : false;
     }
 
     //deletes a user or a user and all visits based on the boolean value passed
     //if the boolean is true then the users visits will also be deleted
-    public void deleteUser(String email, boolean deleteVisits){
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            String deleteUserTable = "DELETE FROM USER " +
-                            "WHERE email = '" + email + "'";
-            stmt.execute(deleteUserTable);
-            if(deleteVisits){
-                String deleteVisitsTable = "DELETE FROM VISITS " +
-                                           "WHERE email = '" + email +"'";
-                stmt.executeUpdate(deleteVisitsTable);
-            }
-
-        }catch(Exception e){
-            e.printStackTrace();
+    public static boolean deleteUser(String email, boolean deleteVisits){
+    	if(deleteVisits){ // delete first due to foreign key
+    		DatabaseConnector.executeUpdate("DELETE FROM VISITS " +
+                    "WHERE email = '" + email +"'");
         }
+    	int deleteCount = DatabaseConnector.executeUpdate("DELETE FROM USER " +
+                "WHERE email = '" + email + "'");
+
+    	return (deleteCount != 0) ? true : false;
     }
-
-    //returns all of the users
-    public ResultSet getAllUsers(){
-        ResultSet rs = null;
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            String getAllUsers = "SELECT * FROM USER";
-            rs = stmt.executeQuery(getAllUsers);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return rs;
+    
+    // update user info
+    public static boolean updateUser(String email, String column, String update){
+    	int updateCount = 0;
+    	switch(column){
+    		case "fName":
+    		case "lName":
+    		case "phone":
+    		case "email":
+    		case "role":
+    			updateCount = DatabaseConnector.executeUpdate("UPDATE USER SET " + column + "='" + update + "' WHERE email = '" + email +"'");
+    			break;
+    		default:
+    			break;
+    	}
+    	return (updateCount != 0) ? true : false;
     }
-
-    //returns a user based on a specific email
-    public ResultSet getUser(String email){
-        ResultSet rs = null;
-        try{
-            Statement stmt = dc.getConnection().createStatement();
-            String getUser = "SELECT * FROM USER WHERE email = '" + email +"'";
-            rs = stmt.executeQuery(getUser);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return rs;
+    
+    // checks if user table is empty
+    public static boolean isEmpty()
+    {
+    	int count = DatabaseConnector.executeQueryInt("count", "SELECT COUNT(*) AS count FROM USER");
+    	return (count == 0) ? true : false;
     }
-
-
+    
+    // returns string ArrayList with ordered first names
+    public static ArrayList<String> getFirstNames()
+    {
+    	return DatabaseConnector.executeQueryStrings("fName", "SELECT fName FROM USER");
+    }
+    
+    // returns string ArrayList with ordered last names
+    public static ArrayList<String> getLastNames()
+    {
+    	return DatabaseConnector.executeQueryStrings("lName", "SELECT lName FROM USER");
+    }
+    
+    // returns string ArrayList with ordered emails
+    public static ArrayList<String> getEmails()
+    {
+    	return DatabaseConnector.executeQueryStrings("email", "SELECT email FROM USER");
+    }
+    
+    // returns string ArrayList with ordered phones
+    public static ArrayList<String> getPhotos()
+    {
+    	return DatabaseConnector.executeQueryStrings("phone", "SELECT phone FROM USER");
+    }
+    
+    // returns string ArrayList with ordered roles
+    public static ArrayList<String> getRoles()
+    {
+    	return DatabaseConnector.executeQueryStrings("role", "SELECT role FROM USER");
+    }
 }
