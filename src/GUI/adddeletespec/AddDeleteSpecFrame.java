@@ -141,7 +141,7 @@ public class AddDeleteSpecFrame extends JFrame{
                     }
                     else if(specInfoPanel.getFirstName().length() == 0 || specInfoPanel.getLastName().length() == 0
                             || specInfoPanel.getRoleText().length() == 0){
-                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete Information", JOptionPane.ERROR_MESSAGE);
                     }
                     else if(specInfoPanel.getPhoto().length() == 0)
                     {
@@ -153,8 +153,13 @@ public class AddDeleteSpecFrame extends JFrame{
                     else if(specInfoPanel.getEmailText().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid E-mail", JOptionPane.ERROR_MESSAGE);
                     }
-                    else
-                            {
+                    else if(specInfoPanel.getPassword().length() == 0 || specInfoPanel.getCPassword().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Password", JOptionPane.ERROR_MESSAGE);
+                        if(!specInfoPanel.getPassword().equals(specInfoPanel.getCPassword())){
+                            JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Password Unmatched", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                    else {
                                 ImageIcon i = new ImageIcon(specInfoPanel.getPhoto());
                                 if(i.getIconHeight()>250||i.getIconWidth()>250){
                                     
@@ -168,7 +173,7 @@ public class AddDeleteSpecFrame extends JFrame{
 								    	specInfoPanel.getLastName(),
 								    	specInfoPanel.getPhoneText(),
 								    	specInfoPanel.getEmailText(), 
-								    	"password", // placeholder
+								    	specInfoPanel.getPassword(),
 								    	specInfoPanel.getPhoto());
                                         updateList();
                                         specInfoPanel.clear();
@@ -183,6 +188,7 @@ public class AddDeleteSpecFrame extends JFrame{
                 if (submitted == JOptionPane.OK_OPTION){
                     if(specInfoPanel.getPhoto().length() == 0){
                      //SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
+                        JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
                      updateList();
                      specInfoPanel.clear();
                     }

@@ -85,7 +85,7 @@ public class AdminTable {
 	/**
 	 * check if the admin exist in the database
 	 * 
-	 * @param admin
+	 * @param user
 	 * @return
 	 */
 	public static boolean admin_exist(String user) {
