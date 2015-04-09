@@ -1,6 +1,8 @@
 package GUI.teacherselectionwindow;
 
+import Backend.Data;
 import Backend.SpecialistTable;
+import Backend.User;
 
 import disabilitykiosk.DisabilityKiosk;
 

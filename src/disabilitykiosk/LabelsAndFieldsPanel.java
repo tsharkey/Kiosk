@@ -388,14 +388,11 @@ public class LabelsAndFieldsPanel extends JPanel {
      *
      * @return
      */
-    public int getFollowUp() {
+    public Boolean getFollowUp() {
         if (this.followUpI.getSelectedItem().toString() == "Yes") {
-            return 1;
-        } else if (this.followUpI.getSelectedItem().toString() == "No") {
-            return 0;
-        } else {
-            return 0;
+            return true;
         }
+        return false;
     }
 
     public String getLocationInput() {

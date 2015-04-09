@@ -227,12 +227,18 @@ public class DisabilityKiosk extends JFrame {
                     }
 
                     //adding the data to the database
-                    UserTable ut = new UserTable();
-                    VisitsTable vt = new VisitsTable();
-                    ut.addUser(labelsAndFields.getFirst(), labelsAndFields.getLast(), labelsAndFields.getEmail(), labelsAndFields.getPhone(), labelsAndFields.getRole());
-                    VisitsTable.addVisit(labelsAndFields.getReason(), labelsAndFields.getFollowUp(), labelsAndFields.getEmail(), "fix this", labelsAndFields.getLocationInput());
+                    //UserTable ut = new UserTable();
+                    //VisitsTable vt = new VisitsTable();
+                    
+                    // Should only be added if doesn't exist already
+                    if(!UserTable.user_exist(labelsAndFields.getEmail())){
+                    	UserTable.addUser(labelsAndFields.getFirst(), labelsAndFields.getLast(), labelsAndFields.getEmail(), labelsAndFields.getPhone(), labelsAndFields.getRole());
+                    }
+                    
+                    // FIX: Visit should be created after selection of Specialist
+                    //VisitsTable.addVisit(labelsAndFields.getReason(), labelsAndFields.getFollowUp(), labelsAndFields.getEmail(), "fix this", labelsAndFields.getLocationInput());
                     setVisible(false);
-                    new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);
+                    new GUI.teacherselectionwindow.SpecialistSelectionWindow(null);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No Specialist in List", "Incomplete", JOptionPane.ERROR_MESSAGE);
