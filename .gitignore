@@ -16,7 +16,7 @@ hs_err_pid*
 /.idea
 
 #netbean
-#build/
+build/
 nbproject/
 *.xml
 *.mf
