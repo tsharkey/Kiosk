@@ -21,6 +21,7 @@ nbproject/
 *.xml
 *.mf
 *.DS_Store
+nblibraries.properties
 
 
 #drjava
