@@ -25,3 +25,8 @@ nbproject/
 
 #drjava
 *.class
+/bin/
+
+#eclipse
+.classpath
+.project
