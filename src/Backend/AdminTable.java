@@ -19,7 +19,7 @@ public class AdminTable {
 	public static boolean addAdmin(String user, String password) {
 		int insertCount = 0;
 		try {
-			insertCount = DatabaseConnector.executeUpdate("INSERT INTO ADMIN\" + " + "VALUES('" + user
+			insertCount = DatabaseConnector.executeUpdate("INSERT INTO ADMIN VALUES('" + user
 					+ "', '" + PasswordHash.createHash(password) + "')");
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			e.printStackTrace();
