@@ -114,8 +114,9 @@ public class ReportWindow extends JFrame {
 
         try
         {
-            Data.open();
+            //Data.open();
             String temp = "";
+            
             for (Row row: Data.chooseTable("visits"))
             {
                 Table table = Data.chooseTable("user");

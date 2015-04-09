@@ -9,7 +9,7 @@ import GUI.loginwindow.*;
 import GUI.teacherselectionwindow.*;
 import Backend.*;
 import com.sun.speech.freetts.VoiceManager;
-import disabilitykiosk.LabelsAndFieldsPanel.*;
+//import disabilitykiosk.LabelsAndFieldsPanel;
 import java.awt.*;
 import javax.swing.*;
 
@@ -221,7 +221,7 @@ public class DisabilityKiosk extends JFrame
                 UserTable ut = new UserTable();
                 VisitsTable vt = new VisitsTable();
                 ut.addUser(labelsAndFields.getFirst(), labelsAndFields.getLast(), labelsAndFields.getEmail(), labelsAndFields.getPhone(), labelsAndFields.getRole());
-                vt.addVisit(labelsAndFields.getReason(), labelsAndFields.getFollowUp(), labelsAndFields.getEmail(), "fix this", labelsAndFields.getLocationInput());
+                VisitsTable.addVisit(labelsAndFields.getReason(), labelsAndFields.getFollowUp(), labelsAndFields.getEmail(), "fix this", labelsAndFields.getLocationInput());
               setVisible(false);
               new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);
             }

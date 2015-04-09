@@ -33,7 +33,6 @@ public class StartupManger {
         
     }
     
-    
     public static void main(String[] args){
         new StartupManger();
     }
