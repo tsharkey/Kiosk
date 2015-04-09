@@ -34,6 +34,8 @@ import javax.crypto.SecretKeyFactory;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*
  * PBKDF2 salted password hashing.
@@ -187,4 +189,12 @@ public class PasswordHash
         else
             return hex;
     }
+}
+
+// sanitize email input to prevent SQL injection (Brendan Casey)
+public static boolean sanitizeEmail(String email)
+{
+    Pattern pattern = Pattern.compile("[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+    Matcher matcher = pattern.matcher(email);
+    return matcher.matches();
 }
