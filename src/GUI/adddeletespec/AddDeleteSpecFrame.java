@@ -1,7 +1,7 @@
 package GUI.adddeletespec;
 
-import Backend.Specialist;
-import Backend.SpecialistList;
+//import Backend.Specialist;
+//import Backend.SpecialistList;
 import Backend.SpecialistTable;
 
 import java.awt.BorderLayout;
@@ -38,8 +38,6 @@ public class AddDeleteSpecFrame extends JFrame{
     private JList<String> list;
     private DefaultListModel<String> dlm;
     private JScrollPane scroll;
-    
-    SpecialistTable spec;
     
     public AddDeleteSpecFrame(){
         //Window title
@@ -100,30 +98,29 @@ public class AddDeleteSpecFrame extends JFrame{
         buttonPanel.add(deleteBtn, c);
         add(buttonPanel, BorderLayout.EAST);
     }
-       public void updateList()
-    {
-        dlm.clear();
-        for (Specialist a : Backend.SpecialistList.specs)
-        {
-            dlm.addElement(a.getFullName());
-        }
-    }
-       private Specialist getSpecialist()
-    {
-        if (list.getSelectedValue() != null)
-        {
-            String target = list.getSelectedValue();
+    
+    public void updateList() {
+		dlm.clear();
+		ArrayList<String> names = SpecialistTable.getNames();
+		for (String name : names) {
+			dlm.addElement(name);
+		}
+	}
+    
+    // TODO: return an email instead?
+	private String getSpecialist() {
+		if (list.getSelectedValue() != null) {
+			String target = list.getSelectedValue();
 
-            for (Specialist a : SpecialistList.specs)
-            {
-                if (target.equals(a.getFullName()))
-                {
-                    return a;
-                }
-            }
-        }
-        return null;
-    }
+			ArrayList<String> names = SpecialistTable.getNames();
+			for (String name : names) {
+				if (target.equals(name)) {
+					return name;
+				}
+			}
+		}
+		return null;
+	}
     //LISTENERS???
     private class submitOrDeleteListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
@@ -131,14 +128,13 @@ public class AddDeleteSpecFrame extends JFrame{
                 int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
                 boolean flag = true;
                 if (submitted == JOptionPane.OK_OPTION){
-                        boolean exists = false;
-                        for (Specialist a : SpecialistList.specs)
-                        {
-                            if (a.getFullName().equals(specInfoPanel.getFullName()))
-                            {
-                                exists = true;
-                            }
-                        }
+                    boolean exists = false;
+					ArrayList<String> names = SpecialistTable.getNames();
+					for (String name : names) {
+						if (name.equals(specInfoPanel.getFullName())) {
+							exists = true;
+						}
+					}
                     if (exists)
                     {
                         JOptionPane.showInternalMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
@@ -166,9 +162,16 @@ public class AddDeleteSpecFrame extends JFrame{
 
                                 }
                                 else{
-                                SpecialistList.specs.add(new Specialist(specInfoPanel.getPhoto(), specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
-                                updateList();
-                                specInfoPanel.clear();
+                                    // TODO: specInfoPanel getPassword
+							        SpecialistTable.addSpecialist(
+								    	specInfoPanel.getFirstName(),
+								    	specInfoPanel.getLastName(),
+								    	specInfoPanel.getPhoneText(),
+								    	specInfoPanel.getEmailText(), 
+								    	"password", // placeholder
+								    	specInfoPanel.getPhoto());
+                                        updateList();
+                                        specInfoPanel.clear();
                                 }
                     }
                    }
@@ -179,7 +182,7 @@ public class AddDeleteSpecFrame extends JFrame{
                 int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
                 if (submitted == JOptionPane.OK_OPTION){
                     if(specInfoPanel.getPhoto().length() == 0){
-                     SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
+                     //SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
                      updateList();
                      specInfoPanel.clear();
                     }
@@ -191,7 +194,7 @@ public class AddDeleteSpecFrame extends JFrame{
 
                                 }
                                 else{
-                                    SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getPhoto(),specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
+                                    //SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getPhoto(),specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
                                 }
                     }
                 }
@@ -199,7 +202,7 @@ public class AddDeleteSpecFrame extends JFrame{
         }
             if(e.getSource() == deleteBtn){
                 if(getSpecialist()!=null){
-                     SpecialistList.specs.remove(SpecialistList.specs.indexOf(getSpecialist()));
+                     //SpecialistList.specs.remove(SpecialistList.specs.indexOf(getSpecialist()));
                      updateList();
                 }
             }
