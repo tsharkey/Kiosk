@@ -86,8 +86,7 @@ public class LoginFrame extends JFrame {
        //allow login for everyone.
        // only true temporarily: the admin table isn't implemented yet.
        //TODO change to check with admin table
-       if(AdminTable.admin_exist(sUserName) &&
-    		   AdminTable.verifyPassword(sUserName, sPassWord)){
+       if(AdminTable.verifyPassword(sUserName, sPassWord)){
            DisabilityKiosk.isAdminWorking = true;
            DisabilityKiosk.workingAdmin = sUserName;
        } else
