@@ -7,11 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -21,11 +17,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class SpecInfoPanel extends JPanel{
     
     private final int CHAR_LENGTH = 30;
-    private JLabel first, last, photo, email, role, phone;
     private Font font = new Font("MONOSPACED", Font.PLAIN, 18);
     //Need to make passT a JPassword field but after that we need to add another
     //JPassword field to confirm password and check that both JPassword fields match
     private JTextField firstT, lastT, emailT, photoT, roleT, phoneT;
+    private JPasswordField passwordText, cpasswordText;
     private JButton fileselector;
    // private JComboBox locationI;
     
@@ -45,7 +41,7 @@ public class SpecInfoPanel extends JPanel{
          */
         
         //First name 
-        first = new JLabel("First Name");
+        JLabel first = new JLabel("First Name");
         first.setFont(font);
         grid.gridx = 0;
         grid.gridy = 0;
@@ -61,14 +57,14 @@ public class SpecInfoPanel extends JPanel{
         add(firstT, grid);
         
         //Last name
-        last = new JLabel("Last Name");
+        JLabel last = new JLabel("Last Name");
         last.setFont(font);
         grid.gridx = 0;
         grid.gridy = 1;
         grid.gridwidth = 1;
         add(last, grid);
         
-        //input field for first name
+        //input field for last name
         lastT = new JTextField(CHAR_LENGTH);
      
         grid.gridx = 1;
@@ -76,8 +72,8 @@ public class SpecInfoPanel extends JPanel{
         grid.gridwidth = 2;
         add(lastT, grid);
         
-        //Location
-        photo = new JLabel("Photo");
+        //Photo
+        JLabel photo = new JLabel("Photo");
         photo.setFont(font);
         grid.gridx = 0;
         grid.gridy = 2;
@@ -100,7 +96,7 @@ public class SpecInfoPanel extends JPanel{
         fileselector.addActionListener(new Listener());
         
         //Email
-        email = new JLabel("E-Mail");
+        JLabel email = new JLabel("E-Mail");
         email.setFont(font);
         grid.gridx = 0;
         grid.gridy = 3;
@@ -114,8 +110,8 @@ public class SpecInfoPanel extends JPanel{
         grid.gridwidth = 2;
         add(emailT, grid);
         
-        //Email
-        phone = new JLabel("Phone");
+        //Phone
+        JLabel phone = new JLabel("Phone");
         phone.setFont(font);
         grid.gridx = 0;
         grid.gridy = 5;
@@ -130,7 +126,7 @@ public class SpecInfoPanel extends JPanel{
         add(phoneT, grid);
         
         //role
-        role = new JLabel("Role");
+        JLabel role = new JLabel("Role");
         role.setFont(font);
         grid.gridx = 0;
         grid.gridy = 4;
@@ -143,9 +139,34 @@ public class SpecInfoPanel extends JPanel{
         grid.gridy = 4;
         grid.gridwidth = 2;
         add(roleT, grid);
-        
-        
-        
+
+        //password label and field
+        JLabel password = new JLabel("Password");
+        password.setFont(font);
+        grid.gridx = 0;
+        grid.gridy = 6;
+        grid.gridwidth = 1;
+        add(password, grid);
+
+        passwordText = new JPasswordField(CHAR_LENGTH);
+        grid.gridx = 1;
+        grid.gridy = 6;
+        grid.gridwidth = 2;
+        add(passwordText,grid);
+
+        //confirm password label and field
+        JLabel cpassword = new JLabel("Confirm");
+        cpassword.setFont(font);
+        grid.gridx = 0;
+        grid.gridy = 7;
+        grid.gridwidth = 1;
+        add(cpassword, grid);
+
+        cpasswordText = new JPasswordField(CHAR_LENGTH);
+        grid.gridx = 1;
+        grid.gridy = 7;
+        grid.gridwidth = 2;
+        add(cpasswordText, grid);
         
     }
     
@@ -196,22 +217,41 @@ public class SpecInfoPanel extends JPanel{
         // invalid phone number
         return "";
     }
+
+    /**
+     * Returns the file name of the photo
+     * @return
+     */
     public String getPhoto(){
-        return photoT.getText();
+        String temp = photoT.getText();
+        String[] tempList = temp.split("/", -2);
+//        System.out.println(tempList[tempList.length-1]);
+        return tempList[tempList.length-1];
     }
 
-    //not sure what this does
-    /*
-    public void setEditUser(Specialist a){
-        firstT.setText(a.getfName());
-        lastT.setText(a.getLname());
-        emailT.setText(a.getEmail());
-        phoneT.setText(a.getPhone());
-        roleT.setText(a.getRole());
-        if(photoT.getText().equals(""))
-        photoT.setText(a.getPhoto().getDescription());
+
+    /**
+     *     Edit information of a specialist
+     */
+//
+//    public void setEditUser(Specialist a){
+//        firstT.setText(a.getfName());
+//        lastT.setText(a.getLname());
+//        emailT.setText(a.getEmail());
+//        phoneT.setText(a.getPhone());
+//        roleT.setText(a.getRole());
+//        if(photoT.getText().equals(""))
+//        photoT.setText(a.getPhoto().getDescription());
+//    }
+
+
+    public String getPassword() {
+        return String.valueOf(passwordText.getPassword());
     }
-    */
+
+    public String getCPassword() {
+        return String.valueOf(passwordText.getPassword());
+    }
     
     /**
      * Clear all text fields
@@ -223,6 +263,8 @@ public class SpecInfoPanel extends JPanel{
         phoneT.setText("");
         roleT.setText("");
         photoT.setText("");
+        passwordText.setText("");
+        cpasswordText.setText("");
     }
 
     /**

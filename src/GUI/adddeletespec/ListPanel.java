@@ -3,6 +3,8 @@ package GUI.adddeletespec;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -26,7 +28,7 @@ public class ListPanel extends JPanel{
     //JPassword field to confirm password and check that both JPassword fields match
     
     //private ArrayList<Specialist> specs = new ArrayList<Specialist>(Backend.SpecialistList.getSpecialList());
-    
+    private String selectedSpec;
     private JList list;
     private DefaultListModel dlm;
     private JScrollPane scroll;
@@ -51,7 +53,8 @@ public class ListPanel extends JPanel{
        list = new JList(dlm);
        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
        list.setLayoutOrientation(JList.VERTICAL);
-        
+
+
        //nList = new JList(namesList.toArray());
        //add the scroll pane
        scroll = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -63,7 +66,10 @@ public class ListPanel extends JPanel{
        add(scroll, BorderLayout.CENTER);
        setVisible(true);
     }
-    
+
+    /**
+     * update the list of specialist
+     */
     public void updateList()
     {
         dlm.clear();
@@ -72,4 +78,20 @@ public class ListPanel extends JPanel{
         	dlm.addElement(name);
         }
     }
+
+    /**
+     * Listener for the list
+     */
+    //TODO: set the selected Specialist for edit or delete
+    private class ListListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            if(e.getSource() == list){
+                selectedSpec = String.valueOf(list.getSelectedValue());
+                System.out.println(selectedSpec);
+            }
+        }
+    }
+
+
 }
