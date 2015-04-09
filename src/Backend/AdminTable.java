@@ -1,8 +1,8 @@
 package Backend;
 
+import java.util.ArrayList;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
 
 /**
  * This class handles interfacing with the MySQL database with regards to the
@@ -10,13 +10,17 @@ import java.util.ArrayList;
  * 
  * @author Parth Patel, John Cyzeski, Maria del Mar Moncaleano, Brendan Casey
  * 
- * TODO: vulnerable to SQL injections -> sanitize inputs
+ *         TODO: vulnerable to SQL injections -> sanitize inputs
  */
 
 public class AdminTable {
 
 	// Adds an Admin
 	public static boolean addAdmin(String user, String password) {
+		if(admin_exist(user)){
+			// attempt to UPDATE rather than INSERT if user already exists
+			return updatePassword(user, password);
+		}
 		int insertCount = 0;
 		try {
 			insertCount = DatabaseConnector
@@ -38,6 +42,7 @@ public class AdminTable {
 	// check the input for the user
 	public static boolean verifyPassword(String user, String password) {
 		boolean isValid = false;
+		// could be replaced with admin_exist(user)
 		String hash = DatabaseConnector.executeQueryString(1,
 				"SELECT hash FROM ADMIN WHERE hash = (SELECT hash FROM ADMIN WHERE user='"
 						+ user + "')");
@@ -74,7 +79,7 @@ public class AdminTable {
 	 */
 	public static ArrayList<String> getAdmins() {
 		return DatabaseConnector.executeQueryStrings("user",
-				"SELECT user FROM ADMIN");
+				"SELECT user FROM ADMIN ORDER BY user ASC");
 	}
 
 	/**
@@ -83,10 +88,10 @@ public class AdminTable {
 	 * @param admin
 	 * @return
 	 */
-	public static boolean admin_exist(String admin) {
+	public static boolean admin_exist(String user) {
 		ArrayList<String> admins = getAdmins();
-		for (String adminLoop : admins) {
-			if (adminLoop.equals(admin)) {
+		for (String admin : admins) {
+			if (admin.equals(user)) {
 				return true;
 			}
 		}
