@@ -233,8 +233,8 @@ public class SpecInfoPanel extends JPanel{
     /**
      *     Edit information of a specialist
      */
-//
-//    public void setEditUser(Specialist a){
+
+//    public void setEditUser( a){
 //        firstT.setText(a.getfName());
 //        lastT.setText(a.getLname());
 //        emailT.setText(a.getEmail());

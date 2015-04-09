@@ -35,8 +35,8 @@ public class AddDeleteSpecFrame extends JFrame{
     private ListPanel listPanel;
     private JPanel buttonPanel;
     private JButton addBtn, editBtn, deleteBtn;
-    private JList<String> list;
-    private DefaultListModel<String> dlm;
+//    private JList<String> list;
+//    private DefaultListModel<String> dlm;
     private JScrollPane scroll;
     
     public AddDeleteSpecFrame(){
@@ -58,9 +58,10 @@ public class AddDeleteSpecFrame extends JFrame{
      *
      */
     private void buildMainFrame(){
-        dlm = new DefaultListModel<String>();
-        updateList();
+//        dlm = new DefaultListModel<String>();
+//        updateList();
         listPanel = new ListPanel();
+        listPanel.updateList();
         specInfoPanel = new SpecInfoPanel();
         //listPanel = new ListPanel();
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -98,19 +99,19 @@ public class AddDeleteSpecFrame extends JFrame{
         buttonPanel.add(deleteBtn, c);
         add(buttonPanel, BorderLayout.EAST);
     }
+//
+//    public void updateList() {
+//		dlm.clear();
+//		ArrayList<String> names = SpecialistTable.getNames();
+//		for (String name : names) {
+//			dlm.addElement(name);
+//		}
+//	}
     
-    public void updateList() {
-		dlm.clear();
-		ArrayList<String> names = SpecialistTable.getNames();
-		for (String name : names) {
-			dlm.addElement(name);
-		}
-	}
-    
-    // TODO: return an email instead?
+    // TODO: return an email
 	private String getSpecialist() {
-		if (list.getSelectedValue() != null) {
-			String target = list.getSelectedValue();
+		if (listPanel.getSelectedSpec() != null) {
+			String target = listPanel.getSelectedSpec();
 
 			ArrayList<String> names = SpecialistTable.getNames();
 			for (String name : names) {
@@ -143,10 +144,6 @@ public class AddDeleteSpecFrame extends JFrame{
                             || specInfoPanel.getRoleText().length() == 0){
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete Information", JOptionPane.ERROR_MESSAGE);
                     }
-                    else if(specInfoPanel.getPhoto().length() == 0)
-                    {
-                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Image Missing", JOptionPane.ERROR_MESSAGE);
-                    }
                     else if(specInfoPanel.getPhoneText().length() == 0){
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
                     }
@@ -175,7 +172,7 @@ public class AddDeleteSpecFrame extends JFrame{
 								    	specInfoPanel.getEmailText(), 
 								    	specInfoPanel.getPassword(),
 								    	specInfoPanel.getPhoto());
-                                        updateList();
+                                        listPanel.updateList();
                                         specInfoPanel.clear();
                                 }
                     }
@@ -184,32 +181,32 @@ public class AddDeleteSpecFrame extends JFrame{
             if (e.getSource() == editBtn){
                 if(getSpecialist()!=null){
 //                specInfoPanel.setEditUser(getSpecialist());
-                int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
-                if (submitted == JOptionPane.OK_OPTION){
-                    if(specInfoPanel.getPhoto().length() == 0){
+//                int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
+//                if (submitted == JOptionPane.OK_OPTION){
+//                    if(specInfoPanel.getPhoto().length() == 0){
                      //SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
-                        JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
-                     updateList();
-                     specInfoPanel.clear();
-                    }
-                    else{
-                        ImageIcon j = new ImageIcon(specInfoPanel.getPhoto());
-                                if(j.getIconHeight()>250||j.getIconWidth()>250){
-                                    
-                                      JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
+//                        JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
+//                     updateList();
+//                     specInfoPanel.clear();
+//                    }
+//                    else{
+//                        ImageIcon j = new ImageIcon(specInfoPanel.getPhoto());
+//                                if(j.getIconHeight()>250||j.getIconWidth()>250){
+//
+//                                      JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
+//
+//                                }
+//                                else{
+//                                    SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getPhoto(),specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
+//                                }
 
-                                }
-                                else{
-                                    //SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getPhoto(),specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
-                                }
-                    }
-                }
+
             }
         }
             if(e.getSource() == deleteBtn){
                 if(getSpecialist()!=null){
                      //SpecialistList.specs.remove(SpecialistList.specs.indexOf(getSpecialist()));
-                     updateList();
+                     listPanel.updateList();
                 }
             }
     }
