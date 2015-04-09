@@ -1,0 +1,56 @@
+
+Bugs and Improvements
+
+
+Visual-(Henrique, Viet, Catherine, Hannah, Brendan s., Gena)
+
+
+FIXED
+-the "Okay" button when choosing a photo is bugged (Brendan)
+-the slider for text size in the main window changes size when you use it. (Henrique)(FIXED)
+-cannot escape login window without entering correct login credentials - (Viet) (FIXED)
+-the main window should use setExtendedState(Frame.MAXIMIZED_BOTH) instead of its 
+  current size declaration. (Hannah)
+-if you create a specialist with empty text fields, you cannot submit requests to see  
+  that specialist, the submit button won't do anything. (Catherine)(FIXED)
+-The font size on the Specialist selection window is small for the page. (Henrique)
+-the specialist page should come up before the main window is opened. - (Viet) (FIXED) 
+-if there is no Specialist still allows you into the specialist selection window. (FIXED)
+-need a button to turn off and on the auto text to speech. (Already implemented)
+-cannot exit login window without logging in. - (Viet) (FIXED)
+-submit button should be below the text area for easier access. (Catherine)(FIXED)
+-there is no all choose in the drop downs in the report window. (Catherine)(FIXED)
+-Speech button overlap each other when multiple speech text are clicked. (Viet)(FIXED)
+-Text Fields are not Validated, especially email and phone-number. User can enter 
+   whichever text they want and the program will accept it. (Hannah) (FIXED)
+-the specialistSelectorWindow is bugged if there is no Specialist in the program.
+   (FIXED)
+-speech button for admin, close, and submit are redundant. (FIXED)
+- location sound button does not work. (Henrique)
+  -When editing a specialist's first and last name, the change won't reflect on the list 
+  immediately. need to reopen the window to see the change. (HENRIQUE) 
+  -When editing a specialist's first and last name, the change won't reflect on the list 
+  immediately. need to reopen the window to see the change. (HENRIQUE)
+  -Add a new panel at startup to initialized connection with database. (Catherine)
+
+
+TO BE FIXED
+  - Stores the login credential (in a file?) to allow for continued connection between the database and program while the program is running.
+  -Login combobox to choose who is logging in, as admin or supervisor.
+  -Add something to remind the admin to logout. (ask for username/pass when admin button is pressed)
+  -there is no way to go back to viewing all dates in the report window after choosing a 
+  specific date, unless you reopen the window. (DATABASE?- create buttons)
+  -there is no way to go back to viewing all reasons in the report window after choosing 
+  a specific reason. (add all students) - Hannah
+  - stop user from typing in more info if information is already in database - automatically fill. (Brendan).
+  - add Search Button (Hannah)
+  - When sound button is pressed twice in a row, the sounds overlap.
+  - new log in panel to give access to database  -- ** add details?
+
+Backend-(Brendan C., Sean, Parth, John, Tom, Maria)
+
+-Database connection bug?
+-Check database (might not be saving inputs after user logs out)
+-Create and implement mySQL database
+-Create new code for connecting to, reading, writing and querying the DB
+-Locate and refactor code in the rest of the program that interface with the Backend
