@@ -1,8 +1,8 @@
 package GUI.teacherselectionwindow;
 
-import Backend.Data;
+//import Backend.Data;
 import Backend.SpecialistTable;
-import Backend.User;
+//import Backend.User;
 
 import disabilitykiosk.DisabilityKiosk;
 
@@ -26,7 +26,7 @@ public class SpecialistSelectionWindow extends JFrame {
     Toolkit tk = Toolkit.getDefaultToolkit();
     private final int WINDOW_WIDTH = ((int) tk.getScreenSize().getWidth());
     private final int WINDOW_HEIGHT = ((int) tk.getScreenSize().getHeight());
-    private Backend.User user;
+    //private Backend.User user;
     private JButton submit;
     private JPanel panel1, panel2; //panel3, panel4;
     private ArrayList<JRadioButtonMenuItem> radioButtons;

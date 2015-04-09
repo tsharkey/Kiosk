@@ -7,10 +7,7 @@
 package GUI.loginwindow;
 
 import disabilitykiosk.*;
-import Backend.Admin;
-import Backend.AdminAccount;
 import Backend.AdminTable;
-import Backend.SpecialistList;
 import GUI.adddeletespec.AddDeleteSpecFrame;
 import GUI.reportwindow.*;
 
@@ -26,11 +23,11 @@ public class AdminFrame extends JFrame {
     private final int WINDOW_WIDTH = 500;
     private final int WINDOW_HEIGHT = 100;
 
-    private JButton reportButton = new JButton("VIEW REPORT");
-    private JButton closeKioskButton = new JButton("CLOSE KIOSK");
-    private JButton createNewAdmin = new JButton("NEW ADMIN");//allow the admin to create another admin
-    private JButton specialist = new JButton("ADD SPECIALIST"); //creates a adddeletespecframe -Brendan S
-    private JButton logout = new JButton("LOG OUT");
+    private final JButton reportButton = new JButton("VIEW REPORT");
+    private final JButton closeKioskButton = new JButton("CLOSE KIOSK");
+    private final JButton createNewAdmin = new JButton("NEW ADMIN");//allow the admin to create another admin
+    private final JButton specialist = new JButton("ADD SPECIALIST"); //creates a adddeletespecframe -Brendan S
+    private final JButton logout = new JButton("LOG OUT");
 
     public AdminFrame() {
 
@@ -95,6 +92,7 @@ public class AdminFrame extends JFrame {
     // action listeners for each button
     public class CloseKioskButtonListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent ee) {
             if (ee.getSource() == getCloseKioskButton()) {
                 //Admin.serialize();
@@ -108,6 +106,7 @@ public class AdminFrame extends JFrame {
 
     private class ReportButtonListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
 
             if (e.getSource() == getReportButton()) {
@@ -176,6 +175,7 @@ public class AdminFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             DisabilityKiosk.isAdminWorking = false;
+            DisabilityKiosk.workingAdmin = "";
             System.exit(0);
             new DisabilityKiosk();
         }

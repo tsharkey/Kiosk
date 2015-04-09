@@ -1,7 +1,8 @@
 package GUI.adddelete;
 
-import Backend.Admin;
-import Backend.AdminAccount;
+import Backend.AdminTable;
+import GUI.loginwindow.AdminFrame;
+import disabilitykiosk.DisabilityKiosk;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -21,21 +22,19 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 // Created by Pat and Cyrus
+public class AddDeleteAdminFrame extends JFrame {
 
-public class AddDeleteAdminFrame extends JFrame
-{
     private final int WINDOW_WIDTH = 800;
     private final int WINDOW_HEIGHT = 500;
-    
+
     private JList<String> list;
     private DefaultListModel<String> listModel;
     private JScrollPane listScroller;
-    
+
     private JPanel buttonPanel;
     private JButton addBtn, editBtn, deleteBtn;
-    
-    public AddDeleteAdminFrame()
-    {
+
+    public AddDeleteAdminFrame() {
         setTitle("Add/Delete Administrators");
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLayout(new BorderLayout());
@@ -45,24 +44,22 @@ public class AddDeleteAdminFrame extends JFrame
         setVisible(true);
         setResizable(false);
     }
-    
-    private void buildMainFrame()
-    {
-        listModel = new DefaultListModel<String>();
-        
-        updateList();
-        list = new JList<String>(listModel);
-        
-        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        list.setLayoutOrientation(JList.VERTICAL);
-        
-        listScroller = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        add(listScroller, BorderLayout.CENTER);
-        
+
+    private void buildMainFrame() {
+        //listModel = new DefaultListModel<String>();
+
+        //list = new JList<String>(listModel);
+
+        //list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        //list.setLayoutOrientation(JList.VERTICAL);
+
+        //listScroller = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        //add(listScroller, BorderLayout.CENTER);
+
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        
+
         addBtn = new JButton("Add New Admin");
         addBtn.addActionListener(new ButtonListener());
         c.gridx = 0;
@@ -70,7 +67,7 @@ public class AddDeleteAdminFrame extends JFrame
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weighty = 0.05;
         buttonPanel.add(addBtn, c);
-        
+
         editBtn = new JButton("Edit Admin");
         editBtn.addActionListener(new ButtonListener());
         c.gridx = 0;
@@ -78,7 +75,7 @@ public class AddDeleteAdminFrame extends JFrame
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weighty = 0.05;
         buttonPanel.add(editBtn, c);
-        
+
         deleteBtn = new JButton("Remove Admin");
         deleteBtn.addActionListener(new ButtonListener());
         c.gridx = 0;
@@ -86,158 +83,116 @@ public class AddDeleteAdminFrame extends JFrame
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weighty = 0.05;
         buttonPanel.add(deleteBtn, c);
-        
-        add(buttonPanel, BorderLayout.EAST);
+
+        //add(buttonPanel, BorderLayout.EAST);
+        add(buttonPanel);
     }
     
-    private void updateList()
-    {
-        listModel.clear();
-        for (AdminAccount a : Backend.Admin.admins)
-        {
-            listModel.addElement(a.getUsername());
-        }
-    }
-    
-    private AdminAccount getAdmin()
-    {
-        if (list.getSelectedValue() != null)
-        {
-            String target = list.getSelectedValue();
-            
-            for (AdminAccount a : Admin.admins)
-            {
-                if (target.equals(a.getUsername()))
-                {
-                    return a;
-                }
-            }
-        }
-        return null;
-    }
-    
-    private class ButtonListener implements ActionListener
-    {
+
+    private class ButtonListener implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            if (e.getSource() == addBtn)
-            {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == addBtn) {
                 JPanel adminInput = new JPanel();
                 JTextField unInput = new JTextField(10);
                 JPasswordField pwInput = new JPasswordField(10);
-                adminInput.add(new JLabel("Username: " ));
+                JPasswordField confirmPW = new JPasswordField(10);
+                adminInput.add(new JLabel("Username: "));
                 adminInput.add(unInput);
                 adminInput.add(Box.createHorizontalStrut(15));
                 adminInput.add(new JLabel("Password: "));
                 adminInput.add(pwInput);
-                int submitted = JOptionPane.showConfirmDialog(null, adminInput, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
-                
-                if (submitted == JOptionPane.OK_OPTION)
-                {
-                    boolean exists = false;
-                    
-                    for (AdminAccount a : Admin.admins)
-                    {
-                        if (a.getUsername().equals(unInput.getText()))
-                        {
-                            exists = true;
-                        }
-                    }
-                    if (exists)
-                    {
-                        JOptionPane.showMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else
-                    {
-                        String pw = new String(pwInput.getPassword());
-                        Admin.admins.add(new AdminAccount(unInput.getText(), pw));
-                        updateList();
-                    }
-                }
-            }
-            else if (e.getSource() == editBtn)
-            {
-                if (getAdmin() != null)
-                {
-                    JPanel passCheck = new JPanel();
-                    JPasswordField passInput = new JPasswordField(20);
-                    passCheck.add(new JLabel("Password: "));
-                    passCheck.add(passInput);
-                    int entered = JOptionPane.showConfirmDialog(null, passCheck, "Please enter the current password for this account.", JOptionPane.OK_CANCEL_OPTION);
+                adminInput.add(new JLabel("Confirm Password:"));
+                adminInput.add(confirmPW);
+                int submitted = JOptionPane.showConfirmDialog(null, adminInput, "Please enter admin information", JOptionPane.OK_CANCEL_OPTION);
 
-                    if (entered == JOptionPane.OK_OPTION)
-                    {
-                        String pw = new String(passInput.getPassword());
-                        if (pw.equals(getAdmin().getPassword()))
-                        {
-                            JPanel adminInput = new JPanel();
-                            JTextField unInput = new JTextField(10);
-                            JPasswordField pwInput = new JPasswordField(10);
-                            adminInput.add(new JLabel("Username: " ));
-                            adminInput.add(unInput);
-                            adminInput.add(Box.createHorizontalStrut(15));
-                            adminInput.add(new JLabel("Password: "));
-                            adminInput.add(pwInput);
-                            int submitted = JOptionPane.showConfirmDialog(null, adminInput, "Please enter a new username and password for this account.", JOptionPane.OK_CANCEL_OPTION);
-
-                            if (submitted == JOptionPane.OK_OPTION)
-                            {
-                                Admin.admins.set(Admin.admins.indexOf(getAdmin()), new AdminAccount(unInput.getText(), pw));
-                                updateList();
-                            }
+                if (submitted == JOptionPane.OK_OPTION) {
+                    String un = unInput.getText();
+                    String pw = new String(pwInput.getPassword());
+                    String cfpw = new String(confirmPW.getPassword());
+                    if (!un.equals("") && !pw.equals("") && !cfpw.equals("")) {
+                        if (AdminTable.admin_exist(un)) {
+                            JOptionPane.showMessageDialog(null, "An account with this username already exits.", "Error", JOptionPane.ERROR_MESSAGE);
+                            new AdminFrame();
+                        } else if (!pw.equals(cfpw)) {
+                            JOptionPane.showMessageDialog(null, "Passwords do not match", "Error ", JOptionPane.ERROR_MESSAGE);
+                            new AdminFrame();
+                        } else {
+                            AdminTable.addAdmin(un, pw);
                         }
-                        else
-                        {
-                            JOptionPane.showMessageDialog(null, "Incorrect Password.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Missing info ", "Error", JOptionPane.ERROR_MESSAGE);
+                        new AdminFrame();
                     }
+                } else {
+                    new AdminFrame();
                 }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "Please select an account to edit.", "Select Account", JOptionPane.ERROR_MESSAGE);
+            } else if (e.getSource() == editBtn) {
+                JPanel passChange = new JPanel();
+                passChange.add(new JLabel("Current Password: "));
+                JPasswordField oldPassInput = new JPasswordField(20);
+                passChange.add(oldPassInput);
+                passChange.add(new JLabel("New Password:"));
+                JPasswordField newPassInput = new JPasswordField(20);
+                passChange.add(newPassInput);
+                passChange.add(new JLabel("Confirm:"));
+                JPasswordField cfPassInput = new JPasswordField(20);
+                passChange.add(cfPassInput);
+                int entered = JOptionPane.showConfirmDialog(null, passChange, "Please enter information", JOptionPane.OK_CANCEL_OPTION);
+
+                if (entered == JOptionPane.OK_OPTION) {
+                    String opw = new String(oldPassInput.getPassword());
+                    String npw = new String(newPassInput.getPassword());
+                    String cfpw = new String(cfPassInput.getPassword());
+                    if (!opw.equals("") && !npw.equals("") && !cfpw.equals("")) {
+                        if (AdminTable.verifyPassword(DisabilityKiosk.workingAdmin, opw)) {
+                            JOptionPane.showMessageDialog(null, "Wrong old password", "Error", JOptionPane.ERROR_MESSAGE);
+                            new AdminFrame();
+                        } else if (!npw.equals(cfpw)) {
+                            JOptionPane.showMessageDialog(null, "New Passwords do not match", "Error ", JOptionPane.ERROR_MESSAGE);
+                            new AdminFrame();
+                        } else {
+                            AdminTable.updatePassword(DisabilityKiosk.workingAdmin, npw);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Missing info ", "Error", JOptionPane.ERROR_MESSAGE);
+                        new AdminFrame();
+                    }
+                } else {
+                    new AdminFrame();
                 }
-            }
-            else if (e.getSource() == deleteBtn)
-            {
-                if (getAdmin() != null)
-                {
-                    if (Admin.admins.size() == 1)
-                    {
+            } else if (e.getSource()
+                    == deleteBtn) {
+                    if (AdminTable.getAdmins().size() == 1) {
                         JOptionPane.showMessageDialog(null, "You cannot delete the last Administrator.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else 
-                    {
+                    } else {
                         JPanel passCheck = new JPanel();
                         JPasswordField passInput = new JPasswordField(20);
                         passCheck.add(new JLabel("Password: "));
                         passCheck.add(passInput);
                         int entered = JOptionPane.showConfirmDialog(null, passCheck, "Please enter the current password for this account.", JOptionPane.OK_CANCEL_OPTION);
 
-                        if (entered == JOptionPane.OK_OPTION)
-                        {
+                        if (entered == JOptionPane.OK_OPTION) {
                             String pw = new String(passInput.getPassword());
-                            if (pw.equals(getAdmin().getPassword()))
-                            {
+                            if (AdminTable.verifyPassword(DisabilityKiosk.workingAdmin, pw)) {
                                 int entered2 = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this account?", "Verification", JOptionPane.YES_NO_OPTION);
 
-                                if (entered2 == JOptionPane.YES_OPTION)
-                                {
-                                    Admin.admins.remove(getAdmin());
-                                    updateList();
+                                if (entered2 == JOptionPane.YES_OPTION) {
+                                    AdminTable.deleteAdmin(DisabilityKiosk.workingAdmin);
+                                    DisabilityKiosk.workingAdmin = "";
+                                    DisabilityKiosk.isAdminWorking = false;
+                                    new DisabilityKiosk();
                                 }
-                            }
-                            else
-                            {
+                                else{
+                                    new AdminFrame();
+                                }
+                            } else {
                                 JOptionPane.showMessageDialog(null, "Incorrect Password.", "Error", JOptionPane.ERROR_MESSAGE);
+                                new AdminFrame();
                             }
                         }
                     }
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "Please select an account to remove.", "Select Account", JOptionPane.ERROR_MESSAGE);
-                }
             }
         }
     }

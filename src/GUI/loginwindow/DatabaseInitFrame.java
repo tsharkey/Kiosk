@@ -1,10 +1,7 @@
 package GUI.loginwindow;
 
-import Backend.Admin;
-import Backend.AdminAccount;
 import Backend.DatabaseConnector;
 import disabilitykiosk.DisabilityKiosk;
-import Backend.AdminTable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -56,6 +53,7 @@ public class DatabaseInitFrame extends JFrame{
      */
     private class CancelButtonListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent ae) {
 
             if (ae.getSource() == initPanel.getCancelButton()) {
@@ -68,6 +66,7 @@ public class DatabaseInitFrame extends JFrame{
     
     private class ConnectButtonListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
 
             if (e.getSource() == initPanel.getConnectButton()) {
