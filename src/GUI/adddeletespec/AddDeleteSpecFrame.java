@@ -32,6 +32,7 @@ public class AddDeleteSpecFrame extends JFrame{
     private final int WINDOW_HEIGHT = 500;
     private ArrayList<String> specNames;
     private SpecInfoPanel specInfoPanel;
+    private ListPanel listPanel;
     private JPanel buttonPanel;
     private JButton addBtn, editBtn, deleteBtn;
     private JList<String> list;
@@ -61,20 +62,14 @@ public class AddDeleteSpecFrame extends JFrame{
     private void buildMainFrame(){
         dlm = new DefaultListModel<String>();
         updateList();
-       //one of these lists is used to display the names, they have the same index
-        list = new JList(dlm);
-        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        list.setLayoutOrientation(JList.VERTICAL);
-//        submitPanel = new SubmitorDeleteSpec();
-        scroll = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-        JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scroll.setPreferredSize(new Dimension(300, 490));
+        listPanel = new ListPanel();
         specInfoPanel = new SpecInfoPanel();
         //listPanel = new ListPanel();
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         
         setLayout(new BorderLayout());
-        add(scroll, BorderLayout.CENTER);
+
+        add(listPanel);
         //add(specInfoPanel, BorderLayout.EAST);
 //        add(submitPanel, BorderLayout.SOUTH);
         buttonPanel = new JPanel();

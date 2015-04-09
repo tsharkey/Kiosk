@@ -40,7 +40,7 @@ public class ListPanel extends JPanel{
     private void buildPanel(){
         
        specLabel = new JLabel("Specialists");
-       
+
        //to hold names for the Scroll Pane
        //ArrayList<String> namesList = new ArrayList<String>();
        
@@ -56,9 +56,9 @@ public class ListPanel extends JPanel{
        //add the scroll pane
        scroll = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
             JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-       
+
        scroll.setPreferredSize(new Dimension(300, 490));
-       
+
        add(specLabel, BorderLayout.NORTH);
        add(scroll, BorderLayout.CENTER);
        setVisible(true);

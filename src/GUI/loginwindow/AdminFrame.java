@@ -67,7 +67,6 @@ public class AdminFrame extends JFrame {
         getRootPane().setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
         //setAlwaysOnTop(true);
         setResizable(false);
-//        getRootPane().setDefaultButton(launchKioskButton);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -190,7 +189,6 @@ public class AdminFrame extends JFrame {
             new AddDeleteSpecFrame();
 
         }
-
     }
 
     //we should add more buttons to give the admin more rights.
