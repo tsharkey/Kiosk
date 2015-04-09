@@ -43,7 +43,7 @@ public class AdminTable {
 	public static boolean verifyPassword(String user, String password) {
 		boolean isValid = false;
 		// could be replaced with admin_exist(user)
-		String hash = DatabaseConnector.executeQueryString(1,
+		String hash = DatabaseConnector.executeQueryString("hash",
 				"SELECT hash FROM ADMIN WHERE hash = (SELECT hash FROM ADMIN WHERE user='"
 						+ user + "')");
 		if (hash != null) {

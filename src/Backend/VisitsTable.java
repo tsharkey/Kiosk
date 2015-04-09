@@ -21,14 +21,6 @@ public class VisitsTable {
                 "WHERE visitDate = '" + date + "'and visitTime = '" + time + "' and email = '" + email + "'");
     	return (deleteCount != 0) ? true : false;
     }
-
-    /*
-    //takes in a start and end date to return a set of visits between the ranges
-    public static ResultSet visitsByDate(String startDate, String endDate){
-        return null;//DatabaseConnector.executeQuery("SELECT * FROM VISITS"+
-                //"WHERE visitDate between '"+startDate+"' and '"+endDate+"'");
-    }
-    */
     
     public static ArrayList<Date> getVisitDates()
     {
@@ -64,6 +56,15 @@ public class VisitsTable {
     {
     	return DatabaseConnector.executeQueryStrings("location", "SELECT location FROM VISITS ORDER BY ID ASC");
     }
+    
+
+    /*
+    //takes in a start and end date to return a set of visits between the ranges
+    public static ResultSet visitsByDate(String startDate, String endDate){
+        return null;//DatabaseConnector.executeQuery("SELECT * FROM VISITS"+
+                //"WHERE visitDate between '"+startDate+"' and '"+endDate+"'");
+    }
+    */
     
     /*
     public static ArrayList<VisitData> searchVisitString(String query, String column)
