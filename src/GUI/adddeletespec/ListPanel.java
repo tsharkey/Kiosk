@@ -28,7 +28,6 @@ public class ListPanel extends JPanel{
     //JPassword field to confirm password and check that both JPassword fields match
     
     //private ArrayList<Specialist> specs = new ArrayList<Specialist>(Backend.SpecialistList.getSpecialList());
-    private String selectedSpec;
     private JList list;
     private DefaultListModel dlm;
     private JScrollPane scroll;
@@ -79,18 +78,10 @@ public class ListPanel extends JPanel{
         }
     }
 
-    /**
-     * Listener for the list
-     */
-    //TODO: set the selected Specialist for edit or delete
-    private class ListListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e){
-            if(e.getSource() == list){
-                selectedSpec = String.valueOf(list.getSelectedValue());
-                System.out.println(selectedSpec);
-            }
-        }
+    public String[] getSelectedSpec() {
+        String temp = String.valueOf(list.getSelectedValue());
+        String[] s = temp.split(" ",-1);
+        return s;
     }
 
 
