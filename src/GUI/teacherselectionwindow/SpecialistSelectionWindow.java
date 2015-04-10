@@ -34,7 +34,7 @@ public class SpecialistSelectionWindow extends JFrame {
     private ArrayList<String> specName;
     private ArrayList<String> specPhoto;
     //private Border blackline = BorderFactory.createLineBorder(Color.black);
-      //TODO: new Pass in the user info into the Constructor
+      //TODO: need to get information that user filled out in the form into the Constructor
     public SpecialistSelectionWindow() {
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

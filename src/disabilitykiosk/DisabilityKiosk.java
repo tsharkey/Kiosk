@@ -231,10 +231,11 @@ public class DisabilityKiosk extends JFrame {
                     	UserTable.addUser(labelsAndFields.getFirst(), labelsAndFields.getLast(), labelsAndFields.getEmail(), labelsAndFields.getPhone(), labelsAndFields.getRole());
                     }
                     
-                    // FIX: Visit should be created after selection of Specialist
+                    // TODO: Visit should be created after selection of Specialist
                     //VisitsTable.addVisit(labelsAndFields.getReason(), labelsAndFields.getFollowUp(), labelsAndFields.getEmail(), "fix this", labelsAndFields.getLocationInput());
                     setVisible(false);
-//                    new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);
+                    //TODO: needs to pass the information gathered from LabelsAndFieldsPanel to SpecialistSelectionWindow.
+                    new GUI.teacherselectionwindow.SpecialistSelectionWindow();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No Specialist in List", "Incomplete", JOptionPane.ERROR_MESSAGE);
