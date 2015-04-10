@@ -176,7 +176,6 @@ public class AdminFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             DisabilityKiosk.isAdminWorking = false;
             DisabilityKiosk.workingAdmin = "";
-            System.exit(0);
             new DisabilityKiosk();
         }
 

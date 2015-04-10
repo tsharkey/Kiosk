@@ -78,9 +78,10 @@ public class ListPanel extends JPanel{
         }
     }
 
-    public String getSelectedSpec() {
-        System.out.println(String.valueOf(list.getSelectedValue()));
-        return String.valueOf(list.getSelectedValue());
+    public String[] getSelectedSpec() {
+        String temp = String.valueOf(list.getSelectedValue());
+        String[] s = temp.split(" ",-1);
+        return s;
     }
 
 

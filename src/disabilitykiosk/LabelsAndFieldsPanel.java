@@ -583,10 +583,11 @@ public class LabelsAndFieldsPanel extends JPanel {
             }
         }
     }
-    /*
+
+
+    /**
      * Setting up thread for time and date
      */
-
     private class DateAndTime implements Runnable {
 
         private static final int DELAY = 5000;//Sleep every 5 seconds

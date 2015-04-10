@@ -32,6 +32,7 @@ public class AddDeleteSpecFrame extends JFrame{
     private final int WINDOW_HEIGHT = 500;
     private ArrayList<String> specNames;
     private SpecInfoPanel specInfoPanel;
+    private UpdatePanel updatePanel;
     private ListPanel listPanel;
     private JPanel buttonPanel;
     private JButton addBtn, editBtn, deleteBtn;
@@ -63,6 +64,7 @@ public class AddDeleteSpecFrame extends JFrame{
         listPanel = new ListPanel();
         listPanel.updateList();
         specInfoPanel = new SpecInfoPanel();
+        updatePanel = new UpdatePanel();
         //listPanel = new ListPanel();
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         
@@ -99,116 +101,146 @@ public class AddDeleteSpecFrame extends JFrame{
         buttonPanel.add(deleteBtn, c);
         add(buttonPanel, BorderLayout.EAST);
     }
-//
-//    public void updateList() {
-//		dlm.clear();
-//		ArrayList<String> names = SpecialistTable.getNames();
-//		for (String name : names) {
-//			dlm.addElement(name);
-//		}
-//	}
-    
-    // TODO: return an email
+
+    /**
+     * Return the email of a specialist
+     * @return
+     */
 	private String getSpecialist() {
 		if (listPanel.getSelectedSpec() != null) {
-			String target = listPanel.getSelectedSpec();
+            String[] nameArray = listPanel.getSelectedSpec();
+            String fname = nameArray[0];
+            String lname = nameArray[1];
 
-			ArrayList<String> names = SpecialistTable.getNames();
-			for (String name : names) {
-				if (target.equals(name)) {
-					return name;
-				}
-			}
+			return SpecialistTable.getEmailFromName(fname,lname);
 		}
 		return null;
 	}
-    //LISTENERS???
-    private class submitOrDeleteListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            if (e.getSource() == addBtn){
-                int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
+
+    /**
+     * ActionListener for Add, Edit, and Delete Specialist
+     */
+    private class submitOrDeleteListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+            //If Add Specialist is pressed
+            if (e.getSource() == addBtn) {
+                int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter the following information to create a specialist", JOptionPane.OK_CANCEL_OPTION);
                 boolean flag = true;
-                if (submitted == JOptionPane.OK_OPTION){
+                //ok pressed
+                if (submitted == JOptionPane.OK_OPTION) {
                     boolean exists = false;
-					ArrayList<String> names = SpecialistTable.getNames();
-					for (String name : names) {
-						if (name.equals(specInfoPanel.getFullName())) {
-							exists = true;
-						}
-					}
-                    if (exists)
-                    {
-                        JOptionPane.showInternalMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if(specInfoPanel.getFirstName().length() == 0 || specInfoPanel.getLastName().length() == 0
-                            || specInfoPanel.getRoleText().length() == 0){
-                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete Information", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if(specInfoPanel.getPhoneText().length() == 0){
-                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if(specInfoPanel.getEmailText().length() == 0) {
-                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid E-mail", JOptionPane.ERROR_MESSAGE);
-                    }
-                    else if(specInfoPanel.getPassword().length() == 0 || specInfoPanel.getCPassword().length() == 0) {
-                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Password", JOptionPane.ERROR_MESSAGE);
-                        if(!specInfoPanel.getPassword().equals(specInfoPanel.getCPassword())){
-                            JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Password Unmatched", JOptionPane.ERROR_MESSAGE);
+                    ArrayList<String> names = SpecialistTable.getNames();
+                    for (String name : names) {
+                        if (name.equals(specInfoPanel.getFullName())) {
+                            exists = true;
                         }
                     }
-                    else {
-                                ImageIcon i = new ImageIcon(specInfoPanel.getPhoto());
-                                if(i.getIconHeight()>250||i.getIconWidth()>250){
-                                    
-                                      JOptionPane.showInternalMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
+                    //check for error in input information
+                    if (exists) {
+                        JOptionPane.showInternalMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
+                    } else if (specInfoPanel.getFirstName().length() == 0 || specInfoPanel.getLastName().length() == 0
+                            || specInfoPanel.getRoleText().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete Information", JOptionPane.ERROR_MESSAGE);
+                    } else if (specInfoPanel.getPhoneText().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
+                    } else if (specInfoPanel.getEmailText().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid E-mail", JOptionPane.ERROR_MESSAGE);
+                    } else if (specInfoPanel.getPassword().length() == 0 || specInfoPanel.getCPassword().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Password", JOptionPane.ERROR_MESSAGE);
+                        if (specInfoPanel.confirmPassword()) {
+                            JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Password Unmatched", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        ImageIcon i = new ImageIcon(specInfoPanel.getPhoto());
+                        if (i.getIconHeight() > 250 || i.getIconWidth() > 250) {
 
-                                }
-                                else{
-                                    // TODO: specInfoPanel getPassword
-							        SpecialistTable.addSpecialist(
-								    	specInfoPanel.getFirstName(),
-								    	specInfoPanel.getLastName(),
-								    	specInfoPanel.getPhoneText(),
-								    	specInfoPanel.getEmailText(), 
-								    	specInfoPanel.getPassword(),
-								    	specInfoPanel.getPhoto());
-                                        listPanel.updateList();
-                                        specInfoPanel.clear();
-                                }
+                            JOptionPane.showInternalMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
+
+                        } else {
+                            SpecialistTable.addSpecialist(
+                                    specInfoPanel.getFirstName(),
+                                    specInfoPanel.getLastName(),
+                                    specInfoPanel.getPhoneText(),
+                                    specInfoPanel.getEmailText(),
+                                    specInfoPanel.getPassword(),
+                                    specInfoPanel.getPhoto());
+                            listPanel.updateList();
+                            specInfoPanel.clear();
+                        }
                     }
-                   }
-            }
-            if (e.getSource() == editBtn){
-                if(getSpecialist()!=null){
-//                specInfoPanel.setEditUser(getSpecialist());
-//                int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter a username and password for the new account.", JOptionPane.OK_CANCEL_OPTION);
-//                if (submitted == JOptionPane.OK_OPTION){
-//                    if(specInfoPanel.getPhoto().length() == 0){
-                     //SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
-//                        JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
-//                     updateList();
-//                     specInfoPanel.clear();
-//                    }
-//                    else{
-//                        ImageIcon j = new ImageIcon(specInfoPanel.getPhoto());
-//                                if(j.getIconHeight()>250||j.getIconWidth()>250){
-//
-//                                      JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
-//
-//                                }
-//                                else{
-//                                    SpecialistList.specs.set(SpecialistList.specs.indexOf(getSpecialist()),new Specialist(specInfoPanel.getPhoto(),specInfoPanel.getEmailText(),specInfoPanel.getFirstName(),specInfoPanel.getLastName(),specInfoPanel.getRoleText(),specInfoPanel.getPhoneText()));
-//                                }
-
-
-            }
-        }
-            if(e.getSource() == deleteBtn){
-                if(getSpecialist()!=null){
-                     //SpecialistList.specs.remove(SpecialistList.specs.indexOf(getSpecialist()));
-                     listPanel.updateList();
+                }
+                else {
+                    JOptionPane.showInternalMessageDialog(null, "Please select a specialist first", "Selection", JOptionPane.ERROR_MESSAGE);
                 }
             }
+
+            //If Edit button is pressed
+            if (e.getSource() == editBtn) {
+                String[] temp = listPanel.getSelectedSpec();
+                if (getSpecialist() != null) {
+                    updatePanel.setEditUser(temp);
+                    int submitted = JOptionPane.showConfirmDialog(null, updatePanel , "Please enter the updated information.", JOptionPane.OK_CANCEL_OPTION);
+
+                    //update specialist info
+                    if (submitted == JOptionPane.OK_OPTION) {
+                        //if no photo
+                        if (updatePanel.getPhoto().length() == 0) {
+                            SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
+                            //if new password inputted
+                            if (updatePanel.getPassword().length() != 0 || updatePanel.getCPassword().length() != 0) {
+                                if(updatePanel.confirmPassword())
+                                    SpecialistTable.updatePassword(getSpecialist(), updatePanel.getPassword());
+                                else
+                                    JOptionPane.showMessageDialog(null, "Fails to update password", "Passwords Not Matched", JOptionPane.ERROR_MESSAGE);
+                            }
+                            if (updatePanel.getPhoneText().length() != 0)
+                                SpecialistTable.updatePhone(getSpecialist(), updatePanel.getPhoneText());
+                            listPanel.updateList();
+                            updatePanel.clear();
+                        }
+                    } else {
+                        ImageIcon j = new ImageIcon(updatePanel.getPhoto());
+                        if (j.getIconHeight() > 250 || j.getIconWidth() > 250) {
+
+                            JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
+
+                        } else {
+                            SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
+                            SpecialistTable.updatePassword(getSpecialist(), updatePanel.getPassword());
+                            SpecialistTable.updatePhoto(getSpecialist(), updatePanel.getPhoto());
+                            if (updatePanel.getPhoneText().length() != 0)
+                                SpecialistTable.updatePhone(getSpecialist(), updatePanel.getPhoneText());
+
+                            listPanel.updateList();
+                            updatePanel.clear();
+                        }
+
+                        listPanel.updateList();
+                        specInfoPanel.clear();
+
+                    }
+                }
+
+
+            }//If Delete button is pressed
+            if (e.getSource() == deleteBtn) {
+                if (getSpecialist() != null) {
+                    String[] name = listPanel.getSelectedSpec();
+                    String fname = name[0];
+                    String lname = name[1];
+                    int submitted = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete" +fname+" "+lname  , "Delete Warning", JOptionPane.OK_CANCEL_OPTION);
+                    if(submitted == JOptionPane.OK_OPTION) {
+                        SpecialistTable.deleteSpecialist(getSpecialist());
+                        listPanel.updateList();
+                        listPanel.repaint();
+                    }
+
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Please select a specialist", "No Selection", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }
-}
 }

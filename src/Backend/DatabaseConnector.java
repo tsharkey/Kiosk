@@ -46,7 +46,7 @@ public class DatabaseConnector {
 		dataSource.setURL("jdbc:mysql://" + DatabaseConnector.url + "/"
 				+ dbName);
 		// checking if details are valid by attempting a query
-		return executeQueryString(1, "SELECT 1") != null ? true : false;
+		return executeQueryString("1", "SELECT 1") != null ? true : false;
 	}
 
 	// Handles connecting and reading content from the database (SELECT)
@@ -66,7 +66,7 @@ public class DatabaseConnector {
 		return retArray;
 	}
 
-	public static String executeQueryString(int column, String sql) {
+	public static String executeQueryString(String column, String sql) {
 		String retString = null;
 		try (Connection conn = dataSource.getConnection()) {
 			try (Statement stmt = conn.createStatement()) {

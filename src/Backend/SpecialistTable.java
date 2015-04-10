@@ -113,7 +113,7 @@ public class SpecialistTable {
 
 		String hash = DatabaseConnector
 				.executeQueryString(
-						1,
+						"hash",
 						"SELECT hash FROM SPECIALIST WHERE hash = (SELECT hash FROM SPECIALIST WHERE email='"
 								+ email + "')");
 		if (hash != null) {
@@ -175,5 +175,13 @@ public class SpecialistTable {
 				.executeQueryStrings(
 						"name",
 						"SELECT CONCAT(fName, ' ', lName) AS name FROM USER INNER JOIN SPECIALIST ON USER.email=SPECIALIST.email ORDER BY SPECIALIST.email ASC");
+	}
+	
+	// return email of Specialist for first and last name
+	public static String getEmailFromName(String fName, String lName) {
+		return DatabaseConnector
+				.executeQueryString(
+						"email",
+						"SELECT email FROM SPECIALIST WHERE email IN (SELECT email FROM USER WHERE fName='" + fName + "' AND lName='" + lName + "')");
 	}
 }
