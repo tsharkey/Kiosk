@@ -124,12 +124,21 @@ public class UserTable {
 		return DatabaseConnector.executeQueryStrings("role",
 				"SELECT role FROM USER ORDER BY email ASC");
 	}
-	
+
 	// returns string ArrayList with ordered first+last names
 	public static ArrayList<String> getNames() {
 		return DatabaseConnector
-				.executeQueryStrings(
-						"name",
+				.executeQueryStrings("name",
 						"SELECT CONCAT(fName, ' ', lName) AS name FROM USER ORDER BY email ASC");
+	}
+
+	// search name columns for query
+	public static ArrayList<String> searchName(String query) {
+		query = query.trim();
+		return DatabaseConnector.executeQueryStrings("name",
+				"SELECT CONCAT(fName, ' ', lName) AS name FROM USER WHERE (fName LIKE '"
+						+ query + "%') OR (lName LIKE '" + query
+						+ "%') OR (CONCAT(fName, ' ', lName) LIKE '" + query
+						+ "%') ORDER BY email ASC");
 	}
 }

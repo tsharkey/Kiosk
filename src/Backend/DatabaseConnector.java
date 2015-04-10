@@ -97,16 +97,17 @@ public class DatabaseConnector {
 		}
 		return retVal;
 	}
-	
-	public static ArrayList<Date> executeQueryDates(String table, String sql, Boolean isTime) {
+
+	public static ArrayList<Date> executeQueryDates(String table, String sql,
+			Boolean isTime) {
 		ArrayList<Date> retArray = new ArrayList<Date>();
 		try (Connection conn = dataSource.getConnection()) {
 			try (Statement stmt = conn.createStatement()) {
 				try (ResultSet rs = stmt.executeQuery(sql)) {
 					while (rs.next()) {
-						if(isTime){
+						if (isTime) {
 							retArray.add(rs.getTime(table));
-						}else{
+						} else {
 							retArray.add(rs.getDate(table));
 						}
 					}
@@ -117,7 +118,7 @@ public class DatabaseConnector {
 		}
 		return retArray;
 	}
-	
+
 	public static ArrayList<Boolean> executeQueryBools(String table, String sql) {
 		ArrayList<Boolean> retArray = new ArrayList<Boolean>();
 		try (Connection conn = dataSource.getConnection()) {
@@ -151,5 +152,29 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}
 		return rowsAffected;
+	}
+
+	public static ArrayList<VisitData> executeQueryVisitData(String sql) {
+		ArrayList<VisitData> retArray = new ArrayList<VisitData>();
+		try (Connection conn = dataSource.getConnection()) {
+			try (Statement stmt = conn.createStatement()) {
+				try (ResultSet rs = stmt.executeQuery(sql)) {
+					while (rs.next()) {
+						VisitData temp = new VisitData(rs.getDate("visitDate"),
+								rs.getTime("visitTime"),
+								rs.getString("reason"),
+								rs.getBoolean("followUp"),
+								rs.getString("email"),
+								rs.getString("specialist"),
+								rs.getString("location"),
+								rs.getString("fName"), rs.getString("lName"));
+						retArray.add(temp);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return retArray;
 	}
 }
