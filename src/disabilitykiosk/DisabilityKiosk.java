@@ -38,7 +38,7 @@ public class DisabilityKiosk extends JFrame {
     //private final LabelPanel label_Panel;
     private final LabelsAndFieldsPanel labelsAndFields;
     private final SubmitPanel submit_Panel;
-    private Backend.User user;
+//    private Backend.User user;
     public static boolean isAdminWorking = false;
     public static String workingAdmin = "";
 
@@ -234,7 +234,7 @@ public class DisabilityKiosk extends JFrame {
                     // FIX: Visit should be created after selection of Specialist
                     //VisitsTable.addVisit(labelsAndFields.getReason(), labelsAndFields.getFollowUp(), labelsAndFields.getEmail(), "fix this", labelsAndFields.getLocationInput());
                     setVisible(false);
-                    new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);
+//                    new GUI.teacherselectionwindow.SpecialistSelectionWindow(user);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No Specialist in List", "Incomplete", JOptionPane.ERROR_MESSAGE);

@@ -112,32 +112,33 @@ public class ReportWindow extends JFrame {
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         addHeader();
 
-        try
-        {
-            //Data.open();
-            String temp = "";
-            
-            for (Row row: Data.chooseTable("visits"))
-            {
-                Table table = Data.chooseTable("user");
-                Cursor cursor = CursorBuilder.createCursor(table);
-                boolean found = cursor.findFirstRow(Collections.singletonMap("email", row.get("email")));
-
-                temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
-                        + addBuffer(timeFormat.format(row.get("visitTime")),15)
-                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(),15)
-                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(),15) + addBuffer(row.get("email").toString(),30)
-                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(),15) + addBuffer(row.get("reason").toString(),40)
-                        + addBuffer(followUpSwitcher(row.get("followUp").toString()),15) + addBuffer(row.get("Specialist").toString(),15)
-                        + addBuffer(row.get("location").toString(),15) + "\n";
-            }
-
-            textArea.append(temp);
-        }
-        catch(IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        //TODO: Initial Opening of the report window, display all visits from database
+//        try
+//        {
+//            //Data.open();
+//            String temp = "";
+//
+//            for (Row row: Data.chooseTable("visits"))
+//            {
+//                Table table = Data.chooseTable("user");
+//                Cursor cursor = CursorBuilder.createCursor(table);
+//                boolean found = cursor.findFirstRow(Collections.singletonMap("email", row.get("email")));
+//
+//                temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
+//                        + addBuffer(timeFormat.format(row.get("visitTime")),15)
+//                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(),15)
+//                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(),15) + addBuffer(row.get("email").toString(),30)
+//                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(),15) + addBuffer(row.get("reason").toString(),40)
+//                        + addBuffer(followUpSwitcher(row.get("followUp").toString()),15) + addBuffer(row.get("Specialist").toString(),15)
+//                        + addBuffer(row.get("location").toString(),15) + "\n";
+//            }
+//
+//            textArea.append(temp);
+//        }
+//        catch(IOException e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
 
         scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         centerPanel.add(scrollPane);
@@ -234,14 +235,15 @@ public class ReportWindow extends JFrame {
         {
             if (e.getSource() == closeBtn)
             {
-                try {
-                    Data.closeData();
-                    new LoginFrame();
-                    setVisible(false);
-                    dispose();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                //TODO: close the Report window
+//                try {
+//                    Data.closeData();
+//                    new LoginFrame();
+//                    setVisible(false);
+//                    dispose();
+//                } catch (IOException e1) {
+//                    e1.printStackTrace();
+//                }
             }
         }
     }
@@ -267,75 +269,86 @@ public class ReportWindow extends JFrame {
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 DateFormat timeFormat = new SimpleDateFormat("h:mm a");
 
-                try {
-                    for (Row row : Data.chooseTable("visits")) {
-                        Table table = Data.chooseTable("user");
-
-                        Cursor cursor = CursorBuilder.createCursor(table);
-
-                        String temp = "";
-                        temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
-                                + addBuffer(timeFormat.format(row.get("visitTime")),15)
-                                //+ addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(), 15)
-                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(), 15)
-                                + addBuffer(row.get("email").toString(), 30)
-                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(), 15)
-                                + addBuffer(row.get("reason").toString(), 40)
-                                + addBuffer(row.get("followUp").toString(), 15)
-                                + addBuffer(row.get("Specialist").toString(), 15)
-                                + addBuffer(row.get("location").toString(), 15)
-                                + "\n";
-
-                        if (temp.contains(datesComboBox.getSelectedItem().toString())
-                                && temp.contains(reasonsComboBox.getSelectedItem().toString()))
-                            string += temp;
-
-                        textArea.append(string);
-
-                    }
-                } catch (IOException e) {
-                    System.out.println("error");
-                }
+                //TODO: Updates the report list when search value or dropdown selection changed
+//                try {
+//                    for (Row row : Data.chooseTable("visits")) {
+//                        Table table = Data.chooseTable("user");
+//
+//                        Cursor cursor = CursorBuilder.createCursor(table);
+//
+//                        String temp = "";
+//                        temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
+//                                + addBuffer(timeFormat.format(row.get("visitTime")),15)
+//                                //+ addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(), 15)
+//                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(), 15)
+//                                + addBuffer(row.get("email").toString(), 30)
+//                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(), 15)
+//                                + addBuffer(row.get("reason").toString(), 40)
+//                                + addBuffer(row.get("followUp").toString(), 15)
+//                                + addBuffer(row.get("Specialist").toString(), 15)
+//                                + addBuffer(row.get("location").toString(), 15)
+//                                + "\n";
+//
+//                        if (temp.contains(datesComboBox.getSelectedItem().toString())
+//                                && temp.contains(reasonsComboBox.getSelectedItem().toString()))
+//                            string += temp;
+//
+//                        textArea.append(string);
+//
+//                    }
+//                } catch (IOException e) {
+//                    System.out.println("error");
+//                }
             }
         }
 
     }
+
+    /**
+     * Retrieve a report for display
+     * @param query
+     * @param key
+     * @return
+     * @throws IOException
+     */
+    //TODO: Connection to database
      public ArrayList<ArrayList<String>> read(String query,String key) throws IOException
     {
         ArrayList<ArrayList<String>> aListOfListsOfStrings = new ArrayList<ArrayList<String>>();
-        Table table = Data.open().getTable(query);
-        for(Row row: table)
-        {
-            if(row.get("email").toString().equalsIgnoreCase(key))
-            {
-                ArrayList<String> userStrings = new ArrayList<String>();
-                userStrings.add(row.get("visitDate").toString());
-                userStrings.add(row.get("visitTime").toString());
-                userStrings.add(row.get("reason").toString());
-                userStrings.add(row.get("followUp").toString());
-                userStrings.add(row.get("email").toString());
-                userStrings.add(row.get("ID").toString());
-                aListOfListsOfStrings.add(userStrings);
-            }
-        }
+//        Table table = Data.open().getTable(query);
+//        for(Row row: table)
+//        {
+//            if(row.get("email").toString().equalsIgnoreCase(key))
+//            {
+//                ArrayList<String> userStrings = new ArrayList<String>();
+//                userStrings.add(row.get("visitDate").toString());
+//                userStrings.add(row.get("visitTime").toString());
+//                userStrings.add(row.get("reason").toString());
+//                userStrings.add(row.get("followUp").toString());
+//                userStrings.add(row.get("email").toString());
+//                userStrings.add(row.get("ID").toString());
+//                aListOfListsOfStrings.add(userStrings);
+//            }
+//        }
         return aListOfListsOfStrings;
     }
+        //not sure what this does, same method as the read above?
       public ArrayList<ArrayList<String>> read(String query) throws IOException {
 
         ArrayList<ArrayList<String>> aListOfListsOfStrings = new ArrayList<ArrayList<String>>();
-        Table table = Data.open().getTable(query);
-        for(Row row: table)
-        {
-            ArrayList<String> userStrings = new ArrayList<String>();
-            userStrings.add(row.get("visitDate").toString());
-            userStrings.add(row.get("visitTime").toString());
-            userStrings.add(row.get("reason").toString());
-            userStrings.add(row.get("followUp").toString());
-            userStrings.add(row.get("email").toString());
-            userStrings.add(row.get("ID").toString());
-            aListOfListsOfStrings.add(userStrings);
-                    
-        }
+//        Table table = Data.open().getTable(query);
+//        for(Row row: table)
+//        {
+//            ArrayList<String> userStrings = new ArrayList<String>();
+//            userStrings.add(row.get("visitDate").toString());
+//            userStrings.add(row.get("visitTime").toString());
+//            userStrings.add(row.get("reason").toString());
+//            userStrings.add(row.get("followUp").toString());
+//            userStrings.add(row.get("email").toString());
+//            userStrings.add(row.get("ID").toString());
+//            aListOfListsOfStrings.add(userStrings);
+//
+//        }
         return aListOfListsOfStrings;
     }
 }

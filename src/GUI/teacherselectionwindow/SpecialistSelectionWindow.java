@@ -1,8 +1,8 @@
 package GUI.teacherselectionwindow;
 
-import Backend.Data;
+//import Backend.Data;
 import Backend.SpecialistTable;
-import Backend.User;
+//import Backend.User;
 
 import disabilitykiosk.DisabilityKiosk;
 
@@ -26,7 +26,7 @@ public class SpecialistSelectionWindow extends JFrame {
     Toolkit tk = Toolkit.getDefaultToolkit();
     private final int WINDOW_WIDTH = ((int) tk.getScreenSize().getWidth());
     private final int WINDOW_HEIGHT = ((int) tk.getScreenSize().getHeight());
-    private Backend.User user;
+//    private Backend.User user;
     private JButton submit;
     private JPanel panel1, panel2; //panel3, panel4;
     private ArrayList<JRadioButtonMenuItem> radioButtons;
@@ -34,8 +34,8 @@ public class SpecialistSelectionWindow extends JFrame {
     private ArrayList<String> specName;
     private ArrayList<String> specPhoto;
     //private Border blackline = BorderFactory.createLineBorder(Color.black);
-
-    public SpecialistSelectionWindow(User user) {
+      //TODO: new Pass in the user info into the Constructor
+    public SpecialistSelectionWindow() {
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         buildPanel1();
@@ -46,7 +46,7 @@ public class SpecialistSelectionWindow extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
-        this.user = user;
+//        this.user = user;
     }
 
     private void buildPanel1() {
@@ -96,13 +96,14 @@ public class SpecialistSelectionWindow extends JFrame {
     public void submitted() {
         JRadioButtonMenuItem selected = getSelection(bg);
         String facultySelected[] = selected.getText().split(" ");
-        user.setSpecialist(facultySelected[0], facultySelected[1]);
-        try {
-            Data.open();
-            user.newVisit(Data.chooseTable("visits"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+        //TODO: add the appropriate information to the VisitTable
+//        user.setSpecialist(facultySelected[0], facultySelected[1]);
+//        try {
+//            Data.open();
+//            user.newVisit(Data.chooseTable("visits"));
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        }
         JOptionPane.showMessageDialog(null, "Thank you for using the Disability Kiosk", "Thank You",
                 JOptionPane.PLAIN_MESSAGE);
         new DisabilityKiosk();
