@@ -143,9 +143,7 @@ public class ReportWindow extends JFrame {
         addHeader();
 
         // initial opening of the report window, display all visits from database
-        
-        // access user table
-        visitsTable = new VisitsTable(); 
+        displayAllVisits();
         
         
 //        try
@@ -242,6 +240,30 @@ public class ReportWindow extends JFrame {
         else
             return "No";
     }
+    
+    /**
+     * Displays all visits in window.
+     */
+    private void displayAllVisits() {
+      DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+      DateFormat timeFormat = new SimpleDateFormat("h:mm a");
+      
+      String visitsInfo = "";
+      for (VisitData visit : visitsTable.getAllVisits()) {
+        visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                      addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                      addBuffer(visit.getFirstName(), 15) +
+                      addBuffer(visit.getLastName(), 15) +
+                      addBuffer(visit.getEmail(), 30) +
+                      addBuffer(visit.getPhone(), 15) +
+                      addBuffer(visit.getReason(), 40) +
+                      addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                      addBuffer(visit.getSpecialist(), 15) +
+                      addBuffer(visit.getLocation(), 15) + "\n";
+                  }
+      
+      textArea.append(visitsInfo);
+    }
 
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -292,6 +314,8 @@ public class ReportWindow extends JFrame {
             StringBuilder stb;
         }
     }
+    
+
 
     /**
      * Inner class for updating the report window based on reason for visit.
@@ -312,15 +336,11 @@ public class ReportWindow extends JFrame {
                 
                 // show all students if all students collected
                 if (reason.equals("All Students")) {
-                  // will display-- for testing purposes currently
-                  System.out.println("All students selected");
+                  displayAllVisits();
                 }
                 else {
-                  // store visits
-                  ArrayList<VisitData> visitsList = visitsTable.searchReason(reason);
-                
                   // collect all visit information
-                  for (VisitData visit : visitsList) {
+                  for (VisitData visit : visitsTable.searchReason(reason)) {
                     visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
                                   addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
                                   addBuffer(visit.getFirstName(), 15) +
@@ -332,9 +352,10 @@ public class ReportWindow extends JFrame {
                                   addBuffer(visit.getSpecialist(), 15) +
                                   addBuffer(visit.getLocation(), 15) +"\n";
                  }
-                }
-                // display info in window
+                  // display info in window
                 textArea.append(visitsInfo);
+                }
+                
             }
         }
     }
