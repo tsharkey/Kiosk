@@ -1,6 +1,6 @@
 /**
  * Created by Calvin Wong on 04/26/2014
- *
+ * updated by Henrique Aguiar
  * AfterLoginFrame
  *
  */
