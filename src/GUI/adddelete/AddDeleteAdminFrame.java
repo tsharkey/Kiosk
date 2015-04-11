@@ -49,13 +49,10 @@ public class AddDeleteAdminFrame extends JFrame {
         //listModel = new DefaultListModel<String>();
 
         //list = new JList<String>(listModel);
-
         //list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         //list.setLayoutOrientation(JList.VERTICAL);
-
         //listScroller = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         //add(listScroller, BorderLayout.CENTER);
-
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -68,7 +65,7 @@ public class AddDeleteAdminFrame extends JFrame {
         c.weighty = 0.05;
         buttonPanel.add(addBtn, c);
 
-        editBtn = new JButton("Edit Admin");
+        editBtn = new JButton("Edit Current Admin's Password");
         editBtn.addActionListener(new ButtonListener());
         c.gridx = 0;
         c.gridy = 1;
@@ -76,7 +73,7 @@ public class AddDeleteAdminFrame extends JFrame {
         c.weighty = 0.05;
         buttonPanel.add(editBtn, c);
 
-        deleteBtn = new JButton("Remove Admin");
+        deleteBtn = new JButton("Remove Current Admin");
         deleteBtn.addActionListener(new ButtonListener());
         c.gridx = 0;
         c.gridy = 2;
@@ -87,7 +84,6 @@ public class AddDeleteAdminFrame extends JFrame {
         //add(buttonPanel, BorderLayout.EAST);
         add(buttonPanel);
     }
-    
 
     private class ButtonListener implements ActionListener {
 
@@ -120,6 +116,8 @@ public class AddDeleteAdminFrame extends JFrame {
                             new AdminFrame();
                         } else {
                             AdminTable.addAdmin(un, pw);
+                            JOptionPane.showMessageDialog(null, "Admin added successful ", "Notice", JOptionPane.INFORMATION_MESSAGE);
+                            new AdminFrame();
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Missing info ", "Error", JOptionPane.ERROR_MESSAGE);
@@ -128,6 +126,7 @@ public class AddDeleteAdminFrame extends JFrame {
                 } else {
                     new AdminFrame();
                 }
+                dispose();
             } else if (e.getSource() == editBtn) {
                 JPanel passChange = new JPanel();
                 passChange.add(new JLabel("Current Password: "));
@@ -154,6 +153,8 @@ public class AddDeleteAdminFrame extends JFrame {
                             new AdminFrame();
                         } else {
                             AdminTable.updatePassword(DisabilityKiosk.workingAdmin, npw);
+                            JOptionPane.showMessageDialog(null, "password updated successful ", "Notice", JOptionPane.INFORMATION_MESSAGE);
+                            new AdminFrame();
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Missing info ", "Error", JOptionPane.ERROR_MESSAGE);
@@ -162,37 +163,38 @@ public class AddDeleteAdminFrame extends JFrame {
                 } else {
                     new AdminFrame();
                 }
-            } else if (e.getSource()
-                    == deleteBtn) {
-                    if (AdminTable.getAdmins().size() == 1) {
-                        JOptionPane.showMessageDialog(null, "You cannot delete the last Administrator.", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        JPanel passCheck = new JPanel();
-                        JPasswordField passInput = new JPasswordField(20);
-                        passCheck.add(new JLabel("Password: "));
-                        passCheck.add(passInput);
-                        int entered = JOptionPane.showConfirmDialog(null, passCheck, "Please enter the current password for this account.", JOptionPane.OK_CANCEL_OPTION);
+                dispose();
+            } else if (e.getSource() == deleteBtn) {
+                if (AdminTable.getAdmins().size() == 1) {
+                    JOptionPane.showMessageDialog(null, "You cannot delete the last Administrator.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JPanel passCheck = new JPanel();
+                    JPasswordField passInput = new JPasswordField(20);
+                    passCheck.add(new JLabel("Password: "));
+                    passCheck.add(passInput);
+                    int entered = JOptionPane.showConfirmDialog(null, passCheck, "Please enter the current password for this account.", JOptionPane.OK_CANCEL_OPTION);
 
-                        if (entered == JOptionPane.OK_OPTION) {
-                            String pw = new String(passInput.getPassword());
-                            if (AdminTable.verifyPassword(DisabilityKiosk.workingAdmin, pw)) {
-                                int entered2 = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this account?", "Verification", JOptionPane.YES_NO_OPTION);
+                    if (entered == JOptionPane.OK_OPTION) {
+                        String pw = new String(passInput.getPassword());
+                        if (AdminTable.verifyPassword(DisabilityKiosk.workingAdmin, pw)) {
+                            int entered2 = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this account?", "Verification", JOptionPane.YES_NO_OPTION);
 
-                                if (entered2 == JOptionPane.YES_OPTION) {
-                                    AdminTable.deleteAdmin(DisabilityKiosk.workingAdmin);
-                                    DisabilityKiosk.workingAdmin = "";
-                                    DisabilityKiosk.isAdminWorking = false;
-                                    new DisabilityKiosk();
-                                }
-                                else{
-                                    new AdminFrame();
-                                }
+                            if (entered2 == JOptionPane.YES_OPTION) {
+                                AdminTable.deleteAdmin(DisabilityKiosk.workingAdmin);
+                                DisabilityKiosk.workingAdmin = "";
+                                DisabilityKiosk.isAdminWorking = false;
+                                JOptionPane.showMessageDialog(null, "Admin account deleted", "Notice", JOptionPane.INFORMATION_MESSAGE);
+                                new DisabilityKiosk();
                             } else {
-                                JOptionPane.showMessageDialog(null, "Incorrect Password.", "Error", JOptionPane.ERROR_MESSAGE);
                                 new AdminFrame();
                             }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrect Password.", "Error", JOptionPane.ERROR_MESSAGE);
+                            new AdminFrame();
                         }
                     }
+                }
+                dispose();
             }
         }
     }
