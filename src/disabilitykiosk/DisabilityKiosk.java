@@ -208,22 +208,20 @@ public class DisabilityKiosk extends JFrame {
         public void actionPerformed(ActionEvent e) {
             if (!SpecialistTable.isEmpty()) {
                 //if(!SpecialistList.getSpecialList().isEmpty()){
-                boolean flag = true;
+                //boolean flag = true;
                 if (labelsAndFields.getFirst().length() == 0 || labelsAndFields.getLast().length() == 0) {
-                    flag = false;
+                    //flag = false;
                     JOptionPane.showMessageDialog(null, "Please Enter the Correct Information", "Incomplete", JOptionPane.ERROR_MESSAGE);
                 } else if (labelsAndFields.getEmail().length() == 0) {
-                    flag = false;
+                    //flag = false;
                     JOptionPane.showMessageDialog(null, "Please Enter a Valid E-mail Address", "Invalid E-mail", JOptionPane.ERROR_MESSAGE);
                 } else if (labelsAndFields.getPhone().length() == 0) {
-                    flag = false;
+                    //flag = false;
                     JOptionPane.showMessageDialog(null, "Please Enter a Valid Phone Number", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
-                } else if (flag = true) {
-                    boolean temp;
+                } else {
+                    boolean followUp = false;
                     if (labelsAndFields.followUpI.getSelectedItem() == "Yes") {
-                        temp = true;
-                    } else {
-                        temp = false;
+                        followUp = true;
                     }
                     
                     // Should only be added if doesn't exist already
@@ -235,7 +233,7 @@ public class DisabilityKiosk extends JFrame {
                     //VisitsTable.addVisit(labelsAndFields.getReason(), labelsAndFields.getFollowUp(), labelsAndFields.getEmail(), "fix this", labelsAndFields.getLocationInput());
                     setVisible(false);
                     //TODO: needs to pass the information gathered from LabelsAndFieldsPanel to SpecialistSelectionWindow.
-                    new GUI.teacherselectionwindow.SpecialistSelectionWindow();
+                    new SpecialistSelectionWindow(labelsAndFields.getReason(), followUp, labelsAndFields.getEmail(), labelsAndFields.getLocationInput());
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No Specialist in List", "Incomplete", JOptionPane.ERROR_MESSAGE);

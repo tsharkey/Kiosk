@@ -2,6 +2,7 @@ package GUI.teacherselectionwindow;
 
 //import Backend.Data;
 import Backend.SpecialistTable;
+import Backend.VisitsTable;
 //import Backend.User;
 
 import disabilitykiosk.DisabilityKiosk;
@@ -33,9 +34,19 @@ public class SpecialistSelectionWindow extends JFrame {
     private ButtonGroup bg = new ButtonGroup();
     private ArrayList<String> specName;
     private ArrayList<String> specPhoto;
+    
+    private String reason;
+    private Boolean followUp;
+    private String email;
+    private String location;
     //private Border blackline = BorderFactory.createLineBorder(Color.black);
       //TODO: need to get information that user filled out in the form into the Constructor
-    public SpecialistSelectionWindow() {
+    public SpecialistSelectionWindow(String reason, Boolean followUp, String email, String location) {
+        this.reason = reason;
+        this.followUp = followUp;
+        this.email = email;
+        this.location = location;
+        
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         buildPanel1();
@@ -104,6 +115,7 @@ public class SpecialistSelectionWindow extends JFrame {
 //        } catch (IOException e1) {
 //            e1.printStackTrace();
 //        }
+        VisitsTable.addVisit(reason, followUp, email, facultySelected[0], location);
         JOptionPane.showMessageDialog(null, "Thank you for using the Disability Kiosk", "Thank You",
                 JOptionPane.PLAIN_MESSAGE);
         new DisabilityKiosk();
