@@ -31,6 +31,7 @@ import java.util.regex.Matcher;
  * out as a form for their visits.
  *
  * @author Spconway 4/26/2014
+ * updated by Henrique Aguiar
  */
 public class LabelsAndFieldsPanel extends JPanel {
 
