@@ -9,7 +9,6 @@ package Backend;
 public class UserData {
 	private String firstName;
 	private String lastName;
-	private String fullName;
 	private String email;
 	private String phone;
 	private String role;
@@ -18,7 +17,6 @@ public class UserData {
 			String phone, String role) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.fullName = firstName + " " + lastName;
 		this.email = email;
 		this.phone = phone;
 		this.role = role;
@@ -33,7 +31,7 @@ public class UserData {
 	}
 
 	public String getFullName() {
-		return fullName;
+		return firstName + " " + lastName;
 	}
 
 	public String getEmail() {
