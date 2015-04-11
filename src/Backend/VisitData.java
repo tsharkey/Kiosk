@@ -30,7 +30,6 @@ public class VisitData {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;
-
 	}
 
 	public Date getVisitDate() {
