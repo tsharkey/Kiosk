@@ -1,6 +1,6 @@
 package disabilitykiosk;
 
-import com.sun.speech.freetts.VoiceManager;
+//import com.sun.speech.freetts.VoiceManager;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

@@ -4,9 +4,6 @@ import GUI.adddeletespec.AddDeleteSpecFrame;
 import GUI.adddelete.AddDeleteAdminFrame;
 import GUI.loginwindow.LoginFrame;
 
-import com.healthmarketscience.jackcess.*;
-import com.healthmarketscience.jackcess.Cursor;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.awt.*;
@@ -19,12 +16,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Scanner;
+import java.util.Scanner;;
 
 import javax.swing.*;
-
-import com.healthmarketscience.jackcess.CursorBuilder;
-import com.healthmarketscience.jackcess.Row;
 import java.util.ArrayList;
 
 /**
@@ -48,6 +42,8 @@ public class ReportWindow extends JFrame {
     private JButton addDeleteSpecBtn;
     private JButton addDeleteAdminBtn;
     private JButton closeBtn;
+    
+    private JTextField searchBox;
 
     private final String[] reasons = {"All Students", "New, Prospective Student/Group","Disclose and Document Disability (In-take)","Placement Testing with Accommodation",
             "Schedule An Appointment with Disability Specialist","Meet with a Disability Specialist","Take Test with Accommodations","Drop Off/Pick Up Notes",
@@ -96,9 +92,18 @@ public class ReportWindow extends JFrame {
         datesComboBox = new JComboBox(datesPastYr);
         datesComboBox.addItemListener(new ReportWindow.ItemChangeListener());
 
+        // create search box
+        searchBox = new JTextField("Search", 10); 
+        
+        searchBox.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                  System.out.println("search!");
+                  }
+                });
 
         comboPanel.add(datesComboBox);
         comboPanel.add(reasonsComboBox);
+        comboPanel.add(searchBox);
 
         northPanel.add(new JLabel("Current students waiting to be seen:"), BorderLayout.NORTH);
         northPanel.add(comboPanel, BorderLayout.SOUTH);

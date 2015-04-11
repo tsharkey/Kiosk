@@ -8,7 +8,7 @@ package disabilitykiosk;
 import GUI.loginwindow.*;
 import GUI.teacherselectionwindow.*;
 import Backend.*;
-import com.sun.speech.freetts.VoiceManager;
+//import com.sun.speech.freetts.VoiceManager;
 //import disabilitykiosk.LabelsAndFieldsPanel;
 import java.awt.*;
 import javax.swing.*;
@@ -228,7 +228,7 @@ public class DisabilityKiosk extends JFrame {
                     
                     // Should only be added if doesn't exist already
                     if(!UserTable.user_exist(labelsAndFields.getEmail())){
-                    	UserTable.addUser(labelsAndFields.getFirst(), labelsAndFields.getLast(), labelsAndFields.getEmail(), labelsAndFields.getPhone(), labelsAndFields.getRole());
+                     UserTable.addUser(labelsAndFields.getFirst(), labelsAndFields.getLast(), labelsAndFields.getEmail(), labelsAndFields.getPhone(), labelsAndFields.getRole());
                     }
                     
                     // TODO: Visit should be created after selection of Specialist
