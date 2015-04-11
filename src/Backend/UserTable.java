@@ -132,13 +132,15 @@ public class UserTable {
 						"SELECT CONCAT(fName, ' ', lName) AS name FROM USER ORDER BY email ASC");
 	}
 
-	// search name columns for query
-	public static ArrayList<String> searchName(String query) {
+	// search name columns for query, boolean will toggle searching specialists or everyone else
+	public static ArrayList<String> searchName(String query,
+			Boolean isSpecialist) {
 		query = query.trim();
 		return DatabaseConnector.executeQueryStrings("name",
-				"SELECT CONCAT(fName, ' ', lName) AS name FROM USER WHERE (fName LIKE '"
+				"SELECT CONCAT(fName, ' ', lName) AS name FROM USER WHERE ((fName LIKE '"
 						+ query + "%') OR (lName LIKE '" + query
 						+ "%') OR (CONCAT(fName, ' ', lName) LIKE '" + query
-						+ "%') ORDER BY email ASC");
+						+ "%')) AND (role" + (!isSpecialist ? "!" : "")
+						+ "='Specialist') ORDER BY email ASC");
 	}
 }
