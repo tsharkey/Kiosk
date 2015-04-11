@@ -178,4 +178,23 @@ public class DatabaseConnector {
 		}
 		return retArray;
 	}
+	
+	public static ArrayList<UserData> executeQueryUserData(String sql) {
+		ArrayList<UserData> retArray = new ArrayList<UserData>();
+		try (Connection conn = dataSource.getConnection()) {
+			try (Statement stmt = conn.createStatement()) {
+				try (ResultSet rs = stmt.executeQuery(sql)) {
+					while (rs.next()) {
+						UserData temp = new UserData(rs.getString("fName"),
+								rs.getString("lName"), rs.getString("email"),
+								rs.getString("phone"), rs.getString("role"));
+						retArray.add(temp);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return retArray;
+	}
 }
