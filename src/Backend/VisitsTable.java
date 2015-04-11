@@ -37,39 +37,10 @@ public class VisitsTable {
 		return (deleteCount != 0) ? true : false;
 	}
 
-	public static ArrayList<Date> getVisitDates() {
-		return DatabaseConnector.executeQueryDates("visitDate",
-				"SELECT visitDate FROM VISITS ORDER BY ID ASC", false);
-	}
-
-	public static ArrayList<Date> getVisitTimes() {
-		return DatabaseConnector.executeQueryDates("visitTime",
-				"SELECT visitTime FROM VISITS ORDER BY ID ASC", true);
-	}
-
-	public static ArrayList<Boolean> getFollowUps() {
-		return DatabaseConnector.executeQueryBools("followUp",
-				"SELECT followUp FROM VISITS ORDER BY ID ASC");
-	}
-
-	public static ArrayList<String> getReasons() {
-		return DatabaseConnector.executeQueryStrings("reason",
-				"SELECT reason FROM VISITS ORDER BY ID ASC");
-	}
-
-	public static ArrayList<String> getEmails() {
-		return DatabaseConnector.executeQueryStrings("email",
-				"SELECT email FROM VISITS ORDER BY ID ASC");
-	}
-
-	public static ArrayList<String> getSpecialists() {
-		return DatabaseConnector.executeQueryStrings("specialist",
-				"SELECT specialist FROM VISITS ORDER BY ID ASC");
-	}
-
-	public static ArrayList<String> getLocations() {
-		return DatabaseConnector.executeQueryStrings("location",
-				"SELECT location FROM VISITS ORDER BY ID ASC");
+	// get all visit data
+	public static ArrayList<VisitData> getAllVisits() {
+		return DatabaseConnector
+				.executeQueryVisitData("SELECT USER.fName, lName, phone, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email ORDER BY VISITS.ID ASC");
 	}
 
 	// search column name for specific query
