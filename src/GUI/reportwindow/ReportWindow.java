@@ -52,6 +52,8 @@ public class ReportWindow extends JFrame {
     private JButton closeBtn;
     
     private JTextField searchBox;
+    private JTextField startInput;
+    private JTextField endInput; 
 
     private final String[] reasons = {"All Students", "New, Prospective Student/Group","Disclose and Document Disability (In-take)","Placement Testing with Accommodation",
             "Schedule An Appointment with Disability Specialist","Meet with a Disability Specialist","Take Test with Accommodations","Drop Off/Pick Up Notes",
@@ -80,7 +82,7 @@ public class ReportWindow extends JFrame {
         comboPanel = new JPanel();
 
         reasonsComboBox = new JComboBox(reasons);
-        reasonsComboBox.addItemListener(new ReportWindow.ItemChangeListener());
+        reasonsComboBox.addItemListener(new ReportWindow.ReasonChangeListener());
         datesPastYr = new String[365];
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         DateFormat timeFormat = new SimpleDateFormat("h:mm a");
@@ -96,22 +98,37 @@ public class ReportWindow extends JFrame {
                 datesPastYr[i] = dateFormat.format(day);
             }
         }
-
-        datesComboBox = new JComboBox(datesPastYr);
-        datesComboBox.addItemListener(new ReportWindow.ItemChangeListener());
+        
+        JLabel startLabel = new JLabel("Start Date:");
+        JLabel endLabel = new JLabel("End Date:");
+        startInput = new JTextField("YYYY-MM-DD", 10);
+        endInput = new JTextField("YYYY-MM-DD", 10); 
 
         // create search box
-        searchBox = new JTextField("Search", 10); 
+        searchBox = new JTextField("Search by Name", 10); 
         
+        // add action listener to search box
         searchBox.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                  System.out.println("search!");
+
+                  String visitsInfo = "";
+                  String input = searchBox.getText();
+                  
                   }
                 });
-
-        comboPanel.add(datesComboBox);
+        
+        // add date change action listeners
+        startInput.addActionListener(new ReportWindow.DateChangeListener());
+        endInput.addActionListener(new ReportWindow.DateChangeListener());
+        
+        // add to panel
+        comboPanel.add(startLabel);
+        comboPanel.add(startInput);
+        comboPanel.add(endLabel);
+        comboPanel.add(endInput);
         comboPanel.add(reasonsComboBox);
         comboPanel.add(searchBox);
+       
 
         northPanel.add(new JLabel("Current students waiting to be seen:"), BorderLayout.NORTH);
         northPanel.add(comboPanel, BorderLayout.SOUTH);
@@ -279,7 +296,7 @@ public class ReportWindow extends JFrame {
     /**
      * Inner class for updating the report window based on reason for visit.
      */
-    class ItemChangeListener implements ItemListener {
+    class ReasonChangeListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -309,7 +326,7 @@ public class ReportWindow extends JFrame {
                                   addBuffer(visit.getFirstName(), 15) +
                                   addBuffer(visit.getLastName(), 15) +
                                   addBuffer(visit.getEmail(), 30) +
-                                  addBuffer("(111) 222-3333", 15) +
+                                  addBuffer(visit.getPhone(), 15) +
                                   addBuffer(visit.getReason(), 40) +
                                   addBuffer(String.valueOf(visit.isFollowUp()), 15) +
                                   addBuffer(visit.getSpecialist(), 15) +
@@ -318,41 +335,62 @@ public class ReportWindow extends JFrame {
                 }
                 // display info in window
                 textArea.append(visitsInfo);
-
-                //TODO: Updates the report list when search value or dropdown selection changed
-//                try {
-//                    for (Row row : Data.chooseTable("visits")) {
-//                        Table table = Data.chooseTable("user");
-//
-//                        Cursor cursor = CursorBuilder.createCursor(table);
-//
-//                        String temp = "";
-//                        temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
-//                                + addBuffer(timeFormat.format(row.get("visitTime")),15)
-//                                //+ addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(), 15)
-//                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(), 15)
-//                                + addBuffer(row.get("email").toString(), 30)
-//                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(), 15)
-//                                + addBuffer(row.get("reason").toString(), 40)
-//                                + addBuffer(row.get("followUp").toString(), 15)
-//                                + addBuffer(row.get("Specialist").toString(), 15)
-//                                + addBuffer(row.get("location").toString(), 15)
-//                                + "\n";
-//
-//                        if (temp.contains(datesComboBox.getSelectedItem().toString())
-//                                && temp.contains(reasonsComboBox.getSelectedItem().toString()))
-//                            string += temp;
-//
-//                        textArea.append(string);
-//
-//                    }
-//                } catch (IOException e) {
-//                    System.out.println("error");
-//                }
             }
         }
-
     }
+    
+    /**
+     * Inner class for updating the report window based on date of visit
+     */
+    class DateChangeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+          
+          textArea.setText("");
+          addHeader(); 
+          DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+          DateFormat timeFormat = new SimpleDateFormat("h:mm a");
+          
+          // for testing-- remove at end
+          System.out.println("start input:" + startInput.getText());
+          System.out.println("end input:" + endInput.getText());
+          
+          // store input
+          String startText = startInput.getText();
+          String endText = endInput.getText();
+          
+          VisitsTable vTable = new VisitsTable();
+
+          String visitsInfo = "";
+                 
+          // collect all visit information
+          for (VisitData visit : vTable.searchDates(startText, endText)) {
+            visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                                  addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                                  addBuffer(visit.getFirstName(), 15) +
+                                  addBuffer(visit.getLastName(), 15) +
+                                  addBuffer(visit.getEmail(), 30) +
+                                  addBuffer(visit.getPhone(), 15) +
+                                  addBuffer(visit.getReason(), 40) +
+                                  addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                                  addBuffer(visit.getSpecialist(), 15) +
+                                  addBuffer(visit.getLocation(), 15) +"\n";
+          }
+          
+          // display info in window
+          textArea.append(visitsInfo);
+
+        }
+    }
+    
+
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * Retrieve a report for display
