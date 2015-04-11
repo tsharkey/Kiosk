@@ -164,11 +164,11 @@ public class DatabaseConnector {
 								rs.getTime("visitTime"),
 								rs.getString("reason"),
 								rs.getBoolean("followUp"),
-								rs.getString("email"),
 								rs.getString("specialist"),
 								rs.getString("location"),
 								rs.getString("fName"), rs.getString("lName"),
-								rs.getString("phone"));
+								rs.getString("email"), rs.getString("phone"),
+								rs.getString("role"));
 						retArray.add(temp);
 					}
 				}
