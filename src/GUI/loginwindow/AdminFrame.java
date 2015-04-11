@@ -177,6 +177,7 @@ public class AdminFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             DisabilityKiosk.isAdminWorking = false;
             DisabilityKiosk.workingAdmin = "";
+            dispose(); //Brendan S
             new DisabilityKiosk();
         }
 

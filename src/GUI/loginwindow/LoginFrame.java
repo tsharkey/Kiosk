@@ -88,6 +88,7 @@ public class LoginFrame extends JFrame {
        if(AdminTable.verifyPassword(sUserName, sPassWord)){
            DisabilityKiosk.isAdminWorking = true;
            DisabilityKiosk.workingAdmin = sUserName;
+           dispose(); //Brendan S
            new AdminFrame();
        } else
            JOptionPane.showMessageDialog(null, "Incorrect username or password");
