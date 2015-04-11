@@ -23,8 +23,16 @@ import java.util.ArrayList;
 
 /**
  * Created by Pat
+ * 
+ * Front end search and displaying of data
+ * capabilites added by Hannah. 
  */
 public class ReportWindow extends JFrame {
+  
+    // database
+    private VisitsTable visitsTable; 
+  
+    // gui 
     private JPanel northPanel;
     private JPanel comboPanel;
 
@@ -117,7 +125,12 @@ public class ReportWindow extends JFrame {
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         addHeader();
 
-        //TODO: Initial Opening of the report window, display all visits from database
+        // initial opening of the report window, display all visits from database
+        
+        // access user table
+        visitsTable = new VisitsTable(); 
+        
+        
 //        try
 //        {
 //            //Data.open();
@@ -263,16 +276,48 @@ public class ReportWindow extends JFrame {
         }
     }
 
+    /**
+     * Inner class for updating the report window based on reason for visit.
+     */
     class ItemChangeListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
             if (event.getStateChange() == ItemEvent.SELECTED) {
 
-                String string = "";
+                String visitsInfo = "";
                 textArea.setText("");
                 addHeader();
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 DateFormat timeFormat = new SimpleDateFormat("h:mm a");
+                
+                // get reason
+                String reason = (String) event.getItem();
+                
+                // show all students if all students collected
+                if (reason.equals("All Students")) {
+                  // will display-- for testing purposes currently
+                  System.out.println("All students selected");
+                }
+                else {
+                  // store visits
+                  ArrayList<VisitData> visitsList = visitsTable.searchReason(reason);
+                
+                  // collect all visit information
+                  for (VisitData visit : visitsList) {
+                    visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                                  addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                                  addBuffer(visit.getFirstName(), 15) +
+                                  addBuffer(visit.getLastName(), 15) +
+                                  addBuffer(visit.getEmail(), 30) +
+                                  addBuffer("(111) 222-3333", 15) +
+                                  addBuffer(visit.getReason(), 40) +
+                                  addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                                  addBuffer(visit.getSpecialist(), 15) +
+                                  addBuffer(visit.getLocation(), 15) +"\n";
+                 }
+                }
+                // display info in window
+                textArea.append(visitsInfo);
 
                 //TODO: Updates the report list when search value or dropdown selection changed
 //                try {
@@ -357,5 +402,6 @@ public class ReportWindow extends JFrame {
         return aListOfListsOfStrings;
     }
 }
+
 
 
