@@ -167,7 +167,8 @@ public class DatabaseConnector {
 								rs.getString("email"),
 								rs.getString("specialist"),
 								rs.getString("location"),
-								rs.getString("fName"), rs.getString("lName"));
+								rs.getString("fName"), rs.getString("lName"),
+								rs.getString("phone"));
 						retArray.add(temp);
 					}
 				}
