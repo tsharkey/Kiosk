@@ -79,7 +79,8 @@ public class UserTable {
 	 * @return
 	 */
 	public static boolean user_exist(String email) {
-		ArrayList<String> emails = getEmails();
+		ArrayList<String> emails = DatabaseConnector.executeQueryStrings(
+				"email", "SELECT email FROM USER ORDER BY email ASC");
 		for (String emailLoop : emails) {
 			if (emailLoop.equals(email)) {
 				return true;
@@ -95,49 +96,27 @@ public class UserTable {
 		return (count == 0) ? true : false;
 	}
 
-	// returns string ArrayList with ordered first names
-	public static ArrayList<String> getFirstNames() {
-		return DatabaseConnector.executeQueryStrings("fName",
-				"SELECT fName FROM USER ORDER BY email ASC");
-	}
-
-	// returns string ArrayList with ordered last names
-	public static ArrayList<String> getLastNames() {
-		return DatabaseConnector.executeQueryStrings("lName",
-				"SELECT lName FROM USER ORDER BY email ASC");
-	}
-
-	// returns string ArrayList with ordered emails
-	public static ArrayList<String> getEmails() {
-		return DatabaseConnector.executeQueryStrings("email",
-				"SELECT email FROM USER ORDER BY email ASC");
-	}
-
-	// returns string ArrayList with ordered phones
-	public static ArrayList<String> getPhotos() {
-		return DatabaseConnector.executeQueryStrings("phone",
-				"SELECT phone FROM USER ORDER BY email ASC");
-	}
-
-	// returns string ArrayList with ordered roles
-	public static ArrayList<String> getRoles() {
-		return DatabaseConnector.executeQueryStrings("role",
-				"SELECT role FROM USER ORDER BY email ASC");
-	}
-
-	// returns string ArrayList with ordered first+last names
-	public static ArrayList<String> getNames() {
+	// get all specialists or all non-specialists
+	public static ArrayList<UserData> getAllUsers(Boolean isSpecialist) {
 		return DatabaseConnector
-				.executeQueryStrings("name",
-						"SELECT CONCAT(fName, ' ', lName) AS name FROM USER ORDER BY email ASC");
+				.executeQueryUserData("SELECT * FROM USER WHERE role"
+						+ (!isSpecialist ? "!" : "")
+						+ "='Specialist' ORDER BY email ASC");
 	}
 
-	// search name columns for query, boolean will toggle searching specialists or everyone else
-	public static ArrayList<String> searchName(String query,
+	// get all users
+	public static ArrayList<UserData> getAllUsers() {
+		return DatabaseConnector
+				.executeQueryUserData("SELECT * FROM USER ORDER BY email ASC");
+	}
+
+	// search name columns for query, boolean will toggle searching specialists
+	// or everyone else
+	public static ArrayList<UserData> searchName(String query,
 			Boolean isSpecialist) {
 		query = query.trim();
-		return DatabaseConnector.executeQueryStrings("name",
-				"SELECT CONCAT(fName, ' ', lName) AS name FROM USER WHERE ((fName LIKE '"
+		return DatabaseConnector
+				.executeQueryUserData("SELECT * FROM USER WHERE ((fName LIKE '"
 						+ query + "%') OR (lName LIKE '" + query
 						+ "%') OR (CONCAT(fName, ' ', lName) LIKE '" + query
 						+ "%')) AND (role" + (!isSpecialist ? "!" : "")
