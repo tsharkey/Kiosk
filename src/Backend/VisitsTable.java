@@ -40,19 +40,19 @@ public class VisitsTable {
 	// get all visit data
 	public static ArrayList<VisitData> getAllVisits() {
 		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.fName, lName, phone, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email ORDER BY VISITS.ID ASC");
+				.executeQueryVisitData("SELECT USER.fName, lName, phone, role, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email ORDER BY VISITS.ID ASC");
 	}
 
 	// search column name for specific query
 	private static ArrayList<VisitData> search(String column, String query) {
 		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.fName, lName, phone, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS."
+				.executeQueryVisitData("SELECT USER.fName, lName, phone, role, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS."
 						+ column + " = '" + query + "' ORDER BY VISITS.ID ASC");
 	}
 
 	private static ArrayList<VisitData> search(String column, Boolean query) {
 		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.fName, lName, phone, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS."
+				.executeQueryVisitData("SELECT USER.fName, lName, phone, role, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS."
 						+ column + " = " + query + " ORDER BY VISITS.ID ASC");
 	}
 
@@ -85,7 +85,7 @@ public class VisitsTable {
 	public static ArrayList<VisitData> searchDates(String date_start,
 			String date_end) {
 		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.fName, lName, phone, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.visitDate BETWEEN '"
+				.executeQueryVisitData("SELECT USER.fName, lName, phone, role, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.visitDate BETWEEN '"
 						+ date_start
 						+ "' AND '"
 						+ date_end
@@ -96,7 +96,7 @@ public class VisitsTable {
 	public static ArrayList<VisitData> searchDateAndTimes(String date,
 			String time_start, String time_end) {
 		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.fName, lName, phone, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE (VISITS.visitTime BETWEEN '"
+				.executeQueryVisitData("SELECT USER.fName, lName, phone, role, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE (VISITS.visitTime BETWEEN '"
 						+ time_start
 						+ "' AND '"
 						+ time_end
@@ -104,5 +104,4 @@ public class VisitsTable {
 						+ date
 						+ "' ORDER BY VISITS.ID ASC");
 	}
-
 }
