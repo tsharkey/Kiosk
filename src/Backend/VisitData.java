@@ -15,10 +15,11 @@ public class VisitData {
 	private String location;
 	private String firstName;
 	private String lastName;
+	private String phone;
 
 	public VisitData(Date visitDate, Date visitTime, String reason,
 			boolean followUp, String email, String specialist, String location,
-			String firstName, String lastName) {
+			String firstName, String lastName, String phone) {
 		this.visitDate = visitDate;
 		this.visitTime = visitTime;
 		this.reason = reason;
@@ -28,6 +29,7 @@ public class VisitData {
 		this.location = location;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.phone = phone;
 
 	}
 
@@ -65,5 +67,9 @@ public class VisitData {
 
 	public String getLastName() {
 		return lastName;
+	}
+	
+	public String getPhone() {
+		return phone;
 	}
 }
