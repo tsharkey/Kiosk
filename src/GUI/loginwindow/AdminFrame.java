@@ -66,6 +66,7 @@ public class AdminFrame extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
     // getters for buttons
