@@ -106,7 +106,7 @@ public class SpecialistSelectionWindow extends JFrame {
 
     public void submitted() {
         JRadioButtonMenuItem selected = getSelection(bg);
-        String facultySelected[] = selected.getText().split(" ");
+        //String facultySelected[] = selected.getText().split(" ");
         //TODO: add the appropriate information to the VisitTable
 //        user.setSpecialist(facultySelected[0], facultySelected[1]);
 //        try {
@@ -115,7 +115,7 @@ public class SpecialistSelectionWindow extends JFrame {
 //        } catch (IOException e1) {
 //            e1.printStackTrace();
 //        }
-        VisitsTable.addVisit(reason, followUp, email, facultySelected[0], location);
+        VisitsTable.addVisit(reason, followUp, email, selected.getText(), location);
         JOptionPane.showMessageDialog(null, "Thank you for using the Disability Kiosk", "Thank You",
                 JOptionPane.PLAIN_MESSAGE);
         new DisabilityKiosk();
