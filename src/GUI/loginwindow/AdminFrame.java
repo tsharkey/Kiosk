@@ -20,10 +20,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
- * AdminFrame class creates the graphic interface to allows an administrator some functions.
- * this functions are: create a new administrator, add an specialist, view a report, it permit to log out
- * it can launch the main window for the KIOSK application and to close it.
- * This class will create each of the button for the each of the functions and their listeners
+ * AdminFrame class creates a graphic interface to allows an administrator to do some tasks.
+ * this tasks or privileges  are: create a new administrator, add an specialist, view a report
+ * the window has options to log out, launch the main window for the KIOSK application front it and close the application.
+ * This class will create each of the buttons for the each of the functions and their listeners
  */
 
 public class AdminFrame extends JFrame {
