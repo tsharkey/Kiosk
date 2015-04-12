@@ -3,8 +3,12 @@ package Backend;
 import java.util.Date;
 
 /**
- * @author Tom, Brendan
+ * This subclass of UserData stores information from the VISITS table about a
+ * particular entry along with the USER information for that visit.
+ * 
+ * @author Tom Sharkey, Brendan Casey
  */
+
 public class VisitData extends UserData {
 	private Date visitDate;
 	private Date visitTime;
@@ -13,11 +17,13 @@ public class VisitData extends UserData {
 	private String specialist;
 	private String location;
 
+	/**
+	 * Constructor to store all various information about a visit.
+	 */
 	public VisitData(Date visitDate, Date visitTime, String reason,
 			boolean followUp, String specialist, String location,
 			String firstName, String lastName, String email, String phone,
 			String role) {
-
 		super(firstName, lastName, email, phone, role);
 		this.visitDate = visitDate;
 		this.visitTime = visitTime;
@@ -26,6 +32,12 @@ public class VisitData extends UserData {
 		this.specialist = specialist;
 		this.location = location;
 	}
+	
+	/**
+	 * Getters for details specific to VISITS.
+	 * 
+	 * @return
+	 */
 
 	public Date getVisitDate() {
 		return visitDate;

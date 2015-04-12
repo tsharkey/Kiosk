@@ -190,7 +190,12 @@ public class PasswordHash
             return hex;
     }
 
-	// sanitize email input to prevent SQL injection (Brendan Casey)
+	/**
+	 * Sanitize email input to prevent SQL injection (Brendan Casey).
+	 * 
+	 * @param email
+	 * @return boolean whether valid email or not
+	 */
 	public static boolean sanitizeEmail(String email)
 	{
 	    Pattern pattern = Pattern.compile("[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");

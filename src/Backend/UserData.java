@@ -1,6 +1,7 @@
 package Backend;
 
 /**
+ * This class stores information about a particular USER from the database.
  * 
  * @author Brendan Casey
  *
@@ -13,6 +14,9 @@ public class UserData {
 	private String phone;
 	private String role;
 
+	/**
+	 * Constructor to store all various information about a visit.
+	 */
 	public UserData(String firstName, String lastName, String email,
 			String phone, String role) {
 		this.firstName = firstName;
@@ -22,6 +26,12 @@ public class UserData {
 		this.role = role;
 	}
 
+	/**
+	 * Getters for details specific to USER.
+	 * 
+	 * @return
+	 */
+	
 	public String getFirstName() {
 		return firstName;
 	}
