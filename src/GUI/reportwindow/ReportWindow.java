@@ -4,9 +4,6 @@ import GUI.adddeletespec.AddDeleteSpecFrame;
 import GUI.adddelete.AddDeleteAdminFrame;
 import GUI.loginwindow.LoginFrame;
 
-import com.healthmarketscience.jackcess.*;
-import com.healthmarketscience.jackcess.Cursor;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.awt.*;
@@ -22,15 +19,18 @@ import java.util.Date;
 import java.util.Scanner;
 
 import javax.swing.*;
-
-import com.healthmarketscience.jackcess.CursorBuilder;
-import com.healthmarketscience.jackcess.Row;
 import java.util.ArrayList;
 
 /**
  * Created by Pat
+ * 
+ * Front end search and displaying of data capabilites added by Hannah. 
  */
 public class ReportWindow extends JFrame {
+    // database
+    private VisitsTable visitsTable; 
+  
+    // gui 
     private JPanel northPanel;
     private JPanel comboPanel;
 
@@ -44,10 +44,15 @@ public class ReportWindow extends JFrame {
     private JScrollPane scrollPane;
 
     private JButton printFileBtn;
-    //private JButton addDeleteBtn;
-    private JButton addDeleteSpecBtn;
-    private JButton addDeleteAdminBtn;
     private JButton closeBtn;
+    
+    private JTextField searchBox;
+    private JTextField startInput;
+    private JTextField endInput; 
+    
+    // date and time formatting
+    DateFormat dateFormat; 
+    DateFormat timeFormat; 
 
     private final String[] reasons = {"All Students", "New, Prospective Student/Group","Disclose and Document Disability (In-take)","Placement Testing with Accommodation",
             "Schedule An Appointment with Disability Specialist","Meet with a Disability Specialist","Take Test with Accommodations","Drop Off/Pick Up Notes",
@@ -56,9 +61,18 @@ public class ReportWindow extends JFrame {
             "Professional Consultation (Faculty, Staff, Administration, Department)","Other"};
     private String[] datesPastYr;
 
+    /**
+     * Constructor of the ReportWindow.
+     */
     public ReportWindow() throws IOException {
         super("Administrator Window");
-
+        
+        // date and time formatting
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        timeFormat = new SimpleDateFormat("h:mm a");
+        
+        visitsTable = new VisitsTable();
+        
         setExtendedState(Frame.MAXIMIZED_BOTH);
         //setUndecorated(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -67,6 +81,10 @@ public class ReportWindow extends JFrame {
         buildPanels();
         setVisible(true);
     }
+
+    /**
+     * Builds the panels in the report window. 
+     */
     public void buildPanels() throws IOException {
         //Setting up northPanel
         northPanel = new JPanel();
@@ -75,10 +93,8 @@ public class ReportWindow extends JFrame {
         comboPanel = new JPanel();
 
         reasonsComboBox = new JComboBox(reasons);
-        reasonsComboBox.addItemListener(new ReportWindow.ItemChangeListener());
+        reasonsComboBox.addItemListener(new ReportWindow.ReasonChangeListener());
         datesPastYr = new String[365];
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        DateFormat timeFormat = new SimpleDateFormat("h:mm a");
         Calendar cal = Calendar.getInstance();
 
         for (int i = 0; i < datesPastYr.length; i++) {
@@ -91,13 +107,57 @@ public class ReportWindow extends JFrame {
                 datesPastYr[i] = dateFormat.format(day);
             }
         }
+        
+        JLabel startLabel = new JLabel("Start Date:");
+        JLabel endLabel = new JLabel("End Date:");
+        startInput = new JTextField("YYYY-MM-DD", 10);
+        endInput = new JTextField("YYYY-MM-DD", 10); 
 
-        datesComboBox = new JComboBox(datesPastYr);
-        datesComboBox.addItemListener(new ReportWindow.ItemChangeListener());
-
-
-        comboPanel.add(datesComboBox);
+        // create search box
+        searchBox = new JTextField("Search by Name", 10); 
+        
+        // add action listener to search box
+        searchBox.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                  
+                  // clear old data and add header
+                  textArea.setText("");
+                  addHeader(); 
+                  
+                  String visitsInfo = "";
+                  String input = searchBox.getText();
+                  
+                  // collect all data containing the inputted name
+                  for (VisitData visit : visitsTable.searchName(input)) {
+                      visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                                    addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                                    addBuffer(visit.getFirstName(), 15) +
+                                    addBuffer(visit.getLastName(), 15) +
+                                    addBuffer(visit.getEmail(), 30) +
+                                    addBuffer(visit.getPhone(), 15) +
+                                    addBuffer(visit.getReason(), 40) +
+                                    addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                                    addBuffer(visit.getSpecialist(), 15) +
+                                    addBuffer(visit.getLocation(), 15) + "\n";
+                  }
+                  
+                  // display information in window
+                  textArea.append(visitsInfo);
+                  }
+                });
+        
+        // add date change action listeners
+        startInput.addActionListener(new ReportWindow.DateChangeListener());
+        endInput.addActionListener(new ReportWindow.DateChangeListener());
+        
+        // add to panel
+        comboPanel.add(startLabel);
+        comboPanel.add(startInput);
+        comboPanel.add(endLabel);
+        comboPanel.add(endInput);
         comboPanel.add(reasonsComboBox);
+        comboPanel.add(searchBox);
+       
 
         northPanel.add(new JLabel("Current students waiting to be seen:"), BorderLayout.NORTH);
         northPanel.add(comboPanel, BorderLayout.SOUTH);
@@ -111,46 +171,14 @@ public class ReportWindow extends JFrame {
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         addHeader();
 
-        try
-        {
-            Data.open();
-            String temp = "";
-            for (Row row: Data.chooseTable("visits"))
-            {
-                Table table = Data.chooseTable("user");
-                Cursor cursor = CursorBuilder.createCursor(table);
-                boolean found = cursor.findFirstRow(Collections.singletonMap("email", row.get("email")));
-
-                temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
-                        + addBuffer(timeFormat.format(row.get("visitTime")),15)
-                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(),15)
-                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(),15) + addBuffer(row.get("email").toString(),30)
-                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(),15) + addBuffer(row.get("reason").toString(),40)
-                        + addBuffer(followUpSwitcher(row.get("followUp").toString()),15) + addBuffer(row.get("Specialist").toString(),15)
-                        + addBuffer(row.get("location").toString(),15) + "\n";
-            }
-
-            textArea.append(temp);
-        }
-        catch(IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
-
+        // initial opening of the report window, display all visits from database
+        displayAllVisits();
+        
         scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         centerPanel.add(scrollPane);
 
-
         //setting up southPanel
         southPanel = new JPanel();
-
-        addDeleteAdminBtn = new JButton("Add / Delete Admin");
-        addDeleteAdminBtn.addActionListener(new ReportWindow.ButtonListener());
-        southPanel.add(addDeleteAdminBtn);
-
-        addDeleteSpecBtn = new JButton("Add / Delete Specialist");
-        addDeleteSpecBtn.addActionListener(new ReportWindow.ButtonListener());
-        southPanel.add(addDeleteSpecBtn);
 
         printFileBtn = new JButton("Print File");
         printFileBtn.addActionListener(new ReportWindow.ButtonListener());
@@ -166,6 +194,10 @@ public class ReportWindow extends JFrame {
         add(centerPanel, BorderLayout.CENTER);
         add(southPanel, BorderLayout.SOUTH);
     }
+    
+    /**
+     * Adds the label information to the top of the report window textarea. 
+     */
     private void addHeader() {
         textArea.append(addBuffer("Date", 15));
         textArea.append(addBuffer("Time", 15));
@@ -187,6 +219,10 @@ public class ReportWindow extends JFrame {
         textArea.append("\n");
         scan.close();
     }
+    
+    /**
+     * Adds a buffer to the end of the string.
+     */
     private static String addBuffer(String s, int buffSize) {
         String temp = s;
         for (int i = s.length(); i <= buffSize; i++) {
@@ -195,16 +231,32 @@ public class ReportWindow extends JFrame {
 
         return temp;
     }
-
-    private static String followUpSwitcher(String s) {
-
-        if (s.equalsIgnoreCase("true")) {
-            return "Yes";
-        }
-        else
-            return "No";
+    
+    /**
+     * Displays all visits in window.
+     */
+    private void displayAllVisits() {
+      
+      String visitsInfo = "";
+      for (VisitData visit : visitsTable.getAllVisits()) {
+        visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                      addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                      addBuffer(visit.getFirstName(), 15) +
+                      addBuffer(visit.getLastName(), 15) +
+                      addBuffer(visit.getEmail(), 30) +
+                      addBuffer(visit.getPhone(), 15) +
+                      addBuffer(visit.getReason(), 40) +
+                      addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                      addBuffer(visit.getSpecialist(), 15) +
+                      addBuffer(visit.getLocation(), 15) + "\n";
+                  }
+      
+      textArea.append(visitsInfo);
     }
 
+    /**
+     * Inner class that allows for print listening. 
+     */
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == printFileBtn) {
@@ -216,12 +268,6 @@ public class ReportWindow extends JFrame {
                 } catch(PrinterException exception) {
                     JOptionPane.showMessageDialog(null, exception);
                 }
-            } else if (e.getSource() == addDeleteAdminBtn) {
-                AddDeleteAdminFrame addDeleteAdmin = new AddDeleteAdminFrame();
-                addDeleteAdmin.setVisible(true);
-            } else if (e.getSource() == addDeleteSpecBtn) {
-                AddDeleteSpecFrame addDeleteSpec = new AddDeleteSpecFrame();
-                addDeleteSpec.setVisible(true);
             }
         }
     }
@@ -232,110 +278,90 @@ public class ReportWindow extends JFrame {
         {
             if (e.getSource() == closeBtn)
             {
-                try {
-                    Data.closeData();
-                    new LoginFrame();
-                    setVisible(false);
-                    dispose();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+              setVisible(false); 
+              dispose(); 
+              
+              // go back to disability kiosk-- still to implement
             }
         }
     }
 
-    private class ComboBoxListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            JComboBox cb = (JComboBox) e.getSource();
-
-            String selection = (String) cb.getSelectedItem();
-
-            StringBuilder stb;
-        }
-    }
-
-    class ItemChangeListener implements ItemListener {
+    /**
+     * Inner class for updating the report window based on reason for visit.
+     */
+    class ReasonChangeListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
             if (event.getStateChange() == ItemEvent.SELECTED) {
 
-                String string = "";
+                String visitsInfo = "";
                 textArea.setText("");
                 addHeader();
-                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-                DateFormat timeFormat = new SimpleDateFormat("h:mm a");
-
-                try {
-                    for (Row row : Data.chooseTable("visits")) {
-                        Table table = Data.chooseTable("user");
-
-                        Cursor cursor = CursorBuilder.createCursor(table);
-
-                        String temp = "";
-                        temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
-                                + addBuffer(timeFormat.format(row.get("visitTime")),15)
-                                //+ addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(), 15)
-                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(), 15)
-                                + addBuffer(row.get("email").toString(), 30)
-                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(), 15)
-                                + addBuffer(row.get("reason").toString(), 40)
-                                + addBuffer(row.get("followUp").toString(), 15)
-                                + addBuffer(row.get("Specialist").toString(), 15)
-                                + addBuffer(row.get("location").toString(), 15)
-                                + "\n";
-
-                        if (temp.contains(datesComboBox.getSelectedItem().toString())
-                                && temp.contains(reasonsComboBox.getSelectedItem().toString()))
-                            string += temp;
-
-                        textArea.append(string);
-
-                    }
-                } catch (IOException e) {
-                    System.out.println("error");
+                
+                // get reason
+                String reason = (String) event.getItem();
+                
+                // show all students if all students collected
+                if (reason.equals("All Students")) {
+                  displayAllVisits();
                 }
+                else {
+                  // collect all visit information
+                  for (VisitData visit : visitsTable.searchReason(reason)) {
+                    visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                                  addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                                  addBuffer(visit.getFirstName(), 15) +
+                                  addBuffer(visit.getLastName(), 15) +
+                                  addBuffer(visit.getEmail(), 30) +
+                                  addBuffer(visit.getPhone(), 15) +
+                                  addBuffer(visit.getReason(), 40) +
+                                  addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                                  addBuffer(visit.getSpecialist(), 15) +
+                                  addBuffer(visit.getLocation(), 15) +"\n";
+                 }
+                  // display info in window
+                textArea.append(visitsInfo);
+                }
+                
             }
         }
-
     }
-     public ArrayList<ArrayList<String>> read(String query,String key) throws IOException
-    {
-        ArrayList<ArrayList<String>> aListOfListsOfStrings = new ArrayList<ArrayList<String>>();
-        Table table = Data.open().getTable(query);
-        for(Row row: table)
-        {
-            if(row.get("email").toString().equalsIgnoreCase(key))
-            {
-                ArrayList<String> userStrings = new ArrayList<String>();
-                userStrings.add(row.get("visitDate").toString());
-                userStrings.add(row.get("visitTime").toString());
-                userStrings.add(row.get("reason").toString());
-                userStrings.add(row.get("followUp").toString());
-                userStrings.add(row.get("email").toString());
-                userStrings.add(row.get("ID").toString());
-                aListOfListsOfStrings.add(userStrings);
-            }
-        }
-        return aListOfListsOfStrings;
-    }
-      public ArrayList<ArrayList<String>> read(String query) throws IOException {
+    
+    /**
+     * Inner class for updating the report window based on date of visit
+     */
+    class DateChangeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+          
+          // clear old data and add header
+          textArea.setText("");
+          addHeader(); 
+          
+          // store input
+          String startText = startInput.getText();
+          String endText = endInput.getText();
 
-        ArrayList<ArrayList<String>> aListOfListsOfStrings = new ArrayList<ArrayList<String>>();
-        Table table = Data.open().getTable(query);
-        for(Row row: table)
-        {
-            ArrayList<String> userStrings = new ArrayList<String>();
-            userStrings.add(row.get("visitDate").toString());
-            userStrings.add(row.get("visitTime").toString());
-            userStrings.add(row.get("reason").toString());
-            userStrings.add(row.get("followUp").toString());
-            userStrings.add(row.get("email").toString());
-            userStrings.add(row.get("ID").toString());
-            aListOfListsOfStrings.add(userStrings);
-                    
+          String visitsInfo = "";
+                 
+          // collect all visit information
+          for (VisitData visit : visitsTable.searchDates(startText, endText)) {
+            visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                                  addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                                  addBuffer(visit.getFirstName(), 15) +
+                                  addBuffer(visit.getLastName(), 15) +
+                                  addBuffer(visit.getEmail(), 30) +
+                                  addBuffer(visit.getPhone(), 15) +
+                                  addBuffer(visit.getReason(), 40) +
+                                  addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                                  addBuffer(visit.getSpecialist(), 15) +
+                                  addBuffer(visit.getLocation(), 15) +"\n";
+          }
+          
+          // display info in window
+          textArea.append(visitsInfo);
+
         }
-        return aListOfListsOfStrings;
     }
 }
-
 

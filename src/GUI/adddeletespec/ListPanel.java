@@ -3,6 +3,8 @@ package GUI.adddeletespec;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -26,7 +28,6 @@ public class ListPanel extends JPanel{
     //JPassword field to confirm password and check that both JPassword fields match
     
     //private ArrayList<Specialist> specs = new ArrayList<Specialist>(Backend.SpecialistList.getSpecialList());
-    
     private JList list;
     private DefaultListModel dlm;
     private JScrollPane scroll;
@@ -40,7 +41,7 @@ public class ListPanel extends JPanel{
     private void buildPanel(){
         
        specLabel = new JLabel("Specialists");
-       
+
        //to hold names for the Scroll Pane
        //ArrayList<String> namesList = new ArrayList<String>();
        
@@ -51,19 +52,23 @@ public class ListPanel extends JPanel{
        list = new JList(dlm);
        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
        list.setLayoutOrientation(JList.VERTICAL);
-        
+
+
        //nList = new JList(namesList.toArray());
        //add the scroll pane
        scroll = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
             JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-       
+
        scroll.setPreferredSize(new Dimension(300, 490));
-       
+
        add(specLabel, BorderLayout.NORTH);
        add(scroll, BorderLayout.CENTER);
        setVisible(true);
     }
-    
+
+    /**
+     * update the list of specialist
+     */
     public void updateList()
     {
         dlm.clear();
@@ -72,4 +77,12 @@ public class ListPanel extends JPanel{
         	dlm.addElement(name);
         }
     }
+
+    public String[] getSelectedSpec() {
+        String temp = String.valueOf(list.getSelectedValue());
+        String[] s = temp.split(" ",-1);
+        return s;
+    }
+
+
 }

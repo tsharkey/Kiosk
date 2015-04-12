@@ -4,9 +4,6 @@ import GUI.adddeletespec.AddDeleteSpecFrame;
 import GUI.adddelete.AddDeleteAdminFrame;
 import GUI.loginwindow.LoginFrame;
 
-import com.healthmarketscience.jackcess.*;
-import com.healthmarketscience.jackcess.Cursor;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.awt.*;
@@ -22,15 +19,20 @@ import java.util.Date;
 import java.util.Scanner;
 
 import javax.swing.*;
-
-import com.healthmarketscience.jackcess.CursorBuilder;
-import com.healthmarketscience.jackcess.Row;
 import java.util.ArrayList;
 
 /**
  * Created by Pat
+ * 
+ * Front end search and displaying of data
+ * capabilites added by Hannah. 
  */
 public class ReportWindow extends JFrame {
+  
+    // database
+    private VisitsTable visitsTable; 
+  
+    // gui 
     private JPanel northPanel;
     private JPanel comboPanel;
 
@@ -48,8 +50,12 @@ public class ReportWindow extends JFrame {
     private JButton addDeleteSpecBtn;
     private JButton addDeleteAdminBtn;
     private JButton closeBtn;
+    
+    private JTextField searchBox;
+    private JTextField startInput;
+    private JTextField endInput; 
 
-    private final String[] reasons = {"New, Prospective Student/Group","Disclose and Document Disability (In-take)","Placement Testing with Accommodation",
+    private final String[] reasons = {"All Students", "New, Prospective Student/Group","Disclose and Document Disability (In-take)","Placement Testing with Accommodation",
             "Schedule An Appointment with Disability Specialist","Meet with a Disability Specialist","Take Test with Accommodations","Drop Off/Pick Up Notes",
             "Academic Advising (Course Selection, Add/Drop, Withdrawal)","Fill Out Accommodation Forms","Address Problems with Specific Accommodations",
             "Address Specific Course Assignment or Issue","Alternative Format for Texts and Handouts",
@@ -67,6 +73,7 @@ public class ReportWindow extends JFrame {
         buildPanels();
         setVisible(true);
     }
+
     public void buildPanels() throws IOException {
         //Setting up northPanel
         northPanel = new JPanel();
@@ -75,7 +82,7 @@ public class ReportWindow extends JFrame {
         comboPanel = new JPanel();
 
         reasonsComboBox = new JComboBox(reasons);
-        reasonsComboBox.addItemListener(new ReportWindow.ItemChangeListener());
+        reasonsComboBox.addItemListener(new ReportWindow.ReasonChangeListener());
         datesPastYr = new String[365];
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         DateFormat timeFormat = new SimpleDateFormat("h:mm a");
@@ -91,13 +98,37 @@ public class ReportWindow extends JFrame {
                 datesPastYr[i] = dateFormat.format(day);
             }
         }
+        
+        JLabel startLabel = new JLabel("Start Date:");
+        JLabel endLabel = new JLabel("End Date:");
+        startInput = new JTextField("YYYY-MM-DD", 10);
+        endInput = new JTextField("YYYY-MM-DD", 10); 
 
-        datesComboBox = new JComboBox(datesPastYr);
-        datesComboBox.addItemListener(new ReportWindow.ItemChangeListener());
+        // create search box
+        searchBox = new JTextField("Search by Name", 10); 
+        
+        // add action listener to search box
+        searchBox.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
 
-
-        comboPanel.add(datesComboBox);
+                  String visitsInfo = "";
+                  String input = searchBox.getText();
+                  
+                  }
+                });
+        
+        // add date change action listeners
+        startInput.addActionListener(new ReportWindow.DateChangeListener());
+        endInput.addActionListener(new ReportWindow.DateChangeListener());
+        
+        // add to panel
+        comboPanel.add(startLabel);
+        comboPanel.add(startInput);
+        comboPanel.add(endLabel);
+        comboPanel.add(endInput);
         comboPanel.add(reasonsComboBox);
+        comboPanel.add(searchBox);
+       
 
         northPanel.add(new JLabel("Current students waiting to be seen:"), BorderLayout.NORTH);
         northPanel.add(comboPanel, BorderLayout.SOUTH);
@@ -111,31 +142,36 @@ public class ReportWindow extends JFrame {
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         addHeader();
 
-        try
-        {
-            Data.open();
-            String temp = "";
-            for (Row row: Data.chooseTable("visits"))
-            {
-                Table table = Data.chooseTable("user");
-                Cursor cursor = CursorBuilder.createCursor(table);
-                boolean found = cursor.findFirstRow(Collections.singletonMap("email", row.get("email")));
-
-                temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
-                        + addBuffer(timeFormat.format(row.get("visitTime")),15)
-                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(),15)
-                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(),15) + addBuffer(row.get("email").toString(),30)
-                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(),15) + addBuffer(row.get("reason").toString(),40)
-                        + addBuffer(followUpSwitcher(row.get("followUp").toString()),15) + addBuffer(row.get("Specialist").toString(),15)
-                        + addBuffer(row.get("location").toString(),15) + "\n";
-            }
-
-            textArea.append(temp);
-        }
-        catch(IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
+        // initial opening of the report window, display all visits from database
+        displayAllVisits();
+        
+        
+//        try
+//        {
+//            //Data.open();
+//            String temp = "";
+//
+//            for (Row row: Data.chooseTable("visits"))
+//            {
+//                Table table = Data.chooseTable("user");
+//                Cursor cursor = CursorBuilder.createCursor(table);
+//                boolean found = cursor.findFirstRow(Collections.singletonMap("email", row.get("email")));
+//
+//                temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
+//                        + addBuffer(timeFormat.format(row.get("visitTime")),15)
+//                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(),15)
+//                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(),15) + addBuffer(row.get("email").toString(),30)
+//                        + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(),15) + addBuffer(row.get("reason").toString(),40)
+//                        + addBuffer(followUpSwitcher(row.get("followUp").toString()),15) + addBuffer(row.get("Specialist").toString(),15)
+//                        + addBuffer(row.get("location").toString(),15) + "\n";
+//            }
+//
+//            textArea.append(temp);
+//        }
+//        catch(IOException e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
 
         scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         centerPanel.add(scrollPane);
@@ -204,6 +240,30 @@ public class ReportWindow extends JFrame {
         else
             return "No";
     }
+    
+    /**
+     * Displays all visits in window.
+     */
+    private void displayAllVisits() {
+      DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+      DateFormat timeFormat = new SimpleDateFormat("h:mm a");
+      
+      String visitsInfo = "";
+      for (VisitData visit : visitsTable.getAllVisits()) {
+        visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                      addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                      addBuffer(visit.getFirstName(), 15) +
+                      addBuffer(visit.getLastName(), 15) +
+                      addBuffer(visit.getEmail(), 30) +
+                      addBuffer(visit.getPhone(), 15) +
+                      addBuffer(visit.getReason(), 40) +
+                      addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                      addBuffer(visit.getSpecialist(), 15) +
+                      addBuffer(visit.getLocation(), 15) + "\n";
+                  }
+      
+      textArea.append(visitsInfo);
+    }
 
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -232,14 +292,15 @@ public class ReportWindow extends JFrame {
         {
             if (e.getSource() == closeBtn)
             {
-                try {
-                    Data.closeData();
-                    new LoginFrame();
-                    setVisible(false);
-                    dispose();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                //TODO: close the Report window
+//                try {
+//                    Data.closeData();
+//                    new LoginFrame();
+//                    setVisible(false);
+//                    dispose();
+//                } catch (IOException e1) {
+//                    e1.printStackTrace();
+//                }
             }
         }
     }
@@ -253,89 +314,153 @@ public class ReportWindow extends JFrame {
             StringBuilder stb;
         }
     }
+    
 
-    class ItemChangeListener implements ItemListener {
+
+    /**
+     * Inner class for updating the report window based on reason for visit.
+     */
+    class ReasonChangeListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
             if (event.getStateChange() == ItemEvent.SELECTED) {
 
-                String string = "";
+                String visitsInfo = "";
                 textArea.setText("");
                 addHeader();
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 DateFormat timeFormat = new SimpleDateFormat("h:mm a");
-
-                try {
-                    for (Row row : Data.chooseTable("visits")) {
-                        Table table = Data.chooseTable("user");
-
-                        Cursor cursor = CursorBuilder.createCursor(table);
-
-                        String temp = "";
-                        temp += addBuffer(dateFormat.format(row.get("visitDate")),15)
-                                + addBuffer(timeFormat.format(row.get("visitTime")),15)
-                                //+ addBuffer(cursor.getCurrentRowValue(table.getColumn("fName")).toString(), 15)
-                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("lName")).toString(), 15)
-                                + addBuffer(row.get("email").toString(), 30)
-                                + addBuffer(cursor.getCurrentRowValue(table.getColumn("phone")).toString(), 15)
-                                + addBuffer(row.get("reason").toString(), 40)
-                                + addBuffer(row.get("followUp").toString(), 15)
-                                + addBuffer(row.get("Specialist").toString(), 15)
-                                + addBuffer(row.get("location").toString(), 15)
-                                + "\n";
-
-                        if (temp.contains(datesComboBox.getSelectedItem().toString())
-                                && temp.contains(reasonsComboBox.getSelectedItem().toString()))
-                            string += temp;
-
-                        textArea.append(string);
-
-                    }
-                } catch (IOException e) {
-                    System.out.println("error");
+                
+                // get reason
+                String reason = (String) event.getItem();
+                
+                // show all students if all students collected
+                if (reason.equals("All Students")) {
+                  displayAllVisits();
                 }
+                else {
+                  // collect all visit information
+                  for (VisitData visit : visitsTable.searchReason(reason)) {
+                    visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                                  addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                                  addBuffer(visit.getFirstName(), 15) +
+                                  addBuffer(visit.getLastName(), 15) +
+                                  addBuffer(visit.getEmail(), 30) +
+                                  addBuffer(visit.getPhone(), 15) +
+                                  addBuffer(visit.getReason(), 40) +
+                                  addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                                  addBuffer(visit.getSpecialist(), 15) +
+                                  addBuffer(visit.getLocation(), 15) +"\n";
+                 }
+                  // display info in window
+                textArea.append(visitsInfo);
+                }
+                
             }
         }
-
     }
+    
+    /**
+     * Inner class for updating the report window based on date of visit
+     */
+    class DateChangeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+          
+          textArea.setText("");
+          addHeader(); 
+          DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+          DateFormat timeFormat = new SimpleDateFormat("h:mm a");
+          
+          // for testing-- remove at end
+          System.out.println("start input:" + startInput.getText());
+          System.out.println("end input:" + endInput.getText());
+          
+          // store input
+          String startText = startInput.getText();
+          String endText = endInput.getText();
+          
+          VisitsTable vTable = new VisitsTable();
+
+          String visitsInfo = "";
+                 
+          // collect all visit information
+          for (VisitData visit : vTable.searchDates(startText, endText)) {
+            visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15) + 
+                                  addBuffer(timeFormat.format(visit.getVisitTime()), 15) +
+                                  addBuffer(visit.getFirstName(), 15) +
+                                  addBuffer(visit.getLastName(), 15) +
+                                  addBuffer(visit.getEmail(), 30) +
+                                  addBuffer(visit.getPhone(), 15) +
+                                  addBuffer(visit.getReason(), 40) +
+                                  addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                                  addBuffer(visit.getSpecialist(), 15) +
+                                  addBuffer(visit.getLocation(), 15) +"\n";
+          }
+          
+          // display info in window
+          textArea.append(visitsInfo);
+
+        }
+    }
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+    /**
+     * Retrieve a report for display
+     * @param query
+     * @param key
+     * @return
+     * @throws IOException
+     */
+    //TODO: Connection to database
      public ArrayList<ArrayList<String>> read(String query,String key) throws IOException
     {
         ArrayList<ArrayList<String>> aListOfListsOfStrings = new ArrayList<ArrayList<String>>();
-        Table table = Data.open().getTable(query);
-        for(Row row: table)
-        {
-            if(row.get("email").toString().equalsIgnoreCase(key))
-            {
-                ArrayList<String> userStrings = new ArrayList<String>();
-                userStrings.add(row.get("visitDate").toString());
-                userStrings.add(row.get("visitTime").toString());
-                userStrings.add(row.get("reason").toString());
-                userStrings.add(row.get("followUp").toString());
-                userStrings.add(row.get("email").toString());
-                userStrings.add(row.get("ID").toString());
-                aListOfListsOfStrings.add(userStrings);
-            }
-        }
+//        Table table = Data.open().getTable(query);
+//        for(Row row: table)
+//        {
+//            if(row.get("email").toString().equalsIgnoreCase(key))
+//            {
+//                ArrayList<String> userStrings = new ArrayList<String>();
+//                userStrings.add(row.get("visitDate").toString());
+//                userStrings.add(row.get("visitTime").toString());
+//                userStrings.add(row.get("reason").toString());
+//                userStrings.add(row.get("followUp").toString());
+//                userStrings.add(row.get("email").toString());
+//                userStrings.add(row.get("ID").toString());
+//                aListOfListsOfStrings.add(userStrings);
+//            }
+//        }
         return aListOfListsOfStrings;
     }
+        //not sure what this does, same method as the read above?
       public ArrayList<ArrayList<String>> read(String query) throws IOException {
 
         ArrayList<ArrayList<String>> aListOfListsOfStrings = new ArrayList<ArrayList<String>>();
-        Table table = Data.open().getTable(query);
-        for(Row row: table)
-        {
-            ArrayList<String> userStrings = new ArrayList<String>();
-            userStrings.add(row.get("visitDate").toString());
-            userStrings.add(row.get("visitTime").toString());
-            userStrings.add(row.get("reason").toString());
-            userStrings.add(row.get("followUp").toString());
-            userStrings.add(row.get("email").toString());
-            userStrings.add(row.get("ID").toString());
-            aListOfListsOfStrings.add(userStrings);
-                    
-        }
+//        Table table = Data.open().getTable(query);
+//        for(Row row: table)
+//        {
+//            ArrayList<String> userStrings = new ArrayList<String>();
+//            userStrings.add(row.get("visitDate").toString());
+//            userStrings.add(row.get("visitTime").toString());
+//            userStrings.add(row.get("reason").toString());
+//            userStrings.add(row.get("followUp").toString());
+//            userStrings.add(row.get("email").toString());
+//            userStrings.add(row.get("ID").toString());
+//            aListOfListsOfStrings.add(userStrings);
+//
+//        }
         return aListOfListsOfStrings;
     }
 }
+
 
 
