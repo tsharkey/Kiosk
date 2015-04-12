@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * DatabaseInitFrame is a window allows to connect to the database
+ * it will create a frame with
  * Created by catherinehuang on 4/6/15.
  */
 public class DatabaseInitFrame extends JFrame{
