@@ -4,7 +4,6 @@ package Backend;
  * This class stores information about a particular USER from the database.
  * 
  * @author Brendan Casey
- *
  */
 
 public class UserData {

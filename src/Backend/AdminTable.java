@@ -10,9 +10,7 @@ import java.security.spec.InvalidKeySpecException;
  * 
  * @author Parth Patel, John Cyzeski, Maria del Mar Moncaleano, Brendan Casey
  * 
- *         TODO:
- *         - proper error handling
- *         - vulnerable to SQL injections -> sanitize inputs 
+ *         TODO: proper error handling
  */
 
 public class AdminTable {

@@ -18,6 +18,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  *         - proper error handling 
  *         - createDatabase : create initial database using SQL queries 
  *         - delete database -> clear tables
+ *         - PreparedStatement to prevent sql injection
  */
 public class DatabaseConnector {
 
