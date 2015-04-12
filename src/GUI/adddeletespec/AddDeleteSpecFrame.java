@@ -21,20 +21,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-
-
 /**
- *
+ * AddDeleteSpecFrame Class is part or the Kiosk implementation.
+ * it is a graphic interface that allows to add or delete a specialist from the database
+ * The frame will have three buttons to add, delete and edit the specialist
  * @author Spconway 4/26/2014
  */
 public class AddDeleteSpecFrame extends JFrame{
+
     private final int WINDOW_WIDTH = 800;
     private final int WINDOW_HEIGHT = 500;
+    //declaring an array that holds the names of the specialists
     private ArrayList<String> specNames;
+    //declaring fields for the panels
     private SpecInfoPanel specInfoPanel;
     private UpdatePanel updatePanel;
     private ListPanel listPanel;
     private JPanel buttonPanel;
+    //declaring fields for the buttons
     private JButton addBtn, editBtn, deleteBtn;
 //    private JList<String> list;
 //    private DefaultListModel<String> dlm;
@@ -76,6 +80,8 @@ public class AddDeleteSpecFrame extends JFrame{
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
+
+        //creating the Add button and adding the listener to it
         addBtn = new JButton("Add New Specialist");
         addBtn.addActionListener(new submitOrDeleteListener());
         c.gridx = 0;
@@ -83,7 +89,8 @@ public class AddDeleteSpecFrame extends JFrame{
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weighty = 0.05;
         buttonPanel.add(addBtn, c);
-        
+
+        //creating the Edit button and adding the listener to it
         editBtn = new JButton("Edit Specialist");
         editBtn.addActionListener(new submitOrDeleteListener());
         c.gridx = 0;
@@ -91,7 +98,8 @@ public class AddDeleteSpecFrame extends JFrame{
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weighty = 0.05;
         buttonPanel.add(editBtn, c);
-        
+
+        //creating the Delete button and adding the listener to it
         deleteBtn = new JButton("Remove Specialist");
         deleteBtn.addActionListener(new submitOrDeleteListener());
         c.gridx = 0;
@@ -104,7 +112,7 @@ public class AddDeleteSpecFrame extends JFrame{
 
     /**
      * Return the email of a specialist
-     * @return
+     * @return String
      */
 	private String getSpecialist() {
 		if (listPanel.getSelectedSpec() != null) {
