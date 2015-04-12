@@ -19,11 +19,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class AdminFrame extends JFrame {
+/**
+ * AdminFrame class creates the graphic interface to allows an administrator some functions.
+ * this functions are: create a new administrator, add an specialist, view a report, it permit to log out
+ * it can launch the main window for the KIOSK application and to close it.
+ * This class will create each of the button for the each of the functions and their listeners
+ */
 
+public class AdminFrame extends JFrame {
+    //size of the window
     private final int WINDOW_WIDTH = 500;
     private final int WINDOW_HEIGHT = 100;
-
+    //Jbuttons fields for each of the buttons
     private final JButton reportButton = new JButton("VIEW REPORT");
     private final JButton closeKioskButton = new JButton("CLOSE KIOSK");
     private final JButton createNewAdmin = new JButton("ADMIN OPTIONS");//allow the admin to create another admin
@@ -33,7 +40,9 @@ public class AdminFrame extends JFrame {
     public AdminFrame() {
 
         setLayout(new GridLayout());
+        //creates panel for buttons
         JPanel button = new JPanel();
+        //adding the buttons to the panel
         button.add(createNewAdmin);
         button.add(closeKioskButton);
         button.add(reportButton);
@@ -92,6 +101,8 @@ public class AdminFrame extends JFrame {
     }
 
     // action listeners for each button
+
+    //action listener for the button 'close kiosk'
     public class CloseKioskButtonListener implements ActionListener {
 
         @Override
@@ -106,11 +117,11 @@ public class AdminFrame extends JFrame {
         }
     }
 
+    //action listener for the button 'report'
     private class ReportButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
             if (e.getSource() == getReportButton()) {
                 // this button goes to the report window
                 try {
@@ -124,6 +135,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
+    //action listener for the button 'create admin'
     //create another admin account, and return to admin window
     private class CreateAdminButtonListener implements ActionListener {
 
@@ -174,6 +186,7 @@ public class AdminFrame extends JFrame {
         }
     }
 
+    //action listener for the button 'log out'
     //current admin logs out, return to main window of the application
     private class LogoutButtonListener implements ActionListener {
 
@@ -187,6 +200,7 @@ public class AdminFrame extends JFrame {
 
     }
 
+    //action listener for the button 'add specialist'
     private class SpecialistButtonListener implements ActionListener {
 
         @Override
