@@ -1,6 +1,9 @@
 package GUI.loginwindow;
 
 /**
+ * LoginPanel Class is the graphical interface window to login as a administrator
+ * it provides a username and the password field to login into the Admin Frame
+ * it provides two buttons one to 'login' and one to 'cancel'
  * Created by Calvin Wong on 04/24/2014
  *
  * Login Panel
