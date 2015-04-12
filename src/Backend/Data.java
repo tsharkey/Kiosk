@@ -18,9 +18,12 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
+
 public class Data {
 
+
     private static Database dbopen;
+
     private static Set<String> tableNames;
 
     public Data() throws IOException {
@@ -36,13 +39,16 @@ public class Data {
         }        return dbopen;
     }
 
+
     public static Table chooseTable(String table) throws IOException {
         return dbopen.getTable(table);
     }
 
+
     public static void closeData() throws IOException {
         dbopen.close();
     }
+
 
     public static void getTableNames() throws IOException {
         tableNames = dbopen.getTableNames();

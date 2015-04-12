@@ -11,7 +11,7 @@ import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 /**
- *
+
  * @author Eric Sullivan
  */
 public class Specialist implements Serializable
@@ -41,6 +41,9 @@ public class Specialist implements Serializable
         this.phone =  phone;
         
     }
+
+
+
      public ImageIcon getPhoto() {
         return new ImageIcon(photo,photo);
     }

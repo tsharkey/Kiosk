@@ -11,7 +11,11 @@ import org.joda.time.LocalDate;
 
 import org.joda.time.format.DateTimeFormat;
 
+
+
 public class User {
+
+
     private boolean follow;
     private String reason;
     private String location;
@@ -22,10 +26,12 @@ public class User {
     private String phone;
     private String specialistFirst;
     private String specialistLast;
-    
+
+
     public User(boolean follow, String reason, String location, String email,
             String fName, String lName, String role, String phone)
     {
+
         this.follow = follow;
         this.reason = reason;
         this.location = location;
@@ -56,6 +62,7 @@ public class User {
 		tab.addRow(location, email, Column.AUTO_NUMBER, date.toDate(), reason,
 				follow, cal.getTime(), specialistFirst, specialistLast);
 	}
+
 
 	public static boolean checkUser(Table tab, String email) throws IOException {
 		Boolean state = false;

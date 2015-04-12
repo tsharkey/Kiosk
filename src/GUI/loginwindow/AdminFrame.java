@@ -20,11 +20,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * AdminFrame class creates the graphic interface to allows an administrator some functions.
+ * this functions are: create a new administrator, add an specialist, view a report, it permit to log out
+ * as administrator and launch the main window for the KIOSK application and to close it.
+ * This class will create each of the button for the each of the functions and their listeners
+ */
 public class AdminFrame extends JFrame {
-
+    //size of the frame
 	private final int WINDOW_WIDTH = 500;
     private final int WINDOW_HEIGHT = 100;
-
+    // declaration of the buttons on the frame
     private JButton launchKioskButton = new JButton("LAUNCH KIOSK");
     private JButton reportButton = new JButton("VIEW REPORT");
     private JButton closeKioskButton = new JButton("CLOSE KIOSK");
@@ -33,7 +39,7 @@ public class AdminFrame extends JFrame {
     private JButton logout = new JButton("LOG OUT");
     
     public AdminFrame() {
-
+        //adding the buttons to a Panel
         setLayout(new GridLayout());
         JPanel button = new JPanel();
         button.add(launchKioskButton);
@@ -104,6 +110,8 @@ public class AdminFrame extends JFrame {
 
 
     // action listeners for each button
+
+    //listener for LaunchKioskButton
     public class LaunchKioskButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent ae) {
             if (ae.getSource() == getLaunchKioskButton()) {
@@ -113,7 +121,7 @@ public class AdminFrame extends JFrame {
             }
         }
     }
-
+    //listener for CloseKioskButton
     public class CloseKioskButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent ee) {
             if (ee.getSource() == getCloseKioskButton()) {
@@ -126,10 +134,9 @@ public class AdminFrame extends JFrame {
         }
     }
 
+    //listener for reportButton
     private class ReportButtonListener implements ActionListener {
-
         public void actionPerformed(ActionEvent e) {
-
             if (e.getSource() == getReportButton()) {
                 // this button goes to the report window
                 try {

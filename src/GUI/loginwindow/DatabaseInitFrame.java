@@ -24,6 +24,8 @@ public class DatabaseInitFrame extends JFrame{
         buildConnectWindow(); // build window
     }
 
+    //creates the window that connects with the Database
+    //
     private void buildConnectWindow() {
 
         initPanel = new DatabaseInitPanel();

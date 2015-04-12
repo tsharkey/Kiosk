@@ -3,7 +3,7 @@ package Backend;
 import java.util.ArrayList;
 
 /**
- *
+ * This class handles interfacing with the MySQL database with regards to the USER table
  * @author Sean Johnston, Brendan Casey
  */
 public class UserTable {
@@ -13,7 +13,8 @@ public class UserTable {
     {
     	int insertCount = DatabaseConnector.executeUpdate("INSERT INTO USER "
                 + "VALUES('"+_fName+"', '"+_lName+"', '"+_email+ "', '"+_phone+"', '"+_role+"')");
-    	return (insertCount != 0) ? true : false;
+    	//return (insertCount != 0) ? true : false;
+        return (insertCount != 0);
     }
 
     //deletes a user or a user and all visits based on the boolean value passed
@@ -26,7 +27,8 @@ public class UserTable {
     	int deleteCount = DatabaseConnector.executeUpdate("DELETE FROM USER " +
                 "WHERE email = '" + email + "'");
 
-    	return (deleteCount != 0) ? true : false;
+    	//return (deleteCount != 0) ? true : false;
+        return (deleteCount != 0);
     }
     
     // update user info
@@ -43,7 +45,8 @@ public class UserTable {
     		default:
     			break;
     	}
-    	return (updateCount != 0) ? true : false;
+    	//return (updateCount != 0) ? true : false;
+        return (updateCount != 0);
     }
     
     // checks if user table is empty

@@ -2,7 +2,7 @@ package Backend;
 
 import java.sql.ResultSet;
 /**
- *
+ *  This class handles interfacing with the MySQL database with regards to the VISITS table
  * @author Sean Johnston, Brendan Casey
  */
 public class VisitsTable {

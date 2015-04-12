@@ -41,26 +41,28 @@ public class Admin {
 
     private File dbFile;
     private Database db;
-    public static ArrayList<AdminAccount> admins = new ArrayList<AdminAccount>();
-    public static boolean isAdminWorking = false;//check if an admin is working on the system
 
- private Cursor cursor;
+    public static ArrayList<AdminAccount> admins = new ArrayList<AdminAccount>();
+
+    public static boolean isAdminWorking = false;
+
+    private Cursor cursor;
     
     /*
      *   The GUI should catch any IOException thrown by the class
      */
 
-    /**
-     * Constructor for Admin
-     */
+
     public Admin() {
     }
-    
+
+
     public void addAdmin(String username, String password)
     {
      admins.add(new AdminAccount(username, password));
     }
-    
+
+
     public void deleteAdmin(String username)
     {
      for (AdminAccount addmin : admins)
@@ -103,7 +105,7 @@ public class Admin {
 
     }
     
-    
+
     public void checkCol(Database db, Table tab) throws IOException {
 
         tab = db.getTable("visits");

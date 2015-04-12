@@ -20,16 +20,19 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 /**
+ * SpecialistList class creates and array of specialists
+ * it can add specialist to it, delete them
  * SpecialistList -> SpecialistList
  * @author Eric Sullivan
  */
 public class SpecialistList{
-    
+    //declaration of the array specs wich will hold the specialists
     public static ArrayList<Specialist> specs = new ArrayList<Specialist>();
     
     public SpecialistList(){
     }
-    
+
+    //adds an specialist to the array
     public void addSpecialist(String photo, String email, String fName, String lname, String role, String phone)
     {
      specs.add(new Specialist(photo,email,fName,lname, role, phone));
@@ -37,7 +40,9 @@ public class SpecialistList{
     public void addSpecialist(Specialist s){
         specs.add(s);
     }
-    
+
+    //deletes a specialist, iterates through the array and compare the username with the first name of the specialist
+    //if it is equal, the specialist gets remove from the array
     public void deleteSpecialist(String username)
     {
      for (Specialist s : specs)
@@ -49,6 +54,7 @@ public class SpecialistList{
      }
     }
 
+    //gets the array of the specialists
     public static ArrayList<Specialist> getSpecialList() {
   return specs;
  }
