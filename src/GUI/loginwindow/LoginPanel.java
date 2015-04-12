@@ -19,7 +19,7 @@ import javax.swing.JPasswordField;
 import java.awt.Font;
 
 public class LoginPanel extends JPanel {
-
+    //declaring fields for the buttons, labels , text and password for the frame
     private final int CHAR_LENGTH = 15;
     private JLabel userName;
     private JLabel passWord;
@@ -36,7 +36,7 @@ public class LoginPanel extends JPanel {
     }
 
     private void loginPanel() {
-
+        //creating the fields for the elements of the window
         userNameText = new JTextField(CHAR_LENGTH);
         passWordText = new JPasswordField(CHAR_LENGTH);
         loginButton = new JButton("LOGIN");
@@ -46,7 +46,7 @@ public class LoginPanel extends JPanel {
         GridBagConstraints grid = new GridBagConstraints();
 
         grid.fill = GridBagConstraints.HORIZONTAL;
-
+        //username Label
         userName = new JLabel("Username: ");
         userName.setFont(font);
         grid.gridx = 0;
@@ -60,7 +60,7 @@ public class LoginPanel extends JPanel {
         grid.gridwidth = 2;
 
         add(userNameText, grid);
-
+        //password label
         passWord = new JLabel("Password: ");
         passWord.setFont(font);
         grid.gridx = 0;
