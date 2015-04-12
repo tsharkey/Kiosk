@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
  /** Created by Pat
  * 
- * Front end search and displaying of data capabilities added by Hannah.
+ * Front end search and displaying of data capabilities added by Hannah. Maria del Mar Moncaleano
  */
 public class ReportWindow extends JFrame {
     // database
@@ -301,7 +301,7 @@ public class ReportWindow extends JFrame {
             }
         }
     }
-
+    //goBack actionListener button to go back to Kiosk application
     private class goBackButtonListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
