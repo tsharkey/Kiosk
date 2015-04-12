@@ -110,23 +110,18 @@ public class AddDeleteAdminFrame extends JFrame {
                     if (!un.equals("") && !pw.equals("") && !cfpw.equals("")) {
                         if (AdminTable.admin_exist(un)) {
                             JOptionPane.showMessageDialog(null, "An account with this username already exits.", "Error", JOptionPane.ERROR_MESSAGE);
-                            new AdminFrame();
                         } else if (!pw.equals(cfpw)) {
                             JOptionPane.showMessageDialog(null, "Passwords do not match", "Error ", JOptionPane.ERROR_MESSAGE);
-                            new AdminFrame();
                         } else {
                             AdminTable.addAdmin(un, pw);
                             JOptionPane.showMessageDialog(null, "Admin added successful ", "Notice", JOptionPane.INFORMATION_MESSAGE);
-                            new AdminFrame();
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Missing info ", "Error", JOptionPane.ERROR_MESSAGE);
-                        new AdminFrame();
                     }
-                } else {
-                    new AdminFrame();
                 }
                 dispose();
+                new AdminFrame();
             } else if (e.getSource() == editBtn) {
                 JPanel passChange = new JPanel();
                 passChange.add(new JLabel("Current Password: "));
@@ -135,7 +130,7 @@ public class AddDeleteAdminFrame extends JFrame {
                 passChange.add(new JLabel("New Password:"));
                 JPasswordField newPassInput = new JPasswordField(20);
                 passChange.add(newPassInput);
-                passChange.add(new JLabel("Confirm:"));
+                passChange.add(new JLabel("Confirm New Password:"));
                 JPasswordField cfPassInput = new JPasswordField(20);
                 passChange.add(cfPassInput);
                 int entered = JOptionPane.showConfirmDialog(null, passChange, "Please enter information", JOptionPane.OK_CANCEL_OPTION);
@@ -145,25 +140,20 @@ public class AddDeleteAdminFrame extends JFrame {
                     String npw = new String(newPassInput.getPassword());
                     String cfpw = new String(cfPassInput.getPassword());
                     if (!opw.equals("") && !npw.equals("") && !cfpw.equals("")) {
-                        if (AdminTable.verifyPassword(DisabilityKiosk.workingAdmin, opw)) {
+                        if (!AdminTable.verifyPassword(DisabilityKiosk.workingAdmin, opw)) {
                             JOptionPane.showMessageDialog(null, "Wrong old password", "Error", JOptionPane.ERROR_MESSAGE);
-                            new AdminFrame();
                         } else if (!npw.equals(cfpw)) {
                             JOptionPane.showMessageDialog(null, "New Passwords do not match", "Error ", JOptionPane.ERROR_MESSAGE);
-                            new AdminFrame();
                         } else {
                             AdminTable.updatePassword(DisabilityKiosk.workingAdmin, npw);
                             JOptionPane.showMessageDialog(null, "password updated successful ", "Notice", JOptionPane.INFORMATION_MESSAGE);
-                            new AdminFrame();
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Missing info ", "Error", JOptionPane.ERROR_MESSAGE);
-                        new AdminFrame();
                     }
-                } else {
-                    new AdminFrame();
                 }
                 dispose();
+                new AdminFrame();
             } else if (e.getSource() == deleteBtn) {
                 if (AdminTable.getAdmins().size() == 1) {
                     JOptionPane.showMessageDialog(null, "You cannot delete the last Administrator.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -185,13 +175,19 @@ public class AddDeleteAdminFrame extends JFrame {
                                 DisabilityKiosk.isAdminWorking = false;
                                 JOptionPane.showMessageDialog(null, "Admin account deleted", "Notice", JOptionPane.INFORMATION_MESSAGE);
                                 new DisabilityKiosk();
-                            } else {
+                            }
+                            //Brendan S
+                            else if (entered2 == JOptionPane.NO_OPTION){
+                            	dispose();
                                 new AdminFrame();
                             }
                         } else {
                             JOptionPane.showMessageDialog(null, "Incorrect Password.", "Error", JOptionPane.ERROR_MESSAGE);
-                            new AdminFrame();
                         }
+                    }
+                    else if (entered == JOptionPane.CANCEL_OPTION){
+                    	dispose();
+                        new AdminFrame();
                     }
                 }
                 dispose();

@@ -32,6 +32,8 @@ import java.util.regex.Matcher;
  *
  * @author Spconway 4/26/2014
  * updated by Henrique Aguiar
+ * 
+ * Input checks with regular expressions by Hannah
  */
 public class LabelsAndFieldsPanel extends JPanel {
 

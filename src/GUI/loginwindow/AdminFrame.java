@@ -26,7 +26,7 @@ public class AdminFrame extends JFrame {
 
     private final JButton reportButton = new JButton("VIEW REPORT");
     private final JButton closeKioskButton = new JButton("CLOSE KIOSK");
-    private final JButton createNewAdmin = new JButton("ADMIN OPTIONs");//allow the admin to create another admin
+    private final JButton createNewAdmin = new JButton("ADMIN OPTIONS");//allow the admin to create another admin
     private final JButton specialist = new JButton("ADD SPECIALIST"); //creates a adddeletespecframe -Brendan S
     private final JButton logout = new JButton("LOG OUT");
 
@@ -129,7 +129,7 @@ public class AdminFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
+        	dispose(); //Brendan S
             new AddDeleteAdminFrame();
             /*
             int submitted;
