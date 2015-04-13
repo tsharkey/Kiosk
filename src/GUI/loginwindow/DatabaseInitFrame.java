@@ -78,9 +78,9 @@ public class DatabaseInitFrame extends JFrame{
 
             if (e.getSource() == initPanel.getConnectButton()) {
                 //information for the connection
-                String sUserName = "kiosk"; //initPanel.getUsernameText();
-                String sPassWord = "massbaysp2015"; //initPanel.getPasswordText();
-                String sDb = "kioskdb2"; //nitPanel.getHostText();
+                String sUserName = initPanel.getUsernameText();
+                String sPassWord = initPanel.getPasswordText();
+                String sDb = initPanel.getHostText();
                 String sHost = "107.170.166.28";
 
                 if (DatabaseConnector.setDatabaseConnection(sUserName, sPassWord, sHost, sDb)) {
