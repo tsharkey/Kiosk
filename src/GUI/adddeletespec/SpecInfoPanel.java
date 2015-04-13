@@ -233,16 +233,16 @@ public class SpecInfoPanel extends JPanel{
 
     /**
      * Validate and return the password
-     * TODO: validate password length and characters
      * @return
      */
     public String getPassword() {
-
-        return String.valueOf(passwordText.getPassword());
+        String pw = new String(passwordText.getPassword());
+        return pw;
     }
 
     public String getCPassword() {
-        return String.valueOf(passwordText.getPassword());
+        String cpw = new String(cpasswordText.getPassword());
+        return cpw;
     }
 
     public boolean confirmPassword() {

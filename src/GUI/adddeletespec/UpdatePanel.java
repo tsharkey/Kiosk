@@ -199,7 +199,6 @@ public class UpdatePanel extends JPanel {
 
     /**
      * Validate password and return string
-     * TODO: Validate password length and characters.
      * @return
      */
     public String getPassword() {
