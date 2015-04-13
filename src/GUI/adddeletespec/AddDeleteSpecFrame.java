@@ -180,8 +180,8 @@ public class AddDeleteSpecFrame extends JFrame{
                             SpecialistTable.addSpecialist(
                                     specInfoPanel.getFirstName(),
                                     specInfoPanel.getLastName(),
-                                    specInfoPanel.getPhoneText(),
                                     specInfoPanel.getEmailText(),
+                                    specInfoPanel.getPhoneText(),
                                     specInfoPanel.getPassword(),
                                     specInfoPanel.getPhoto());
                             listPanel.updateList();
