@@ -269,7 +269,7 @@ public class AddDeleteSpecFrame extends JFrame{
                 else{
                     JOptionPane.showMessageDialog(null, "Please select a specialist", "No Selection", JOptionPane.ERROR_MESSAGE);
                 }
-            } if (e.getSource() == cancelBtn) {
+            } else if (e.getSource() == cancelBtn) {
             	dispose();
                 new AdminFrame();
             }
