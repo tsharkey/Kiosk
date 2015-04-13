@@ -3,6 +3,8 @@ import Backend.*;
 import GUI.adddeletespec.AddDeleteSpecFrame;
 import GUI.adddelete.AddDeleteAdminFrame;
 import GUI.loginwindow.LoginFrame;
+import disabilitykiosk.DisabilityKiosk;
+import GUI.loginwindow.AdminFrame;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -22,21 +24,27 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- * Created by Pat
+ * ReportWindow Class display a window with a Report for all the visits to the Kiosk Application
+ * It will display date, time, first and last name of the visitor, the email, phone, Reason for the visit, follow up field if needs to be follow up,
+ * the specialist and the location where the visitor is getting the services.
+ * In this window the user (administrator or specialist in accordance with the privileges) will have the capability to search and print data
+ * from it.
+ * /
+
+ /** Created by Pat
  * 
- * Front end search and displaying of data capabilites added by Hannah. 
+ * Front end search and displaying of data capabilities added by Hannah. Maria del Mar Moncaleano
  */
 public class ReportWindow extends JFrame {
     // database
-    private VisitsTable visitsTable; 
-  
-    // gui 
+    private VisitsTable visitsTable;
+   //gui panels
     private JPanel northPanel;
     private JPanel comboPanel;
 
     private JPanel centerPanel;
     private JPanel southPanel;
-
+    //combo boxes to display the reasons and dates in the gui
     private JComboBox reasonsComboBox;
     private JComboBox datesComboBox;
 
@@ -45,6 +53,7 @@ public class ReportWindow extends JFrame {
 
     private JButton printFileBtn;
     private JButton closeBtn;
+    private JButton goBackBtn;
     
     private JTextField searchBox;
     private JTextField startInput;
@@ -91,13 +100,15 @@ public class ReportWindow extends JFrame {
         northPanel.setLayout(new BorderLayout());
 
         comboPanel = new JPanel();
-
+        //creates the comboBox for the reasons
         reasonsComboBox = new JComboBox(reasons);
         reasonsComboBox.addItemListener(new ReportWindow.ReasonChangeListener());
         datesPastYr = new String[365];
+
         Calendar cal = Calendar.getInstance();
 
-        for (int i = 0; i < datesPastYr.length; i++) {
+        for (int i = 0; i < datesPastYr.length; i++)
+        {
             if (i == 0) {
                 Date day = cal.getTime();
                 datesPastYr[i] = dateFormat.format(day);
@@ -111,7 +122,9 @@ public class ReportWindow extends JFrame {
         JLabel startLabel = new JLabel("Start Date:");
         JLabel endLabel = new JLabel("End Date:");
         startInput = new JTextField("YYYY-MM-DD", 10);
-        endInput = new JTextField("YYYY-MM-DD", 10); 
+        endInput = new JTextField("YYYY-MM-DD", 10);
+
+        JLabel reasonLabel = new JLabel("Search by Reason:");
 
         // create search box
         searchBox = new JTextField("Search by Name", 10); 
@@ -155,6 +168,7 @@ public class ReportWindow extends JFrame {
         comboPanel.add(startInput);
         comboPanel.add(endLabel);
         comboPanel.add(endInput);
+        comboPanel.add(reasonLabel);
         comboPanel.add(reasonsComboBox);
         comboPanel.add(searchBox);
        
@@ -188,6 +202,9 @@ public class ReportWindow extends JFrame {
         closeBtn.addActionListener(new ReportWindow.CloseButtonListener());
         southPanel.add(closeBtn);
 
+        goBackBtn = new JButton("Go Back");
+        goBackBtn.addActionListener(new ReportWindow.goBackButtonListener());
+        southPanel.add(goBackBtn);
 
         //adding all panels to frame
         add(northPanel, BorderLayout.NORTH);
@@ -196,7 +213,7 @@ public class ReportWindow extends JFrame {
     }
     
     /**
-     * Adds the label information to the top of the report window textarea. 
+     * Adds the label information to the top of the report window text area.
      */
     private void addHeader() {
         textArea.append(addBuffer("Date", 15));
@@ -282,6 +299,18 @@ public class ReportWindow extends JFrame {
               dispose(); 
               
               // go back to disability kiosk-- still to implement
+            }
+        }
+    }
+    //goBack actionListener button to go back to Kiosk application
+    private class goBackButtonListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getSource() == goBackBtn)
+            {
+                new AdminFrame();
+                dispose();
             }
         }
     }

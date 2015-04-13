@@ -402,6 +402,9 @@ public class LabelsAndFieldsPanel extends JPanel {
         return this.locationI.getSelectedItem().toString();
     }
 
+    /**
+     * TODO: remove the slider
+     */
     private class SliderListener implements ChangeListener {
 
         @Override

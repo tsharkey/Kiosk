@@ -110,6 +110,8 @@ public class AddDeleteAdminFrame extends JFrame {
                     if (!un.equals("") && !pw.equals("") && !cfpw.equals("")) {
                         if (AdminTable.admin_exist(un)) {
                             JOptionPane.showMessageDialog(null, "An account with this username already exits.", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else if(pw.length()<6){
+                                JOptionPane.showMessageDialog(null, "Password too short", "Error", JOptionPane.ERROR_MESSAGE);
                         } else if (!pw.equals(cfpw)) {
                             JOptionPane.showMessageDialog(null, "Passwords do not match", "Error ", JOptionPane.ERROR_MESSAGE);
                         } else {
@@ -142,6 +144,8 @@ public class AddDeleteAdminFrame extends JFrame {
                     if (!opw.equals("") && !npw.equals("") && !cfpw.equals("")) {
                         if (!AdminTable.verifyPassword(DisabilityKiosk.workingAdmin, opw)) {
                             JOptionPane.showMessageDialog(null, "Wrong old password", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else if(npw.length() < 6) {
+                            JOptionPane.showMessageDialog(null, "Password too short", "Error", JOptionPane.ERROR_MESSAGE);
                         } else if (!npw.equals(cfpw)) {
                             JOptionPane.showMessageDialog(null, "New Passwords do not match", "Error ", JOptionPane.ERROR_MESSAGE);
                         } else {

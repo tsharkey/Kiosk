@@ -4,19 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * DatabaseInitPanel class creates a window that will allow the Kiosk application to connect to the database,
+ * using the host, user name and password
+ * it has two buttons one to login in the database 'Login' and one to exit 'cancel'
  * Created by catherinehuang on 4/6/15.
  */
 public class DatabaseInitPanel extends JPanel{
 
     private final int CHAR_LENGTH = 20;  //userName, passWord, and
-    private JLabel userName;
-    private JLabel passWord;
-    private JButton loginButton;
-    private JButton cancelButton;
+    private JLabel userName; //label for username
+    private JLabel passWord; //label for password
+    private JButton loginButton; //button for login
+    private JButton cancelButton; //button for cancel, exit out of the application
     private Font font = new Font("PLAIN", Font.PLAIN, 18);
-    private JTextField userNameText;
-    private JPasswordField passWordText;
-    private JTextField hostText;
+    private JTextField userNameText; //text field to enter the user name
+    private JPasswordField passWordText; //text field to enter the password
+    private JTextField hostText; // text field to enter the host
 
     /**
      * Constructor
@@ -28,7 +31,7 @@ public class DatabaseInitPanel extends JPanel{
     }
 
     /**
-     * Creates the login panel
+     * Creates the labels and buttons for the login panel
      */
     private void loginPanel() {
 
@@ -43,7 +46,7 @@ public class DatabaseInitPanel extends JPanel{
 
         grid.fill = GridBagConstraints.HORIZONTAL;
 
-        //host
+        //creates the label host
         JLabel host = new JLabel("Host: ");
         host.setFont(font);
         grid.gridx = 0;
@@ -58,7 +61,7 @@ public class DatabaseInitPanel extends JPanel{
 
         add(hostText, grid);
 
-        //userName
+        //creates the label fo the userName
         userName = new JLabel("Username: ");
         userName.setFont(font);
         grid.gridx = 0;
@@ -73,7 +76,7 @@ public class DatabaseInitPanel extends JPanel{
 
         add(userNameText, grid);
 
-        //password
+        //Creates the label for the password
         passWord = new JLabel("Password: ");
         passWord.setFont(font);
         grid.gridx = 0;

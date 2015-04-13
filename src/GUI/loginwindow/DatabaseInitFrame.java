@@ -8,11 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * DatabaseInitFrame creates a frame to connect to the database
  * Created by catherinehuang on 4/6/15.
  */
 public class DatabaseInitFrame extends JFrame{
+    //size of the frame
     private final int WINDOW_WIDTH = 500;
     private final int WINDOW_HEIGHT = 200;
+
     private DatabaseInitPanel initPanel;
 
     /**
@@ -23,17 +26,19 @@ public class DatabaseInitFrame extends JFrame{
         buildConnectWindow(); // build window
     }
 
+    //creates the window that connects with the Database
     private void buildConnectWindow() {
 
+        //creating the Panel to initialized the database connection
         initPanel = new DatabaseInitPanel();
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
+        //creating the button for the connection and adding the listener to it
         ConnectButtonListener onClick = new ConnectButtonListener();
-
         initPanel.getConnectButton().addActionListener(onClick);
 
+        //creating the button for cancel and adding the listener to it
         CancelButtonListener close = new CancelButtonListener();
-
         initPanel.getCancelButton().addActionListener(close);
 
         add(initPanel);
@@ -63,17 +68,19 @@ public class DatabaseInitFrame extends JFrame{
         }
     }
 
-    
+    /**
+     * Connect button ActionListener.
+     */
     private class ConnectButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
             if (e.getSource() == initPanel.getConnectButton()) {
-
-                String sUserName = "kiosk"; //initPanel.getUsernameText();
-                String sPassWord = "massbaysp2015"; //initPanel.getPasswordText();
-                String sDb = "kioskdb2"; //nitPanel.getHostText();
+                //information for the connection
+                String sUserName = initPanel.getUsernameText();
+                String sPassWord = initPanel.getPasswordText();
+                String sDb = initPanel.getHostText();
                 String sHost = "107.170.166.28";
 
                 if (DatabaseConnector.setDatabaseConnection(sUserName, sPassWord, sHost, sDb)) {
