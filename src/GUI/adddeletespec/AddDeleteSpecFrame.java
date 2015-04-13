@@ -157,6 +157,10 @@ public class AddDeleteSpecFrame extends JFrame{
 
                             JOptionPane.showInternalMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
 
+                        } else if (specInfoPanel.getPhoto().length() > 100) {
+                        	
+                        	JOptionPane.showInternalMessageDialog(null, "Photo file name is too large. Please rename it and try again.", "Image Error", JOptionPane.ERROR_MESSAGE);
+                        	
                         } else {
                             SpecialistTable.addSpecialist(
                                     specInfoPanel.getFirstName(),

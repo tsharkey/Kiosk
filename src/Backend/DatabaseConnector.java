@@ -16,12 +16,10 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  *
  *         TODO: 
  *         - proper error handling 
- *         - createDatabase : create initial database using SQL queries 
- *         - delete database -> clear tables
- *         - PreparedStatement to prevent sql injection
+ *         - createDatabase : create initial database using SQL queries
+ *         - rework methods to use PreparedStatement to prevent SQL injections
  */
 public class DatabaseConnector {
-
 	/**
 	 * Static variables with database connection details
 	 */
@@ -50,6 +48,16 @@ public class DatabaseConnector {
 				+ dbName);
 		// checking if details are valid by attempting a query to database
 		return executeQueryString("1", "SELECT 1") != null ? true : false;
+	}
+	
+	/**
+	 * Remove (DROP) the specified table if it exists
+	 * 
+	 * @param table
+	 * @return boolean of success
+	 */
+	public static boolean executeDropTable(String table) {
+		return (executeUpdate("DROP TABLE IF EXISTS " + table) != 0) ? true : false;
 	}
 
 	/**
