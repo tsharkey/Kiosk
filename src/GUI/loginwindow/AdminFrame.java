@@ -75,7 +75,7 @@ public class AdminFrame extends JFrame {
         //setAlwaysOnTop(true);
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 

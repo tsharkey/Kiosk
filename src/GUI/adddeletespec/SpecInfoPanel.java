@@ -227,12 +227,17 @@ public class SpecInfoPanel extends JPanel{
     public String getPhoto(){
         String temp = photoT.getText();
         String[] tempList = temp.split("/", -2);
-//        System.out.println(tempList[tempList.length-1]);
+        //TODO: Only pass on the file name, once the SpecitalistTable's phone var length is fix, change to pass on the whole path
         return tempList[tempList.length-1];
     }
 
-
+    /**
+     * Validate and return the password
+     * TODO: validate password length and characters
+     * @return
+     */
     public String getPassword() {
+
         return String.valueOf(passwordText.getPassword());
     }
 
