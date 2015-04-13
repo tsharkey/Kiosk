@@ -69,10 +69,10 @@ public class SpecialistSelectionWindow extends JFrame {
         specName = SpecialistTable.getNames();
         
         for (int i = 0; i < specName.size(); i++) {
-         ImageIcon picture = new ImageIcon(specPhoto.get(i));
+        	ImageIcon picture = new ImageIcon(specPhoto.get(i));
             String name = specName.get(i);
             JRadioButtonMenuItem rButton = new JRadioButtonMenuItem(name, picture, true);
-            rButton.setFont(new Font("ariel",Font.BOLD, 16));
+            rButton.setFont(new Font("ariel",Font.BOLD, 100));
             rButton.isBorderPainted();
             radioButtons.add(rButton);
         }

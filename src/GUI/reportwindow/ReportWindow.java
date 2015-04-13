@@ -4,6 +4,7 @@ import GUI.adddeletespec.AddDeleteSpecFrame;
 import GUI.adddelete.AddDeleteAdminFrame;
 import GUI.loginwindow.LoginFrame;
 import disabilitykiosk.DisabilityKiosk;
+import GUI.loginwindow.AdminFrame;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -201,7 +202,7 @@ public class ReportWindow extends JFrame {
         closeBtn.addActionListener(new ReportWindow.CloseButtonListener());
         southPanel.add(closeBtn);
 
-        goBackBtn = new JButton("GoBack");
+        goBackBtn = new JButton("Go Back");
         goBackBtn.addActionListener(new ReportWindow.goBackButtonListener());
         southPanel.add(goBackBtn);
 
@@ -308,11 +309,9 @@ public class ReportWindow extends JFrame {
         {
             if (e.getSource() == goBackBtn)
             {
-                new DisabilityKiosk();
+                new AdminFrame();
                 dispose();
-
             }
-
         }
     }
 
