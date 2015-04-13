@@ -80,6 +80,9 @@ public class ListPanel extends JPanel{
 
     public String[] getSelectedSpec() {
         String temp = String.valueOf(list.getSelectedValue());
+        if(temp.equals("null")){
+        	return null;
+        }
         String[] s = temp.split(" ",-1);
         return s;
     }
