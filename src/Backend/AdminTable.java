@@ -30,9 +30,9 @@ public class AdminTable {
 		}
 		int insertCount = 0;
 		try {
-			insertCount = DatabaseConnector
-					.executeUpdate("INSERT INTO ADMIN VALUES('" + user + "', '"
-							+ PasswordHash.createHash(password) + "')");
+			insertCount = DatabaseConnector.executeUpdate(
+					"INSERT INTO ADMIN VALUES(?, ?)", user,
+					PasswordHash.createHash(password));
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
@@ -50,10 +50,9 @@ public class AdminTable {
 	public static boolean updatePassword(String user, String newPassword) {
 		int updateCount = 0;
 		try {
-			updateCount = DatabaseConnector
-					.executeUpdate("UPDATE ADMIN SET hash='"
-							+ PasswordHash.createHash(newPassword)
-							+ "' WHERE user = '" + user + "'");
+			updateCount = DatabaseConnector.executeUpdate(
+					"UPDATE ADMIN SET hash=? WHERE user = ?",
+					PasswordHash.createHash(newPassword), user);
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
@@ -67,8 +66,8 @@ public class AdminTable {
 	 * @return boolean of success
 	 */
 	public static boolean deleteAdmin(String user) {
-		int insertCount = DatabaseConnector
-				.executeUpdate("DELETE FROM ADMIN WHERE user = '" + user + "'");
+		int insertCount = DatabaseConnector.executeUpdate(
+				"DELETE FROM ADMIN WHERE user = ?", user);
 		return (insertCount != 0) ? true : false;
 	}
 
@@ -81,9 +80,11 @@ public class AdminTable {
 	 */
 	public static boolean verifyPassword(String user, String password) {
 		boolean isValid = false;
-		String hash = DatabaseConnector.executeQueryString("hash",
-				"SELECT hash FROM ADMIN WHERE hash = (SELECT hash FROM ADMIN WHERE user='"
-						+ user + "')");
+		String hash = DatabaseConnector
+				.executeQueryString(
+						"hash",
+						"SELECT hash FROM ADMIN WHERE hash = (SELECT hash FROM ADMIN WHERE user=?)",
+						user);
 		if (hash != null) {
 			try {
 				isValid = PasswordHash.validatePassword(password, hash);
@@ -112,12 +113,7 @@ public class AdminTable {
 	 */
 	public static boolean admin_exist(String user) {
 		ArrayList<String> admins = getAdmins();
-		for (String admin : admins) {
-			if (admin.equals(user)) {
-				return true;
-			}
-		}
-		return false;
+		return admins.contains(user);
 	}
 
 	/**

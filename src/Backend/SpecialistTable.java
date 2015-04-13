@@ -20,17 +20,16 @@ public class SpecialistTable {
 	 * 
 	 * @param fName
 	 * @param lName
-	 * @param phone
 	 * @param email
+	 * @param phone
 	 * @param password
 	 * @param photo
 	 * @return boolean of success
 	 */
 	public static boolean addSpecialist(String fName, String lName,
-			String phone, String email, String password, String photo) {
-		if (UserTable.addUser(fName, lName, phone, email, "Specialist") != true) {
-			return false; // cannot add user or they already exist, attempt to
-							// update instead?
+			String email, String phone, String password, String photo) {
+		if (UserTable.addUser(fName, lName, email, phone, "Specialist") != true) {
+			return false; // failed to add or update user
 		}
 		return insertSpecialist(email, password, photo);
 	}
@@ -48,12 +47,15 @@ public class SpecialistTable {
 			String photo) {
 		int insertCount = 0;
 		try {
-			insertCount = DatabaseConnector
-					.executeUpdate("INSERT INTO SPECIALIST VALUES("
-							+ ((photo != null) ? ("'" + photo + "', ")
-									: "NULL, ") + "'"
-							+ PasswordHash.createHash(password) + "', '"
-							+ email + "')");
+			if (photo.equals("") || photo == null) {
+				insertCount = DatabaseConnector.executeUpdate(
+						"INSERT INTO SPECIALIST (hash, email) VALUES(?, ?)",
+						PasswordHash.createHash(password), email);
+			} else {
+				insertCount = DatabaseConnector.executeUpdate(
+						"INSERT INTO SPECIALIST VALUES(?, ?, ?)", photo,
+						PasswordHash.createHash(password), email);
+			}
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
@@ -67,9 +69,7 @@ public class SpecialistTable {
 	 * @return boolean of success
 	 */
 	public static boolean deleteSpecialist(String email) {
-		int insertCount = DatabaseConnector
-				.executeUpdate("DELETE FROM USER WHERE email = '" + email + "'");
-		return (insertCount != 0) ? true : false;
+		return UserTable.deleteUser(email);
 	}
 
 	/**
@@ -133,30 +133,27 @@ public class SpecialistTable {
 		}
 		int updateCount = 0;
 		switch (column) {
-		case "photo":
-			updateCount = DatabaseConnector
-					.executeUpdate("UPDATE SPECIALIST SET photo='" + update
-							+ "' WHERE email = '" + email + "'");
+		case "email":
+			updateCount = DatabaseConnector.executeUpdate(
+					"UPDATE USER SET email=? WHERE email = ?", update, email);
 			break;
 		case "hash":
 			try {
-				updateCount = DatabaseConnector
-						.executeUpdate("UPDATE SPECIALIST SET hash='"
-								+ PasswordHash.createHash(update)
-								+ "' WHERE email = '" + email + "'");
+				updateCount = DatabaseConnector.executeUpdate(
+						"UPDATE SPECIALIST SET hash=? WHERE email = ?",
+						PasswordHash.createHash(update), email);
 			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 				e.printStackTrace();
 			}
 			break;
-		case "email":
-			updateCount = DatabaseConnector
-					.executeUpdate("UPDATE USER SET email='" + update
-							+ "' WHERE email = '" + email + "'");
-			break;
 		case "phone":
-			updateCount = DatabaseConnector
-					.executeUpdate("UPDATE USER SET phone='" + update
-							+ "' WHERE email = '" + email + "'");
+			updateCount = DatabaseConnector.executeUpdate(
+					"UPDATE USER SET phone=? WHERE email = ?", update, email);
+			break;
+		case "photo":
+			updateCount = DatabaseConnector.executeUpdate(
+					"UPDATE SPECIALIST SET photo=? WHERE email = ?", update,
+					email);
 			break;
 		default:
 			break;
@@ -176,8 +173,8 @@ public class SpecialistTable {
 		String hash = DatabaseConnector
 				.executeQueryString(
 						"hash",
-						"SELECT hash FROM SPECIALIST WHERE hash = (SELECT hash FROM SPECIALIST WHERE email='"
-								+ email + "')");
+						"SELECT hash FROM SPECIALIST WHERE hash = (SELECT hash FROM SPECIALIST WHERE email=?)",
+						email);
 		if (hash != null) { // making sure password hash exists
 			try {
 				isValid = PasswordHash.validatePassword(password, hash);
@@ -207,12 +204,7 @@ public class SpecialistTable {
 	 */
 	public static boolean specialist_exist(String email) {
 		ArrayList<String> emails = getEmails();
-		for (String emailLoop : emails) {
-			if (emailLoop.equals(email)) {
-				return true;
-			}
-		}
-		return false;
+		return emails.contains(email);
 	}
 
 	/**
@@ -273,7 +265,32 @@ public class SpecialistTable {
 		return DatabaseConnector
 				.executeQueryString(
 						"email",
-						"SELECT email FROM SPECIALIST WHERE email IN (SELECT email FROM USER WHERE fName='"
-								+ fName + "' AND lName='" + lName + "')");
+						"SELECT email FROM SPECIALIST WHERE email IN (SELECT email FROM USER WHERE fName=? AND lName=?)",
+						fName, lName);
+	}
+
+	/**
+	 * Get phone of SPECIALIST for email
+	 * 
+	 * @param email
+	 * @return String with phone
+	 */
+	public static String getPhone(String email) {
+		return DatabaseConnector
+				.executeQueryString(
+						"phone",
+						"SELECT phone FROM USER WHERE email = (SELECT email FROM SPECIALIST WHERE email=?)",
+						email);
+	}
+
+	/**
+	 * Get photo of SPECIALIST for email
+	 * 
+	 * @param email
+	 * @return String with photo
+	 */
+	public static String getPhoto(String email) {
+		return DatabaseConnector.executeQueryString("photo",
+				"SELECT photo FROM SPECIALIST WHERE email=?", email);
 	}
 }
