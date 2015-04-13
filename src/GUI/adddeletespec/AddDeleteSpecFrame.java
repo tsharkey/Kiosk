@@ -258,7 +258,7 @@ public class AddDeleteSpecFrame extends JFrame{
                     String[] name = listPanel.getSelectedSpec();
                     String fname = name[0];
                     String lname = name[1];
-                    int submitted = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete" +fname+" "+lname  , "Delete Warning", JOptionPane.OK_CANCEL_OPTION);
+                    int submitted = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " +fname+" "+lname  , "Delete Warning", JOptionPane.OK_CANCEL_OPTION);
                     if(submitted == JOptionPane.OK_OPTION) {
                         SpecialistTable.deleteSpecialist(getSpecialist());
                         listPanel.updateList();
