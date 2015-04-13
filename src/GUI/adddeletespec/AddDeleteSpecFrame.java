@@ -6,22 +6,18 @@ import Backend.SpecialistTable;
 import GUI.loginwindow.AdminFrame;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 
 /**
  * AddDeleteSpecFrame Class is part or the Kiosk implementation.
@@ -158,8 +154,7 @@ public class AddDeleteSpecFrame extends JFrame{
                     //check for error in input information
                     if (exists) {
                         JOptionPane.showMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
-                    } else if (specInfoPanel.getFirstName().length() == 0 || specInfoPanel.getLastName().length() == 0
-                            || specInfoPanel.getRoleText().length() == 0) {
+                    } else if (specInfoPanel.getFirstName().length() == 0 || specInfoPanel.getLastName().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete Information", JOptionPane.ERROR_MESSAGE);
                     } else if (specInfoPanel.getPhoneText().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
@@ -209,7 +204,7 @@ public class AddDeleteSpecFrame extends JFrame{
                         if (updatePanel.getPhoto().length() == 0) {
                             SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
                             //if new password inputted
-                            if (specInfoPanel.getPassword().length() < 6) {
+                            if (updatePanel.getPassword().length() < 6) {
                                 JOptionPane.showMessageDialog(null, "Password too Short", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                             if (updatePanel.getPassword().length() != 0 || updatePanel.getCPassword().length() != 0) {
@@ -258,7 +253,7 @@ public class AddDeleteSpecFrame extends JFrame{
                     String[] name = listPanel.getSelectedSpec();
                     String fname = name[0];
                     String lname = name[1];
-                    int submitted = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete" +fname+" "+lname  , "Delete Warning", JOptionPane.OK_CANCEL_OPTION);
+                    int submitted = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " +fname+" "+lname  , "Delete Warning", JOptionPane.OK_CANCEL_OPTION);
                     if(submitted == JOptionPane.OK_OPTION) {
                         SpecialistTable.deleteSpecialist(getSpecialist());
                         listPanel.updateList();
@@ -269,7 +264,7 @@ public class AddDeleteSpecFrame extends JFrame{
                 else{
                     JOptionPane.showMessageDialog(null, "Please select a specialist", "No Selection", JOptionPane.ERROR_MESSAGE);
                 }
-            } if (e.getSource() == cancelBtn) {
+            } else if (e.getSource() == cancelBtn) {
             	dispose();
                 new AdminFrame();
             }
