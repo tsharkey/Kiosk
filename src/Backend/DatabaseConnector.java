@@ -47,14 +47,65 @@ public class DatabaseConnector {
 	}
 
 	/**
-	 * Remove (DROP) the specified table if it exists
+	 * Initialize and create new database.
 	 * 
-	 * @param table
-	 * @return boolean of success
 	 */
-	public static boolean executeDropTable(String table) {
-		return (executeUpdate("DROP TABLE IF EXISTS " + table) != 0) ? true
-				: false;
+	public static void initDatabase() {
+		// wipe existing database
+		dropTables();
+		// create new ADMIN table
+		executeUpdate("CREATE TABLE ADMIN ("
+				+ "user varchar(100) NOT NULL COMMENT 'username', "
+				+ "hash varchar(105) NOT NULL COMMENT 'password hash', "
+				+ "PRIMARY KEY (user), UNIQUE KEY user_UNIQUE (user))");
+		// create new USER table
+		executeUpdate("CREATE TABLE USER ("
+				+ "fName varchar(50) NOT NULL COMMENT 'First name', "
+				+ "lName varchar(50) NOT NULL COMMENT 'Last name', "
+				+ "email varchar(50) NOT NULL, "
+				+ "phone varchar(20) NOT NULL, "
+				+ "role varchar(50) NOT NULL, "
+				+ "PRIMARY KEY (email, phone), "
+				+ "UNIQUE KEY email_UNIQUE (email), "
+				+ "UNIQUE KEY phone_UNIQUE (phone))");
+		// create new SPECIALIST table
+		executeUpdate("CREATE TABLE SPECIALIST ("
+				+ "photo varchar(50) DEFAULT 'search.jpg', "
+				+ "hash varchar(105) NOT NULL, "
+				+ "email varchar(50) NOT NULL, "
+				+ "PRIMARY KEY (email), "
+				+ "CONSTRAINT spec_constraint FOREIGN KEY (email) "
+				+ "REFERENCES USER (email) ON DELETE CASCADE ON UPDATE CASCADE)");
+		// create new VISITS table
+		executeUpdate("CREATE TABLE VISITS ("
+				+ "visitDate date DEFAULT NULL, "
+				+ "visitTime time DEFAULT NULL, "
+				+ "reason varchar(100) DEFAULT NULL, "
+				+ "followUp bit(1) DEFAULT b'0', "
+				+ "email varchar(50) NOT NULL, "
+				+ "ID int(10) unsigned NOT NULL AUTO_INCREMENT, "
+				+ "specialist varchar(50) NOT NULL, "
+				+ "location varchar(20) NOT NULL, "
+				+ "PRIMARY KEY (ID), "
+				+ "KEY email_idx (email), "
+				+ "CONSTRAINT visits_constraint FOREIGN KEY (email) "
+				+ "REFERENCES USER (email) ON DELETE CASCADE ON UPDATE CASCADE)");
+		// create VISITS data and time TRIGGER
+		executeUpdate("CREATE TRIGGER set_date_time BEFORE INSERT ON VISITS "
+				+ "FOR EACH ROW BEGIN "
+				+ "SET NEW.visitDate = CURRENT_DATE(); "
+				+ "SET NEW.visitTime = CURRENT_TIME(); END");
+	}
+
+	/**
+	 * Drop all tables from database in order to prevent foreign key problems.
+	 * 
+	 */
+	private static void dropTables() {
+		executeUpdate("DROP TABLE IF EXISTS ADMIN");
+		executeUpdate("DROP TABLE IF EXISTS SPECIALIST");
+		executeUpdate("DROP TABLE IF EXISTS VISITS");
+		executeUpdate("DROP TABLE IF EXISTS USER");
 	}
 
 	/**
