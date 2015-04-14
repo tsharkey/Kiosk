@@ -22,7 +22,8 @@ public class UserTable {
 	 * @param _role
 	 * @return boolean of success
 	 */
-	public static boolean addUser(String _fName, String _lName, String _email, String _phone,String _role) {
+	public static boolean addUser(String _fName, String _lName, String _email,
+			String _phone, String _role) {
 		if (user_exist(_email)) {
 			// already exists, try to update instead
 			return updateUser(_fName, _lName, _email, _phone, _role);

@@ -13,9 +13,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  *
  * @author Sean Johnston, Brendan Casey
  *
- *         TODO: 
- *         - proper error handling 
- *         - createDatabase : create initial database using SQL queries
+ *         TODO: proper error handling
  */
 public class DatabaseConnector {
 	/**
@@ -47,7 +45,7 @@ public class DatabaseConnector {
 		// checking if details are valid by attempting a query to database
 		return executeQueryString("1", "SELECT 1") != null ? true : false;
 	}
-	
+
 	/**
 	 * Remove (DROP) the specified table if it exists
 	 * 
@@ -55,7 +53,8 @@ public class DatabaseConnector {
 	 * @return boolean of success
 	 */
 	public static boolean executeDropTable(String table) {
-		return (executeUpdate("DROP TABLE IF EXISTS " + table) != 0) ? true : false;
+		return (executeUpdate("DROP TABLE IF EXISTS " + table) != 0) ? true
+				: false;
 	}
 
 	/**
@@ -108,16 +107,17 @@ public class DatabaseConnector {
 		}
 		return retString;
 	}
-	
+
 	/**
-	 * Overload of executeQueryString with one string parameter 
+	 * Overload of executeQueryString with one string parameter
 	 * 
 	 * @param column
 	 * @param query
 	 * @param input
 	 * @return
 	 */
-	public static String executeQueryString(String column, String query, String input) {
+	public static String executeQueryString(String column, String query,
+			String input) {
 		String retString = null;
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -133,16 +133,17 @@ public class DatabaseConnector {
 		}
 		return retString;
 	}
-	
+
 	/**
-	 * Overload of executeQueryString with two string parameters 
+	 * Overload of executeQueryString with two string parameters
 	 * 
 	 * @param column
 	 * @param query
 	 * @param input
 	 * @return
 	 */
-	public static String executeQueryString(String column, String query, String input1, String input2) {
+	public static String executeQueryString(String column, String query,
+			String input1, String input2) {
 		String retString = null;
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -219,14 +220,16 @@ public class DatabaseConnector {
 		}
 		return retArray;
 	}
-	
+
 	/**
 	 * Overload of executeQueryVisitData with one string parameter
+	 * 
 	 * @param query
 	 * @param input
 	 * @return
 	 */
-	public static ArrayList<VisitData> executeQueryVisitData(String query, String input) {
+	public static ArrayList<VisitData> executeQueryVisitData(String query,
+			String input) {
 		ArrayList<VisitData> retArray = new ArrayList<VisitData>();
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -251,14 +254,16 @@ public class DatabaseConnector {
 		}
 		return retArray;
 	}
-	
+
 	/**
 	 * Overload of executeQueryVisitData with one boolean parameter
+	 * 
 	 * @param query
 	 * @param input
 	 * @return
 	 */
-	public static ArrayList<VisitData> executeQueryVisitData(String query, boolean input) {
+	public static ArrayList<VisitData> executeQueryVisitData(String query,
+			boolean input) {
 		ArrayList<VisitData> retArray = new ArrayList<VisitData>();
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -283,15 +288,17 @@ public class DatabaseConnector {
 		}
 		return retArray;
 	}
-	
+
 	/**
 	 * Overload of executeQueryVisitData with two string parameters
+	 * 
 	 * @param query
 	 * @param input1
 	 * @param input2
 	 * @return
 	 */
-	public static ArrayList<VisitData> executeQueryVisitData(String query, String input1, String input2) {
+	public static ArrayList<VisitData> executeQueryVisitData(String query,
+			String input1, String input2) {
 		ArrayList<VisitData> retArray = new ArrayList<VisitData>();
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -317,16 +324,18 @@ public class DatabaseConnector {
 		}
 		return retArray;
 	}
-	
+
 	/**
 	 * Overload of executeQueryVisitData with three string parameters
+	 * 
 	 * @param query
 	 * @param input1
 	 * @param input2
 	 * @param input3
 	 * @return
 	 */
-	public static ArrayList<VisitData> executeQueryVisitData(String query, String input1, String input2, String input3) {
+	public static ArrayList<VisitData> executeQueryVisitData(String query,
+			String input1, String input2, String input3) {
 		ArrayList<VisitData> retArray = new ArrayList<VisitData>();
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -382,16 +391,18 @@ public class DatabaseConnector {
 		}
 		return retArray;
 	}
-	
+
 	/**
 	 * Overload of executeQueryUserData with three string parameters
+	 * 
 	 * @param query
 	 * @param input1
 	 * @param input2
 	 * @param input3
 	 * @return
 	 */
-	public static ArrayList<UserData> executeQueryUserData(String query, String input1, String input2, String input3) {
+	public static ArrayList<UserData> executeQueryUserData(String query,
+			String input1, String input2, String input3) {
 		ArrayList<UserData> retArray = new ArrayList<UserData>();
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -431,7 +442,7 @@ public class DatabaseConnector {
 		}
 		return rowsAffected;
 	}
-	
+
 	/**
 	 * Overload of executeUpdate with one string parameter.
 	 * 
@@ -451,7 +462,7 @@ public class DatabaseConnector {
 		}
 		return rowsAffected;
 	}
-	
+
 	/**
 	 * Overload of executeUpdate with two string parameters.
 	 * 
@@ -460,7 +471,8 @@ public class DatabaseConnector {
 	 * @param input2
 	 * @return
 	 */
-	public static int executeUpdate(String statement, String input1, String input2) {
+	public static int executeUpdate(String statement, String input1,
+			String input2) {
 		int rowsAffected = 0;
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(statement)) {
@@ -473,7 +485,7 @@ public class DatabaseConnector {
 		}
 		return rowsAffected;
 	}
-	
+
 	/**
 	 * Overload of executeUpdate with three string parameters.
 	 * 
@@ -483,7 +495,8 @@ public class DatabaseConnector {
 	 * @param input3
 	 * @return
 	 */
-	public static int executeUpdate(String statement, String input1, String input2, String input3) {
+	public static int executeUpdate(String statement, String input1,
+			String input2, String input3) {
 		int rowsAffected = 0;
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(statement)) {
@@ -497,7 +510,7 @@ public class DatabaseConnector {
 		}
 		return rowsAffected;
 	}
-	
+
 	/**
 	 * Overload of executeUpdate with five string parameters.
 	 * 
@@ -509,7 +522,8 @@ public class DatabaseConnector {
 	 * @param input5
 	 * @return
 	 */
-	public static int executeUpdate(String statement, String input1, String input2, String input3, String input4, String input5) {
+	public static int executeUpdate(String statement, String input1,
+			String input2, String input3, String input4, String input5) {
 		int rowsAffected = 0;
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(statement)) {
@@ -525,7 +539,7 @@ public class DatabaseConnector {
 		}
 		return rowsAffected;
 	}
-	
+
 	/**
 	 * Overload of executeUpdate with six string parameters.
 	 * 
@@ -538,7 +552,9 @@ public class DatabaseConnector {
 	 * @param input6
 	 * @return
 	 */
-	public static int executeUpdate(String statement, String input1, String input2, String input3, String input4, String input5, String input6) {
+	public static int executeUpdate(String statement, String input1,
+			String input2, String input3, String input4, String input5,
+			String input6) {
 		int rowsAffected = 0;
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(statement)) {
@@ -555,19 +571,21 @@ public class DatabaseConnector {
 		}
 		return rowsAffected;
 	}
-	
+
 	/**
 	 * Overload of executeUpdate with four string parameters and one boolean.
 	 * 
 	 * @param statement
 	 * @param input1
-	 * @param input2 boolean
+	 * @param input2
+	 *            boolean
 	 * @param input3
 	 * @param input4
 	 * @param input5
 	 * @return
 	 */
-	public static int executeUpdate(String statement, String input1, boolean input2, String input3, String input4, String input5) {
+	public static int executeUpdate(String statement, String input1,
+			boolean input2, String input3, String input4, String input5) {
 		int rowsAffected = 0;
 		try (Connection conn = dataSource.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(statement)) {
