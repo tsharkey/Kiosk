@@ -29,8 +29,6 @@ public class AddDeleteSpecFrame extends JFrame{
 
     private final int WINDOW_WIDTH = 800;
     private final int WINDOW_HEIGHT = 500;
-    //declaring an array that holds the names of the specialists
-    private ArrayList<String> specNames;
     //declaring fields for the panels
     private SpecInfoPanel specInfoPanel;
     private UpdatePanel updatePanel;
@@ -141,7 +139,6 @@ public class AddDeleteSpecFrame extends JFrame{
             //If Add Specialist is pressed
             if (e.getSource() == addBtn) {
                 int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter the following information to create a specialist", JOptionPane.OK_CANCEL_OPTION);
-                boolean flag = true;
                 //ok pressed
                 if (submitted == JOptionPane.OK_OPTION) {
                     boolean exists = false;

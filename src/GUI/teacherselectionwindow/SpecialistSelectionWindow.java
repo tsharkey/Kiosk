@@ -1,19 +1,14 @@
 package GUI.teacherselectionwindow;
 
-//import Backend.Data;
 import Backend.SpecialistTable;
 import Backend.VisitsTable;
-//import Backend.User;
-
 import disabilitykiosk.DisabilityKiosk;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.swing.*;

@@ -8,16 +8,9 @@ package disabilitykiosk;
 import GUI.loginwindow.*;
 import GUI.teacherselectionwindow.*;
 import Backend.*;
-//import com.sun.speech.freetts.VoiceManager;
-//import disabilitykiosk.LabelsAndFieldsPanel;
 import java.awt.*;
 import javax.swing.*;
-
 import java.awt.event.*;
-import java.io.IOException;
-import java.util.Hashtable;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * DisabilityKiosk class is the main window of the Kiosk program. It allows user

@@ -1,13 +1,7 @@
 package GUI.reportwindow;
 import Backend.*;
-import GUI.adddeletespec.AddDeleteSpecFrame;
-import GUI.adddelete.AddDeleteAdminFrame;
-import GUI.loginwindow.LoginFrame;
-import disabilitykiosk.DisabilityKiosk;
 import GUI.loginwindow.AdminFrame;
-
 import java.io.IOException;
-import java.util.Collections;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
-
 import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * ReportWindow Class display a window with a Report for all the visits to the Kiosk Application

@@ -5,7 +5,6 @@
  */
 
 package GUI.verifywindow;
-//import GUI.reportwindow.*;
 import javax.swing.*;
 /**
  *
