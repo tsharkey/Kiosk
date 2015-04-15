@@ -85,10 +85,16 @@ public class AddDeleteAdminFrame extends JFrame {
         add(buttonPanel);
     }
 
+
+
+    /**
+     * ButtonListener
+     */
     private class ButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            //if Add button pressed
             if (e.getSource() == addBtn) {
                 JPanel adminInput = new JPanel();
                 JTextField unInput = new JTextField(10);
@@ -103,6 +109,7 @@ public class AddDeleteAdminFrame extends JFrame {
                 adminInput.add(confirmPW);
                 int submitted = JOptionPane.showConfirmDialog(null, adminInput, "Please enter admin information", JOptionPane.OK_CANCEL_OPTION);
 
+                //when Ok is pressed
                 if (submitted == JOptionPane.OK_OPTION) {
                     String un = unInput.getText();
                     String pw = new String(pwInput.getPassword());

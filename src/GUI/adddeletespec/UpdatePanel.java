@@ -202,7 +202,17 @@ public class UpdatePanel extends JPanel {
      * @return
      */
     public String getPassword() {
-        return String.valueOf(passwordText.getPassword());
+        String pw = new String(passwordText.getPassword());
+        //regular expression
+        String regex = "((?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(pw);
+
+        if(matcher.matches()) {
+            return pw;
+        }
+
+        return "";
     }
 
     public String getCPassword() {
