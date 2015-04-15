@@ -25,18 +25,9 @@ public class VisitsTable {
 	public static boolean addVisit(String reason, Boolean followUp,
 			String email, String specialist, String location) {
 		int insertCount = DatabaseConnector
-				.executeUpdate("INSERT INTO VISITS(reason, followUp, email, specialist, location) "
-						+ "VALUES('"
-						+ reason
-						+ "', "
-						+ followUp
-						+ ", '"
-						+ email
-						+ "', '"
-						+ specialist
-						+ "', '"
-						+ location
-						+ "')");
+				.executeUpdate(
+						"INSERT INTO VISITS(reason, followUp, email, specialist, location) VALUES(?, ?, ?, ?, ?)",
+						reason, followUp, email, specialist, location);
 		return (insertCount != 0) ? true : false;
 	}
 
@@ -50,9 +41,9 @@ public class VisitsTable {
 	 */
 	public static boolean deleteVisit(String email, String date, String time) {
 		int deleteCount = DatabaseConnector
-				.executeUpdate("DELETE FROM VISITS WHERE visitDate = '" + date
-						+ "' AND visitTime = '" + time + "' AND email = '"
-						+ email + "'");
+				.executeUpdate(
+						"DELETE FROM VISITS WHERE visitDate = ? AND visitTime = ? AND email = ?",
+						date, time, email);
 		return (deleteCount != 0) ? true : false;
 	}
 
@@ -64,34 +55,6 @@ public class VisitsTable {
 	public static ArrayList<VisitData> getAllVisits() {
 		return DatabaseConnector
 				.executeQueryVisitData("SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email ORDER BY VISITS.ID ASC");
-	}
-
-	/**
-	 * Search specified column in VISITS table using input String value as
-	 * restriction.
-	 * 
-	 * @param column
-	 * @param input
-	 * @return ArrayList of VisitData that matches condition
-	 */
-	private static ArrayList<VisitData> search(String column, String input) {
-		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS."
-						+ column + " = '" + input + "' ORDER BY VISITS.ID ASC");
-	}
-
-	/**
-	 * Search specified column in VISITS table using input boolean value as
-	 * restriction.
-	 * 
-	 * @param column
-	 * @param input
-	 * @return ArrayList of VisitData that matches condition
-	 */
-	private static ArrayList<VisitData> search(String column, boolean input) {
-		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS."
-						+ column + " = " + input + " ORDER BY VISITS.ID ASC");
 	}
 
 	/**
@@ -158,6 +121,76 @@ public class VisitsTable {
 	}
 
 	/**
+	 * Search specified column in VISITS table using input String value as
+	 * restriction.
+	 * 
+	 * @param column
+	 * @param input
+	 * @return ArrayList of VisitData that matches condition
+	 */
+	private static ArrayList<VisitData> search(String column, String input) {
+		ArrayList<VisitData> temp = null;
+		switch (column) {
+		case "reason":
+			temp = DatabaseConnector
+					.executeQueryVisitData(
+							"SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.reason = ? ORDER BY VISITS.ID ASC",
+							input);
+			break;
+		case "email":
+			temp = DatabaseConnector
+					.executeQueryVisitData(
+							"SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.email = ? ORDER BY VISITS.ID ASC",
+							input);
+			break;
+		case "specialist":
+			temp = DatabaseConnector
+					.executeQueryVisitData(
+							"SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.specialist = ? ORDER BY VISITS.ID ASC",
+							input);
+			break;
+		case "location":
+			temp = DatabaseConnector
+					.executeQueryVisitData(
+							"SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.location = ? ORDER BY VISITS.ID ASC",
+							input);
+			break;
+		case "visitDate":
+			temp = DatabaseConnector
+					.executeQueryVisitData(
+							"SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.visitDate = ? ORDER BY VISITS.ID ASC",
+							input);
+			break;
+		default:
+			break;
+		}
+		return temp;
+	}
+
+	/**
+	 * Search specified column in VISITS table using input boolean value as
+	 * restriction.
+	 * 
+	 * @param column
+	 * @param input
+	 * @return ArrayList of VisitData that matches condition
+	 */
+	private static ArrayList<VisitData> search(String column, boolean input) {
+		ArrayList<VisitData> temp = null;
+		switch (column) {
+		case "followUp":
+			temp = DatabaseConnector
+					.executeQueryVisitData(
+							"SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.followUp = ? ORDER BY VISITS.ID ASC",
+							input);
+			break;
+		default:
+			break;
+		}
+		return temp;
+	}
+
+	/**
 	 * Searching visitDate column inside VISITS table for a specific inclusive
 	 * date range.
 	 * 
@@ -170,11 +203,9 @@ public class VisitsTable {
 	public static ArrayList<VisitData> searchDates(String date_start,
 			String date_end) {
 		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.visitDate BETWEEN '"
-						+ date_start
-						+ "' AND '"
-						+ date_end
-						+ "' ORDER BY VISITS.ID ASC");
+				.executeQueryVisitData(
+						"SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE VISITS.visitDate BETWEEN ? AND ? ORDER BY VISITS.ID ASC",
+						date_start, date_end);
 	}
 
 	/**
@@ -192,13 +223,9 @@ public class VisitsTable {
 	public static ArrayList<VisitData> searchDateAndTimes(String date,
 			String time_start, String time_end) {
 		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE (VISITS.visitTime BETWEEN '"
-						+ time_start
-						+ "' AND '"
-						+ time_end
-						+ "') AND VISITS.visitDate = '"
-						+ date
-						+ "' ORDER BY VISITS.ID ASC");
+				.executeQueryVisitData(
+						"SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE (VISITS.visitTime BETWEEN ? AND ?) AND VISITS.visitDate = ? ORDER BY VISITS.ID ASC",
+						time_start, time_end, date);
 	}
 
 	/**
@@ -211,13 +238,10 @@ public class VisitsTable {
 	 */
 	public static ArrayList<VisitData> searchName(String input) {
 		input = input.trim();
+		input += '%';
 		return DatabaseConnector
-				.executeQueryVisitData("SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE ((fName LIKE '"
-						+ input
-						+ "%') OR (lName LIKE '"
-						+ input
-						+ "%') OR (CONCAT(fName, ' ', lName) LIKE '"
-						+ input
-						+ "%')) ORDER BY VISITS.ID ASC");
+				.executeQueryVisitData(
+						"SELECT USER.*, VISITS.* FROM VISITS INNER JOIN USER ON USER.email=VISITS.email WHERE ((fName LIKE ?) OR (lName LIKE ?) OR (CONCAT(fName, ' ', lName) LIKE ?)) ORDER BY VISITS.ID ASC",
+						input, input, input);
 	}
 }

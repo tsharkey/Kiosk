@@ -22,32 +22,47 @@ public class UserTable {
 	 * @param _role
 	 * @return boolean of success
 	 */
-	public static boolean addUser(String _fName, String _lName, String _phone,
-			String _email, String _role) {
+	public static boolean addUser(String _fName, String _lName, String _email,
+			String _phone, String _role) {
 		if (user_exist(_email)) {
-			return false; // already exists
+			// already exists, try to update instead
+			return updateUser(_fName, _lName, _email, _phone, _role);
 		}
-		int insertCount = DatabaseConnector.executeUpdate("INSERT INTO USER "
-				+ "VALUES('" + _fName + "', '" + _lName + "', '" + _email
-				+ "', '" + _phone + "', '" + _role + "')");
+		int insertCount = DatabaseConnector.executeUpdate(
+				"INSERT INTO USER VALUES(?, ?, ?, ?, ?)", _fName, _lName,
+				_email, _phone, _role);
 		return (insertCount != 0) ? true : false;
 	}
 
 	/**
-	 * Delete a user or a user and their all visit data if deleteVisits is true.
+	 * Update an existing USER entry using parameter values.
 	 * 
-	 * @param email
-	 * @param deleteVisits
+	 * @param _fName
+	 * @param _lName
+	 * @param _email
+	 * @param _phone
+	 * @param _role
 	 * @return boolean of success
 	 */
-	public static boolean deleteUser(String email, boolean deleteVisits) {
-		if (deleteVisits) { // delete first due to foreign key
-			DatabaseConnector.executeUpdate("DELETE FROM VISITS "
-					+ "WHERE email = '" + email + "'");
-		}
-		int deleteCount = DatabaseConnector.executeUpdate("DELETE FROM USER "
-				+ "WHERE email = '" + email + "'");
+	public static boolean updateUser(String _fName, String _lName,
+			String _email, String _phone, String _role) {
+		int insertCount = DatabaseConnector
+				.executeUpdate(
+						"UPDATE USER SET fName=?, lName=?, email=?, phone=?, role=? WHERE email = ?",
+						_fName, _lName, _email, _phone, _role, _email);
+		return (insertCount != 0) ? true : false;
+	}
 
+	/**
+	 * Delete a user. This will also delete any associated SPECIALIST or VISITS
+	 * entries associated with this user.
+	 * 
+	 * @param email
+	 * @return boolean of success
+	 */
+	public static boolean deleteUser(String email) {
+		int deleteCount = DatabaseConnector.executeUpdate(
+				"DELETE FROM USER WHERE email = ?", email);
 		return (deleteCount != 0) ? true : false;
 	}
 
@@ -124,13 +139,24 @@ public class UserTable {
 		int updateCount = 0;
 		switch (column) {
 		case "fName":
+			updateCount = DatabaseConnector.executeUpdate(
+					"UPDATE USER SET fName = ? WHERE email = ?", update, email);
+			break;
 		case "lName":
+			updateCount = DatabaseConnector.executeUpdate(
+					"UPDATE USER SET lName = ? WHERE email = ?", update, email);
+			break;
 		case "phone":
+			updateCount = DatabaseConnector.executeUpdate(
+					"UPDATE USER SET phone = ? WHERE email = ?", update, email);
+			break;
 		case "email":
+			updateCount = DatabaseConnector.executeUpdate(
+					"UPDATE USER SET email = ? WHERE email = ?", update, email);
+			break;
 		case "role":
-			updateCount = DatabaseConnector.executeUpdate("UPDATE USER SET "
-					+ column + "='" + update + "' WHERE email = '" + email
-					+ "'");
+			updateCount = DatabaseConnector.executeUpdate(
+					"UPDATE USER SET role = ? WHERE email = ?", update, email);
 			break;
 		default:
 			break;
@@ -147,12 +173,7 @@ public class UserTable {
 	public static boolean user_exist(String email) {
 		ArrayList<String> emails = DatabaseConnector.executeQueryStrings(
 				"email", "SELECT email FROM USER ORDER BY email ASC");
-		for (String emailLoop : emails) {
-			if (emailLoop.equals(email)) {
-				return true;
-			}
-		}
-		return false;
+		return emails.contains(email);
 	}
 
 	/**
@@ -175,10 +196,13 @@ public class UserTable {
 	 * @return ArrayList of UserData
 	 */
 	public static ArrayList<UserData> getAllUsers(Boolean isSpecialist) {
-		return DatabaseConnector
-				.executeQueryUserData("SELECT * FROM USER WHERE role"
-						+ (!isSpecialist ? "!" : "")
-						+ "='Specialist' ORDER BY email ASC");
+		if (isSpecialist) {
+			return DatabaseConnector
+					.executeQueryUserData("SELECT * FROM USER WHERE role='Specialist' ORDER BY email ASC");
+		} else {
+			return DatabaseConnector
+					.executeQueryUserData("SELECT * FROM USER WHERE role!='Specialist' ORDER BY email ASC");
+		}
 	}
 
 	/**
@@ -203,11 +227,17 @@ public class UserTable {
 	public static ArrayList<UserData> searchName(String input,
 			Boolean isSpecialist) {
 		input = input.trim();
-		return DatabaseConnector
-				.executeQueryUserData("SELECT * FROM USER WHERE ((fName LIKE '"
-						+ input + "%') OR (lName LIKE '" + input
-						+ "%') OR (CONCAT(fName, ' ', lName) LIKE '" + input
-						+ "%')) AND (role" + (!isSpecialist ? "!" : "")
-						+ "='Specialist') ORDER BY email ASC");
+		input += '%';
+		if (isSpecialist) {
+			return DatabaseConnector
+					.executeQueryUserData(
+							"SELECT * FROM USER WHERE ((fName LIKE ?) OR (lName LIKE ?) OR (CONCAT(fName, ' ', lName) LIKE ?)) AND (role='Specialist') ORDER BY email ASC",
+							input, input, input);
+		} else {
+			return DatabaseConnector
+					.executeQueryUserData(
+							"SELECT * FROM USER WHERE ((fName LIKE ?) OR (lName LIKE ?) OR (CONCAT(fName, ' ', lName) LIKE ?)) AND (role!='Specialist') ORDER BY email ASC",
+							input, input, input);
+		}
 	}
 }

@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 
 // Created by Pat and Cyrus
 public class AddDeleteAdminFrame extends JFrame {
@@ -32,7 +31,7 @@ public class AddDeleteAdminFrame extends JFrame {
     private JScrollPane listScroller;
 
     private JPanel buttonPanel;
-    private JButton addBtn, editBtn, deleteBtn;
+    private JButton addBtn, editBtn, deleteBtn, cancelBtn;
 
     public AddDeleteAdminFrame() {
         setTitle("Add/Delete Administrators");
@@ -80,6 +79,14 @@ public class AddDeleteAdminFrame extends JFrame {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weighty = 0.05;
         buttonPanel.add(deleteBtn, c);
+        
+        cancelBtn = new JButton("Cancel");
+        cancelBtn.addActionListener(new ButtonListener());
+        c.gridx = 0;
+        c.gridy = 3;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weighty = 0.05;
+        buttonPanel.add(cancelBtn, c);
 
         //add(buttonPanel, BorderLayout.EAST);
         add(buttonPanel);
@@ -202,6 +209,9 @@ public class AddDeleteAdminFrame extends JFrame {
                     }
                 }
                 dispose();
+            } else if (e.getSource() == cancelBtn) {
+            	dispose();
+                new AdminFrame();
             }
         }
     }

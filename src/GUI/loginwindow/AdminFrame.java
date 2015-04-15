@@ -7,13 +7,10 @@
 package GUI.loginwindow;
 
 import disabilitykiosk.*;
-import Backend.AdminTable;
 import GUI.adddelete.AddDeleteAdminFrame;
 import GUI.adddeletespec.AddDeleteSpecFrame;
 import GUI.reportwindow.*;
-
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

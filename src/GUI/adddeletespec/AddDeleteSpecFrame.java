@@ -3,23 +3,21 @@ package GUI.adddeletespec;
 //import Backend.Specialist;
 //import Backend.SpecialistList;
 import Backend.SpecialistTable;
+import GUI.loginwindow.AdminFrame;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 
 /**
  * AddDeleteSpecFrame Class is part or the Kiosk implementation.
@@ -31,15 +29,13 @@ public class AddDeleteSpecFrame extends JFrame{
 
     private final int WINDOW_WIDTH = 800;
     private final int WINDOW_HEIGHT = 500;
-    //declaring an array that holds the names of the specialists
-    private ArrayList<String> specNames;
     //declaring fields for the panels
     private SpecInfoPanel specInfoPanel;
     private UpdatePanel updatePanel;
     private ListPanel listPanel;
     private JPanel buttonPanel;
     //declaring fields for the buttons
-    private JButton addBtn, editBtn, deleteBtn;
+    private JButton addBtn, editBtn, deleteBtn, cancelBtn;
 //    private JList<String> list;
 //    private DefaultListModel<String> dlm;
     private JScrollPane scroll;
@@ -108,6 +104,15 @@ public class AddDeleteSpecFrame extends JFrame{
         c.weighty = 0.05;
         buttonPanel.add(deleteBtn, c);
         add(buttonPanel, BorderLayout.EAST);
+        
+        cancelBtn = new JButton("Cancel");
+        cancelBtn.addActionListener(new submitOrDeleteListener());
+        c.gridx = 0;
+        c.gridy = 3;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weighty = 0.05;
+        buttonPanel.add(cancelBtn, c);
+        add(buttonPanel, BorderLayout.EAST);
     }
 
     /**
@@ -134,7 +139,6 @@ public class AddDeleteSpecFrame extends JFrame{
             //If Add Specialist is pressed
             if (e.getSource() == addBtn) {
                 int submitted = JOptionPane.showConfirmDialog(null, specInfoPanel, "Please enter the following information to create a specialist", JOptionPane.OK_CANCEL_OPTION);
-                boolean flag = true;
                 //ok pressed
                 if (submitted == JOptionPane.OK_OPTION) {
                     boolean exists = false;
@@ -146,9 +150,8 @@ public class AddDeleteSpecFrame extends JFrame{
                     }
                     //check for error in input information
                     if (exists) {
-                        JOptionPane.showInternalMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
-                    } else if (specInfoPanel.getFirstName().length() == 0 || specInfoPanel.getLastName().length() == 0
-                            || specInfoPanel.getRoleText().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "An account with this username already exits.", "Existing Account", JOptionPane.ERROR_MESSAGE);
+                    } else if (specInfoPanel.getFirstName().length() == 0 || specInfoPanel.getLastName().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Incomplete Information", JOptionPane.ERROR_MESSAGE);
                     } else if (specInfoPanel.getPhoneText().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
@@ -164,14 +167,18 @@ public class AddDeleteSpecFrame extends JFrame{
                         ImageIcon i = new ImageIcon(specInfoPanel.getPhoto());
                         if (i.getIconHeight() > 250 || i.getIconWidth() > 250) {
 
-                            JOptionPane.showInternalMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
 
+                        } else if (specInfoPanel.getPhoto().length() > 100) {
+                        	
+                        	JOptionPane.showMessageDialog(null, "Photo file name is too large. Please rename it and try again.", "Image Error", JOptionPane.ERROR_MESSAGE);
+                        	
                         } else {
                             SpecialistTable.addSpecialist(
                                     specInfoPanel.getFirstName(),
                                     specInfoPanel.getLastName(),
-                                    specInfoPanel.getPhoneText(),
                                     specInfoPanel.getEmailText(),
+                                    specInfoPanel.getPhoneText(),
                                     specInfoPanel.getPassword(),
                                     specInfoPanel.getPhoto());
                             listPanel.updateList();
@@ -179,13 +186,10 @@ public class AddDeleteSpecFrame extends JFrame{
                         }
                     }
                 }
-                else {
-                    JOptionPane.showInternalMessageDialog(null, "Please select a specialist first", "Selection", JOptionPane.ERROR_MESSAGE);
-                }
             }
 
             //If Edit button is pressed
-            if (e.getSource() == editBtn) {
+            else if (e.getSource() == editBtn) {
                 String[] temp = listPanel.getSelectedSpec();
                 if (getSpecialist() != null) {
                     updatePanel.setEditUser(temp);
@@ -197,7 +201,7 @@ public class AddDeleteSpecFrame extends JFrame{
                         if (updatePanel.getPhoto().length() == 0) {
                             SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
                             //if new password inputted
-                            if (specInfoPanel.getPassword().length() < 6) {
+                            if (updatePanel.getPassword().length() < 6) {
                                 JOptionPane.showMessageDialog(null, "Password too Short", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                             if (updatePanel.getPassword().length() != 0 || updatePanel.getCPassword().length() != 0) {
@@ -210,38 +214,43 @@ public class AddDeleteSpecFrame extends JFrame{
                                 SpecialistTable.updatePhone(getSpecialist(), updatePanel.getPhoneText());
                             listPanel.updateList();
                             updatePanel.clear();
-                        }
-                    } else {
-                        ImageIcon j = new ImageIcon(updatePanel.getPhoto());
-                        if (j.getIconHeight() > 250 || j.getIconWidth() > 250) {
-
-                            JOptionPane.showMessageDialog(null, "Image too Large.", "Image Error", JOptionPane.ERROR_MESSAGE);
-
                         } else {
-                            SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
-                            SpecialistTable.updatePassword(getSpecialist(), updatePanel.getPassword());
-                            SpecialistTable.updatePhoto(getSpecialist(), updatePanel.getPhoto());
-                            if (updatePanel.getPhoneText().length() != 0)
-                                SpecialistTable.updatePhone(getSpecialist(), updatePanel.getPhoneText());
+                            ImageIcon j = new ImageIcon(updatePanel.getPhoto());
+                            if (j.getIconHeight() > 250 || j.getIconWidth() > 250) {
+
+                                JOptionPane.showMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
+
+                            }  else if (updatePanel.getPhoto().length() > 100) {
+                            	
+                            	JOptionPane.showMessageDialog(null, "Photo file name is too large. Please rename it and try again.", "Image Error", JOptionPane.ERROR_MESSAGE);
+                            	
+                            } else {
+                                SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
+                                SpecialistTable.updatePassword(getSpecialist(), updatePanel.getPassword());
+                                SpecialistTable.updatePhoto(getSpecialist(), updatePanel.getPhoto());
+                                if (updatePanel.getPhoneText().length() != 0)
+                                    SpecialistTable.updatePhone(getSpecialist(), updatePanel.getPhoneText());
+
+                                listPanel.updateList();
+                                updatePanel.clear();
+                            }
 
                             listPanel.updateList();
-                            updatePanel.clear();
-                        }
+                            specInfoPanel.clear();
 
-                        listPanel.updateList();
-                        specInfoPanel.clear();
-
-                    }
-                }
-
-
-            }//If Delete button is pressed
-            if (e.getSource() == deleteBtn) {
+                        } 
+                    } 
+                } else {
+                        JOptionPane.showMessageDialog(null, "Please select a specialist first", "Selection", JOptionPane.ERROR_MESSAGE);
+                  }
+            } 
+            //If Delete button is pressed
+            else if (e.getSource() == deleteBtn) {
                 if (getSpecialist() != null) {
                     String[] name = listPanel.getSelectedSpec();
                     String fname = name[0];
                     String lname = name[1];
-                    int submitted = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete" +fname+" "+lname  , "Delete Warning", JOptionPane.OK_CANCEL_OPTION);
+                    int submitted = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " +fname+" "+lname  , "Delete Warning", JOptionPane.OK_CANCEL_OPTION);
                     if(submitted == JOptionPane.OK_OPTION) {
                         SpecialistTable.deleteSpecialist(getSpecialist());
                         listPanel.updateList();
@@ -252,6 +261,9 @@ public class AddDeleteSpecFrame extends JFrame{
                 else{
                     JOptionPane.showMessageDialog(null, "Please select a specialist", "No Selection", JOptionPane.ERROR_MESSAGE);
                 }
+            } else if (e.getSource() == cancelBtn) {
+            	dispose();
+                new AdminFrame();
             }
         }
     }

@@ -8,22 +8,20 @@ package disabilitykiosk;
 
 import GUI.loginwindow.DatabaseInitFrame;
 
-
 /**
  *
  * @author Eric Sullivan
  */
+
 public class StartupManger {
-    
-    public StartupManger() {
-        
-        DatabaseInitFrame dbcf = new DatabaseInitFrame();
-        
-        
-    }
-    
-    public static void main(String[] args){
-        new StartupManger();
-    }
-    
+
+	public StartupManger() {
+
+		DatabaseInitFrame dbcf = new DatabaseInitFrame();
+	}
+
+	public static void main(String[] args) {
+		new StartupManger();
+	}
+
 }

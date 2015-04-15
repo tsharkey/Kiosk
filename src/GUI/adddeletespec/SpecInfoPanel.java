@@ -1,7 +1,5 @@
 package GUI.adddeletespec;
 
-import Backend.SpecialistTable;
-
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,7 +20,7 @@ public class SpecInfoPanel extends JPanel{
     private Font font = new Font("MONOSPACED", Font.PLAIN, 18);
     //Need to make passT a JPassword field but after that we need to add another
     //JPassword field to confirm password and check that both JPassword fields match
-    private JTextField firstT, lastT, emailT, photoT, roleT, phoneT;
+    private JTextField firstT, lastT, emailT, photoT, phoneT;
     private JPasswordField passwordText, cpasswordText;
     private JButton fileselector;
    // private JComboBox locationI;
@@ -126,21 +124,6 @@ public class SpecInfoPanel extends JPanel{
         grid.gridy = 5;
         grid.gridwidth = 2;
         add(phoneT, grid);
-        
-        //role
-        JLabel role = new JLabel("Role");
-        role.setFont(font);
-        grid.gridx = 0;
-        grid.gridy = 4;
-        grid.gridwidth = 1;
-        add(role, grid);
-        
-        roleT = new JTextField(CHAR_LENGTH);
-     
-        grid.gridx = 1;
-        grid.gridy = 4;
-        grid.gridwidth = 2;
-        add(roleT, grid);
 
         //password label and field
         JLabel password = new JLabel("Password");
@@ -200,9 +183,7 @@ public class SpecInfoPanel extends JPanel{
         return "";
 
     }
-    public String getRoleText(){
-        return roleT.getText();
-    }
+    
     public String getPhoneText(){
         String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
 
@@ -266,7 +247,6 @@ public class SpecInfoPanel extends JPanel{
         lastT.setText("");
         emailT.setText("");
         phoneT.setText("");
-        roleT.setText("");
         photoT.setText("");
         passwordText.setText("");
         cpasswordText.setText("");
