@@ -9,6 +9,8 @@ import java.awt.*;
  * it has two buttons one to login in the database 'Login' and one to exit 'cancel'
  * Created by catherinehuang on 4/6/15.
  */
+
+@SuppressWarnings("serial")
 public class DatabaseInitPanel extends JPanel{
 
     private final int CHAR_LENGTH = 20;  //userName, passWord, and
@@ -129,5 +131,9 @@ public class DatabaseInitPanel extends JPanel{
     public String getHostText() {
         return hostText.getText();
     }
-
-}//End of class
+    
+    // setters
+    public void setHostText(String input) {
+    	hostText.setText(input);
+    }
+}

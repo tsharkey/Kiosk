@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package disabilitykiosk;
 
 import GUI.loginwindow.DatabaseInitFrame;
@@ -14,13 +8,20 @@ import GUI.loginwindow.DatabaseInitFrame;
  */
 
 public class StartupManger {
+	public static boolean initalizeDB = false;
 
 	public StartupManger() {
 
+		@SuppressWarnings("unused")
 		DatabaseInitFrame dbcf = new DatabaseInitFrame();
 	}
 
 	public static void main(String[] args) {
+		if (args.length != 0) {
+			if (args[0].equals("initDatabase")) {
+				initalizeDB = true;
+			}
+		}
 		new StartupManger();
 	}
 
