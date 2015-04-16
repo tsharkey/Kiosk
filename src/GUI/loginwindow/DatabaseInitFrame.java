@@ -104,8 +104,8 @@ public class DatabaseInitFrame extends JFrame {
 								sPassWord, sHostDB[0], sHostDB[1])) {
 					
 					// Initialize database if command line parameter is set
-					// Prompt user to confirm reset of database
 					if (StartupManger.initalizeDB == true) {
+						// Prompt user to confirm reset of database
 						int dialogResult = JOptionPane
 								.showConfirmDialog(
 										null,
@@ -119,7 +119,7 @@ public class DatabaseInitFrame extends JFrame {
 						}
 					}
 
-					// save database host and database
+					// save host and database
 					try {
 						FileWriter fileWriter = new FileWriter("./"
 								+ CONFIG_FILE);
