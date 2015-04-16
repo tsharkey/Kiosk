@@ -47,7 +47,7 @@ public class LabelsAndFieldsPanel extends JPanel {
     private JLabel date, time, first, last, email, phone, reason, followUp, role, dateI, timeI, location;
     private JButton firstButton, locationButton, lastButton, emailButton, phoneButton, reasonButton, followUpButton, roleButton;
     private ArrayList<JButton> buttonList;
-    private ImageIcon microphone = new ImageIcon("src/microphone.jpg");
+    private ImageIcon microphone = new ImageIcon("./microphone.jpg");
     private JSlider textSlider;
     public JCheckBox cancelSpeech;
 
