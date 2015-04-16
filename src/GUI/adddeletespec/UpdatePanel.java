@@ -204,7 +204,7 @@ public class UpdatePanel extends JPanel {
     public String getPassword() {
         String pw = new String(passwordText.getPassword());
         //regular expression
-        String regex = "((?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+        String regex = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(pw);
 

@@ -157,13 +157,15 @@ public class AddDeleteSpecFrame extends JFrame{
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid Phone", JOptionPane.ERROR_MESSAGE);
                     } else if (specInfoPanel.getEmailText().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid E-mail", JOptionPane.ERROR_MESSAGE);
-                    } else if (specInfoPanel.getPassword().length() == 0 || specInfoPanel.getCPassword().length() == 0) {
+                    } else if (specInfoPanel.getPassword().length() == 0 && specInfoPanel.getCPassword().length() == 0) {
                         JOptionPane.showMessageDialog(null, "No Password Input", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if (specInfoPanel.getPassword().length() < 6) {
+                    } else if(specInfoPanel.getPassword().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "Password should include 1 Upper Case, 1 Lower Case, 1 of @#$% and 6-20 letters.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }else if (specInfoPanel.getPassword().length() < 6) {
                         JOptionPane.showMessageDialog(null, "Password too Short", "Error", JOptionPane.ERROR_MESSAGE);
                     } else if (!specInfoPanel.confirmPassword()) {
                         JOptionPane.showMessageDialog(null, "Password doesn't match", "Error", JOptionPane.ERROR_MESSAGE);
-                    }else {
+                    }  else {
                         ImageIcon i = new ImageIcon(specInfoPanel.getPhoto());
                         if (i.getIconHeight() > 250 || i.getIconWidth() > 250) {
 
@@ -201,14 +203,15 @@ public class AddDeleteSpecFrame extends JFrame{
                         if (updatePanel.getPhoto().length() == 0) {
                             SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
                             //if new password inputted
-                            if (updatePanel.getPassword().length() < 6) {
-                                JOptionPane.showMessageDialog(null, "Password too Short", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
                             if (updatePanel.getPassword().length() != 0 || updatePanel.getCPassword().length() != 0) {
+                                if (updatePanel.getPassword().length() < 6)
+                                    JOptionPane.showMessageDialog(null, "Password too Short", "Error", JOptionPane.ERROR_MESSAGE);
+                                if (updatePanel.getCPassword().length() == 0)
+                                    JOptionPane.showMessageDialog(null, "Password should include 1 Upper Case, 1 Lower Case, 1 of @#$% and 6-20 letters.", "Error", JOptionPane.ERROR_MESSAGE);
                                 if(updatePanel.confirmPassword())
                                     SpecialistTable.updatePassword(getSpecialist(), updatePanel.getPassword());
                                 else
-                                    JOptionPane.showMessageDialog(null, "Fails to update password", "Passwords Not Matched", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "Passwords Not Matched", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                             if (updatePanel.getPhoneText().length() != 0)
                                 SpecialistTable.updatePhone(getSpecialist(), updatePanel.getPhoneText());

@@ -217,9 +217,9 @@ public class SpecInfoPanel extends JPanel{
      * @return
      */
     public String getPassword() {
-        String pw = new String(passwordText.getPassword());
+        String pw = String.valueOf(passwordText.getPassword());
         //regular expression
-        String regex = "((?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+        String regex = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(pw);
 
