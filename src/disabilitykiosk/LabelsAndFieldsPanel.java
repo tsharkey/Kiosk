@@ -11,16 +11,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -48,7 +49,7 @@ public class LabelsAndFieldsPanel extends JPanel {
     private JButton firstButton, locationButton, lastButton, emailButton, phoneButton, reasonButton, followUpButton, roleButton;
     private ArrayList<JButton> buttonList;
     private ImageIcon microphone = new ImageIcon("src/microphone.jpg");
-    private JSlider textSlider;
+    //private JSlider textSlider;
     public JCheckBox cancelSpeech;
 
     /*
@@ -92,13 +93,15 @@ public class LabelsAndFieldsPanel extends JPanel {
         t.start();
         GridBagConstraints grid = new GridBagConstraints();
         grid.fill = GridBagConstraints.HORIZONTAL;
-
+        
+        
+        
         //date
         date = new JLabel("Date");
         date.setFont(font);
-        grid.gridx = GridBagConstraints.RELATIVE;
+        grid.gridx = GridBagConstraints.EAST;
         grid.gridy = 0;
-        grid.ipadx = 40;
+        //grid.ipadx = 40;
         grid.ipady = 30;
         grid.gridwidth = 2;
         add(date, grid);
@@ -113,7 +116,7 @@ public class LabelsAndFieldsPanel extends JPanel {
         //time
         time = new JLabel("Time");
         time.setFont(font);
-        grid.gridx = GridBagConstraints.RELATIVE;
+        grid.gridx = GridBagConstraints.EAST;
         grid.gridy = 1;
         grid.gridwidth = 2;
         add(time, grid);
@@ -124,7 +127,14 @@ public class LabelsAndFieldsPanel extends JPanel {
         grid.gridy = 1;
         grid.gridwidth = 4;
         add(timeI, grid);
-
+        
+        cancelSpeech = new JCheckBox("Auto Speech", true);
+        grid.gridx = 0;
+        grid.gridy = 0;
+        //grid.ipadx = 40;
+        //grid.gridheight = 4;
+        add(cancelSpeech, grid);
+        
         //first
         firstButton = new JButton();
         firstButton.addActionListener(new firstButtonListener());
@@ -302,30 +312,30 @@ public class LabelsAndFieldsPanel extends JPanel {
         add(locationI, grid);
 
         //Text slider
-        textSlider = new JSlider(JSlider.VERTICAL, TEXT_MIN, TEXT_MAX, TEXT_INIT);
-        textSlider.addChangeListener((new SliderListener()));
-        textSlider.setMajorTickSpacing(2);
+        //textSlider = new JSlider(JSlider.VERTICAL, TEXT_MIN, TEXT_MAX, TEXT_INIT);
+        //textSlider.addChangeListener((new SliderListener()));
+        //textSlider.setMajorTickSpacing(2);
 
         //Create the label table
-        Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-        labelTable.put(new Integer(TEXT_MIN), new JLabel("Shrink text"));
-        labelTable.put(new Integer(TEXT_MAX), new JLabel("Enlarge text"));
+        //Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+        //labelTable.put(new Integer(TEXT_MIN), new JLabel("Shrink text"));
+        //labelTable.put(new Integer(TEXT_MAX), new JLabel("Enlarge text"));
 
-        textSlider.setLabelTable(labelTable);
-        textSlider.setPaintLabels(true);
+        //textSlider.setLabelTable(labelTable);
+        //textSlider.setPaintLabels(true);
 
-        grid.gridx = GridBagConstraints.RELATIVE;
-        grid.gridy = 0;
-        grid.ipadx = 40;
-        grid.gridheight = 4;
-        add(textSlider, grid);
+        //grid.gridx = GridBagConstraints.RELATIVE;
+        //grid.gridy = 0;
+       // grid.ipadx = 40;
+        //grid.gridheight = 4;
+        //add(textSlider, grid);
 
-        cancelSpeech = new JCheckBox("Auto Speech", true);
-        grid.gridx = GridBagConstraints.RELATIVE;
-        grid.gridy = 0;
-        grid.ipadx = 40;
-        grid.gridheight = 4;
-        add(cancelSpeech, grid);
+        //cancelSpeech = new JCheckBox("Auto Speech", true);
+        //grid.gridx = GridBagConstraints.WEST;
+        //grid.gridy = 0;
+        //grid.ipadx = 40;
+        //grid.gridheight = 4;
+        //add(cancelSpeech, grid);
     }//end of buildPanel
 
     //Getters
@@ -403,7 +413,7 @@ public class LabelsAndFieldsPanel extends JPanel {
     /**
      * TODO: remove the slider
      */
-    private class SliderListener implements ChangeListener {
+    /*private class SliderListener implements ChangeListener {
 
         @Override
         public void stateChanged(ChangeEvent e) {
@@ -423,7 +433,7 @@ public class LabelsAndFieldsPanel extends JPanel {
             }
 
         }
-    }
+    }*/
 
     /**
      * Listener for Text to Speech fields and labels
