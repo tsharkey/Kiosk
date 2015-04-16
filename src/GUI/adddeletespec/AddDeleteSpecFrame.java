@@ -160,7 +160,7 @@ public class AddDeleteSpecFrame extends JFrame{
                     } else if (specInfoPanel.getPassword().length() == 0 && specInfoPanel.getCPassword().length() == 0) {
                         JOptionPane.showMessageDialog(null, "No Password Input", "Error", JOptionPane.ERROR_MESSAGE);
                     } else if(specInfoPanel.getPassword().length() == 0) {
-                        JOptionPane.showMessageDialog(null, "Password should include 1 Upper Case, 1 Lower Case, 1 of @#$% and 6-20 letters.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Password should include 1 Upper Case, 1 Lower Case,1 number, 1 of @#$% and 6-20 letters.", "Error", JOptionPane.ERROR_MESSAGE);
                     }else if (specInfoPanel.getPassword().length() < 6) {
                         JOptionPane.showMessageDialog(null, "Password too Short", "Error", JOptionPane.ERROR_MESSAGE);
                     } else if (!specInfoPanel.confirmPassword()) {
@@ -207,7 +207,7 @@ public class AddDeleteSpecFrame extends JFrame{
                                 if (updatePanel.getPassword().length() < 6)
                                     JOptionPane.showMessageDialog(null, "Password too Short", "Error", JOptionPane.ERROR_MESSAGE);
                                 if (updatePanel.getCPassword().length() == 0)
-                                    JOptionPane.showMessageDialog(null, "Password should include 1 Upper Case, 1 Lower Case, 1 of @#$% and 6-20 letters.", "Error", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "Password should include 1 Upper Case, 1 Lower Case, 1 number, 1 of @#$% and 6-20 letters.", "Error", JOptionPane.ERROR_MESSAGE);
                                 if(updatePanel.confirmPassword())
                                     SpecialistTable.updatePassword(getSpecialist(), updatePanel.getPassword());
                                 else
