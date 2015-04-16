@@ -53,13 +53,13 @@ public class DatabaseInitFrame extends JFrame {
 				.setWindowDecorationStyle(JRootPane.WHEN_IN_FOCUSED_WINDOW);
 		getRootPane().setDefaultButton(initPanel.getConnectButton());
 
-		// load previous successfully connected to database and populate text field
+		// load previous successfully connected to db and populate
 		if (new File("./" + CONFIG_FILE).exists()) {
-			try {
-				FileReader fileReader = new FileReader("./" + CONFIG_FILE);
-				BufferedReader bufferedReader = new BufferedReader(fileReader);
-				initPanel.setHostText(bufferedReader.readLine());
-				bufferedReader.close();
+			try (FileReader fileReader = new FileReader("./" + CONFIG_FILE)) {
+				try (BufferedReader bufferedReader = new BufferedReader(
+						fileReader)) {
+					initPanel.setHostText(bufferedReader.readLine());
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -102,7 +102,7 @@ public class DatabaseInitFrame extends JFrame {
 				if (sHostDB.length == 2
 						&& DatabaseConnector.setDatabaseConnection(sUserName,
 								sPassWord, sHostDB[0], sHostDB[1])) {
-					
+
 					// Initialize database if command line parameter is set
 					if (StartupManger.initalizeDB == true) {
 						// Prompt user to confirm reset of database
@@ -110,7 +110,7 @@ public class DatabaseInitFrame extends JFrame {
 								.showConfirmDialog(
 										null,
 										"This will erase the existing database and initalize "
-										+ "a new one.\n Are you sure you wish to continue?",
+												+ "a new one.\n Are you sure you wish to continue?",
 										"Database Initalization Warning",
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.WARNING_MESSAGE);
@@ -120,13 +120,12 @@ public class DatabaseInitFrame extends JFrame {
 					}
 
 					// save host and database
-					try {
-						FileWriter fileWriter = new FileWriter("./"
-								+ CONFIG_FILE);
-						BufferedWriter bufferedWriter = new BufferedWriter(
-								fileWriter);
-						bufferedWriter.write(initPanel.getHostText());
-						bufferedWriter.close();
+					try (FileWriter fileWriter = new FileWriter("./"
+							+ CONFIG_FILE)) {
+						try (BufferedWriter bufferedWriter = new BufferedWriter(
+								fileWriter)) {
+							bufferedWriter.write(initPanel.getHostText());
+						}
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
