@@ -70,7 +70,7 @@ public class DatabaseConnector {
 				+ "UNIQUE KEY phone_UNIQUE (phone))");
 		// create new SPECIALIST table
 		executeUpdate("CREATE TABLE SPECIALIST ("
-				+ "photo varchar(50) DEFAULT 'search.jpg', "
+				+ "photo varchar(100) DEFAULT 'search.jpg', "
 				+ "hash varchar(105) NOT NULL, "
 				+ "email varchar(50) NOT NULL, "
 				+ "PRIMARY KEY (email), "
