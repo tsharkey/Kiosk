@@ -3,11 +3,15 @@ package GUI.adddelete;
 import Backend.AdminTable;
 import GUI.loginwindow.AdminFrame;
 import disabilitykiosk.DisabilityKiosk;
+
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -19,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
 
 // Created by Pat and Cyrus
 public class AddDeleteAdminFrame extends JFrame {
@@ -46,7 +51,7 @@ public class AddDeleteAdminFrame extends JFrame {
 
     private void buildMainFrame() {
         //listModel = new DefaultListModel<String>();
-
+    	addWindowListener(new CloseListener());
         //list = new JList<String>(listModel);
         //list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         //list.setLayoutOrientation(JList.VERTICAL);
@@ -93,6 +98,50 @@ public class AddDeleteAdminFrame extends JFrame {
     }
 
 
+    private class CloseListener implements WindowListener {
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			new AdminFrame();
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			//
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+    	
+    }
+    
 
     /**
      * ButtonListener
