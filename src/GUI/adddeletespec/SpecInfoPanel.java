@@ -206,10 +206,10 @@ public class SpecInfoPanel extends JPanel{
      * @return
      */
     public String getPhoto(){
-        String temp = photoT.getText();
-        String[] tempList = temp.split("/", -2);
+       // String temp = photoT.getText();
+       // String[] tempList = temp.split("/", -2);
         //TODO: Only pass on the file name, once the SpecitalistTable's phone var length is fix, change to pass on the whole path
-        return tempList[tempList.length-1];
+        return photoT.getText();
     }
 
     /**
