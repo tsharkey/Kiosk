@@ -3,6 +3,8 @@ package GUI.teacherselectionwindow;
 import Backend.SpecialistTable;
 import Backend.VisitsTable;
 import disabilitykiosk.DisabilityKiosk;
+import disabilitykiosk.StartupManger;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,18 +13,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
+
 import javax.swing.*;
 
 /**
  *
  * @author Sarah Ben-Kiki, Brendan
  */
+@SuppressWarnings("serial")
 public class SpecialistSelectionWindow extends JFrame {
 
     Toolkit tk = Toolkit.getDefaultToolkit();
     private final int WINDOW_WIDTH = ((int) tk.getScreenSize().getWidth());
     private final int WINDOW_HEIGHT = ((int) tk.getScreenSize().getHeight());
-//    private Backend.User user;
+
     private JButton submit;
     private JPanel panel1, panel2; //panel3, panel4;
     private ArrayList<JRadioButtonMenuItem> radioButtons;
@@ -52,7 +56,6 @@ public class SpecialistSelectionWindow extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
-//        this.user = user;
     }
 
     private void buildPanel1() {
@@ -63,8 +66,14 @@ public class SpecialistSelectionWindow extends JFrame {
         specPhoto = SpecialistTable.getPhotos();
         specName = SpecialistTable.getNames();
         
+        ImageIcon picture;
         for (int i = 0; i < specName.size(); i++) {
-         ImageIcon picture = new ImageIcon(specPhoto.get(i));
+        	if (specPhoto.get(i).equals("search.jpg")) {
+        		picture = new ImageIcon(StartupManger.class.getResource("/search.jpg"));
+        	}else {
+        		picture = new ImageIcon("./" + specPhoto.get(i));
+        	}
+         
             String name = specName.get(i);
             JRadioButtonMenuItem rButton = new JRadioButtonMenuItem(name, picture, true);
             rButton.setFont(new Font("ariel",Font.BOLD, 16));
@@ -90,7 +99,7 @@ public class SpecialistSelectionWindow extends JFrame {
     }
 
     public JRadioButtonMenuItem getSelection(ButtonGroup group) {
-        for (Enumeration e = group.getElements(); e.hasMoreElements();) {
+        for (Enumeration<?> e = group.getElements(); e.hasMoreElements();) {
             JRadioButtonMenuItem b = (JRadioButtonMenuItem) e.nextElement();
             if (b.getModel() == group.getSelection()) {
                 return b;
@@ -101,15 +110,7 @@ public class SpecialistSelectionWindow extends JFrame {
 
     public void submitted() {
         JRadioButtonMenuItem selected = getSelection(bg);
-        //String facultySelected[] = selected.getText().split(" ");
-        //TODO: add the appropriate information to the VisitTable
-//        user.setSpecialist(facultySelected[0], facultySelected[1]);
-//        try {
-//            Data.open();
-//            user.newVisit(Data.chooseTable("visits"));
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
+        
         VisitsTable.addVisit(reason, followUp, email, selected.getText(), location);
         JOptionPane.showMessageDialog(null, "Thank you for using the Disability Kiosk", "Thank You",
                 JOptionPane.PLAIN_MESSAGE);
