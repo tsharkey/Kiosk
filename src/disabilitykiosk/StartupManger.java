@@ -18,7 +18,7 @@ public class StartupManger {
 
 	public static void main(String[] args) {
 		if (args.length != 0) {
-			if (args[0].equals("initDatabase")) {
+			if (args[0].equals("initalizeDB")) {
 				initalizeDB = true;
 			}
 		}
