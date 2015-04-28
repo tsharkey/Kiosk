@@ -11,13 +11,16 @@ package GUI.loginwindow;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+
 import java.awt.Font;
 
+@SuppressWarnings("serial")
 public class LoginPanel extends JPanel {
     //declaring fields for the buttons, labels , text and password for the frame
     private final int CHAR_LENGTH = 15;

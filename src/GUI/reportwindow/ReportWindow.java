@@ -1,6 +1,7 @@
 package GUI.reportwindow;
 import Backend.*;
 import GUI.loginwindow.AdminFrame;
+
 import java.io.IOException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
+
 import javax.swing.*;
+
+import disabilitykiosk.DisabilityKiosk;
 
 /**
  * ReportWindow Class display a window with a Report for all the visits to the Kiosk Application
@@ -190,7 +194,7 @@ public class ReportWindow extends JFrame {
         printFileBtn.addActionListener(new ReportWindow.ButtonListener());
         southPanel.add(printFileBtn);
 
-        closeBtn = new JButton("Close");
+        closeBtn = new JButton("Log Out");
         closeBtn.addActionListener(new ReportWindow.CloseButtonListener());
         southPanel.add(closeBtn);
 
@@ -214,8 +218,9 @@ public class ReportWindow extends JFrame {
         textArea.append(addBuffer("LastName", 15));
         textArea.append(addBuffer("Email", 30));
         textArea.append(addBuffer("Phone", 15));
-        textArea.append(addBuffer("Reason", 40));
+        textArea.append(addBuffer("Reason", 75));
         textArea.append(addBuffer("Follow Up?", 15));
+        textArea.append(addBuffer("Role", 15));
         textArea.append(addBuffer("Specialist", 15));
         textArea.append(addBuffer("Location", 15));
 
@@ -254,8 +259,9 @@ public class ReportWindow extends JFrame {
                       addBuffer(visit.getLastName(), 15) +
                       addBuffer(visit.getEmail(), 30) +
                       addBuffer(visit.getPhone(), 15) +
-                      addBuffer(visit.getReason(), 40) +
+                      addBuffer(visit.getReason(), 75) +
                       addBuffer(String.valueOf(visit.isFollowUp()), 15) +
+                      addBuffer(visit.getRole(), 15) +
                       addBuffer(visit.getSpecialist(), 15) +
                       addBuffer(visit.getLocation(), 15) + "\n";
                   }
@@ -288,9 +294,10 @@ public class ReportWindow extends JFrame {
             if (e.getSource() == closeBtn)
             {
               setVisible(false); 
-              dispose(); 
-              
-              // go back to disability kiosk-- still to implement
+              dispose();
+              DisabilityKiosk.isAdminWorking = false;
+              DisabilityKiosk.workingAdmin = "";
+              new DisabilityKiosk();
             }
         }
     }

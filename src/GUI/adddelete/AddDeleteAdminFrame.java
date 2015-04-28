@@ -85,7 +85,7 @@ public class AddDeleteAdminFrame extends JFrame {
         c.weighty = 0.05;
         buttonPanel.add(deleteBtn, c);
         
-        cancelBtn = new JButton("Cancel");
+        cancelBtn = new JButton("Go Back");
         cancelBtn.addActionListener(new ButtonListener());
         c.gridx = 0;
         c.gridy = 3;

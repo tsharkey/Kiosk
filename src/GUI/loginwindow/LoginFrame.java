@@ -17,6 +17,7 @@ import disabilitykiosk.DisabilityKiosk;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("serial")
 public class LoginFrame extends JFrame {
 
  private final int WINDOW_WIDTH = 500;

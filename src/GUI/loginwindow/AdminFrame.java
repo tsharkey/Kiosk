@@ -23,10 +23,11 @@ import java.io.IOException;
  * This class will create each of the buttons for the each of the functions and their listeners
  */
 
+@SuppressWarnings("serial")
 public class AdminFrame extends JFrame {
     //size of the window
     private final int WINDOW_WIDTH = 500;
-    private final int WINDOW_HEIGHT = 100;
+    private final int WINDOW_HEIGHT = 200;
     //Jbuttons fields for each of the buttons
     private final JButton reportButton = new JButton("VIEW REPORT");
     private final JButton closeKioskButton = new JButton("CLOSE KIOSK");
@@ -35,19 +36,15 @@ public class AdminFrame extends JFrame {
     private final JButton logout = new JButton("LOG OUT");
 
     public AdminFrame() {
-
-        setLayout(new GridLayout());
-        //creates panel for buttons
-        JPanel button = new JPanel();
-        //adding the buttons to the panel
-        button.add(createNewAdmin);
-        button.add(closeKioskButton);
-        button.add(reportButton);
-        button.add(specialist);
-        button.add(logout);
-
-        add(button);
-        setTitle("SELECT CHOICE");
+    	
+    	Container c = this.getContentPane();
+    	c.setLayout(new GridLayout(0,3));
+    	c.add(reportButton);
+    	c.add(specialist);
+    	c.add(createNewAdmin);
+    	c.add(logout);
+    	c.add(closeKioskButton);
+    	
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
         // view report button link
@@ -105,8 +102,6 @@ public class AdminFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent ee) {
             if (ee.getSource() == getCloseKioskButton()) {
-                //Admin.serialize();
-                //SpecialistList.serialize();
                 dispose();
                 // close app
                 System.exit(0);
@@ -140,46 +135,6 @@ public class AdminFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
         	dispose(); //Brendan S
             new AddDeleteAdminFrame();
-            /*
-            int submitted;
-            JTextField userName = new JTextField(10);
-            JPasswordField password = new JPasswordField(10);
-            boolean new_admin_created = false;
-            do {
-                JPanel adminInput = new JPanel();
-                adminInput.add(new JLabel("Username: "));
-
-                adminInput.add(userName);
-                adminInput.add(Box.createHorizontalStrut(15));
-
-                adminInput.add(new JLabel("Password: "));
-
-                adminInput.add(password);
-                submitted = JOptionPane.showConfirmDialog(null, adminInput, "Please enter new Admin Username & Password.", JOptionPane.OK_CANCEL_OPTION);
-                if (submitted == JOptionPane.OK_OPTION && !userName.getText().equals("") && password.getPassword().length != 0) {
-                    String pw = new String(password.getPassword());
-                    if (!AdminTable.admin_exist(userName.getText())) {
-                        AdminTable.addAdmin(userName.getText(), pw);
-                        new_admin_created = true;
-                        JOptionPane.showMessageDialog(null, "New admin created", "Notice", JOptionPane.INFORMATION_MESSAGE);
-                        //get back to admin window
-                        AdminFrame test = new AdminFrame();
-                        test.setVisible(true);
-                    }
-                    else{
-                        
-                    }
-                } else if (submitted != JOptionPane.CANCEL_OPTION) {
-                    JOptionPane.showMessageDialog(null, "Please enter a Username and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } while (submitted == JOptionPane.OK_OPTION && (userName.getText().equals("") || password.getPassword().length == 0) && new_admin_created == true);
-
-            if (submitted == JOptionPane.CANCEL_OPTION) {
-                dispose();
-                //get back to admin window
-                AdminFrame test = new AdminFrame();
-                test.setVisible(true);
-            }*/
         }
     }
 

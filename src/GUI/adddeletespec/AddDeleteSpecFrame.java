@@ -105,7 +105,7 @@ public class AddDeleteSpecFrame extends JFrame{
         buttonPanel.add(deleteBtn, c);
         add(buttonPanel, BorderLayout.EAST);
         
-        cancelBtn = new JButton("Cancel");
+        cancelBtn = new JButton("Go Back");
         cancelBtn.addActionListener(new submitOrDeleteListener());
         c.gridx = 0;
         c.gridy = 3;
