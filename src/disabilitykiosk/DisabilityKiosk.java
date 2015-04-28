@@ -79,8 +79,7 @@ public class DisabilityKiosk extends JFrame {
         }
 
         //Display a title
-        setTitle(
-                "Disability Resource Kiosk");
+        setTitle("Disability Resource Kiosk");
     //set the window size
         //setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         //setExtendedState(Frame.MAXIMIZED_vBOTH);
@@ -120,8 +119,7 @@ public class DisabilityKiosk extends JFrame {
          * ABOVE CODE IS TRYING TO GET RID OF TASK BAR
          */
         //Create a Border Layout
-        setLayout(
-                new BorderLayout());
+        setLayout(new BorderLayout());
 
         //Create the custom panels
         greetings_Panel = new GreetingsPanel();
@@ -151,11 +149,9 @@ public class DisabilityKiosk extends JFrame {
         add(submit_Panel, BorderLayout.SOUTH);
 
         //set the windows position to the center of the screen
-        setLocationRelativeTo(
-                null);
+        setLocationRelativeTo(null);
         //Make the window visible
-        setVisible(
-                true);
+        setVisible(true);
     }
 
     /**
