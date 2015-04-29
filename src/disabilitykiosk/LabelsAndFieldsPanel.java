@@ -12,13 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -34,22 +28,26 @@ import java.util.regex.Matcher;
  * 
  * Input checks with regular expressions by Hannah
  */
-public class LabelsAndFieldsPanel extends JPanel {
+public class LabelsAndFieldsPanel extends JPanel{
 
     /*
      * Labels, text fields and combo box
      */
-    JTextField firstI, lastI, emailI;
-    JTextField phoneI;
     JComboBox reasonI;
     JComboBox followUpI;
     JComboBox roleI;
     JComboBox locationI;
+    private JPasswordField firstI,
+                           lastI,
+                           emailI,
+                           phoneI;
     private JLabel date, time, first, last, email, phone, reason, followUp, role, dateI, timeI, location;
     private JButton firstButton, locationButton, lastButton, emailButton, phoneButton, reasonButton, followUpButton, roleButton;
     private ArrayList<JButton> buttonList;
     private ImageIcon microphone = new ImageIcon("resources/microphone.jpg");
     public JCheckBox cancelSpeech;
+    private boolean firstNameBool,
+                    lastNameBool;
 
     /*
      * Numbers for enlarging text
@@ -79,6 +77,9 @@ public class LabelsAndFieldsPanel extends JPanel {
         setLayout(new GridBagLayout());
         buildPanel();
         setVisible(true);
+
+        firstNameBool = false;
+        lastNameBool = false;
     }
 
     /**
@@ -147,7 +148,8 @@ public class LabelsAndFieldsPanel extends JPanel {
         add(first, grid);
 
         //firstI
-        firstI = new JTextField(CHAR_LENGTH);
+        firstI = new JPasswordField(CHAR_LENGTH);
+        firstI.addFocusListener(new PasswordUtil(firstI));
         firstI.setFont(textFieldFont);
         firstI.addFocusListener(new MyFocusListener());
         grid.gridx = GridBagConstraints.RELATIVE;
@@ -168,7 +170,8 @@ public class LabelsAndFieldsPanel extends JPanel {
         add(last, grid);
 
         //lastI
-        lastI = new JTextField(CHAR_LENGTH);
+        lastI = new JPasswordField(CHAR_LENGTH);
+        lastI.addFocusListener(new PasswordUtil(lastI));
         lastI.setFont(textFieldFont);
         lastI.addFocusListener(new MyFocusListener());
         grid.gridx = GridBagConstraints.RELATIVE;
@@ -211,7 +214,8 @@ public class LabelsAndFieldsPanel extends JPanel {
         add(email, grid);
 
         //emailI
-        emailI = new JTextField(CHAR_LENGTH);
+        emailI = new JPasswordField(CHAR_LENGTH);
+        emailI.addFocusListener(new PasswordUtil(emailI));
         emailI.setFont(textFieldFont);
         emailI.addFocusListener(new MyFocusListener());
         grid.gridx = GridBagConstraints.RELATIVE;
@@ -232,7 +236,8 @@ public class LabelsAndFieldsPanel extends JPanel {
         add(phone, grid);
 
         //phoneI
-        phoneI = new JTextField(CHAR_LENGTH);
+        phoneI = new JPasswordField(CHAR_LENGTH);
+        phoneI.addFocusListener(new PasswordUtil(phoneI));
         phoneI.setFont(textFieldFont);
         phoneI.addFocusListener(new MyFocusListener());
         grid.gridx = GridBagConstraints.RELATIVE;
