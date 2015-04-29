@@ -212,7 +212,7 @@ public class AddDeleteSpecFrame extends JFrame {
                             //copy the image to the project folder for using later
                             //save the relative path to the image into the db
                             File scr = new File(specInfoPanel.getPhoto());
-                            File dest = new File(specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
+                            File dest = new File("specialist_images/"+specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
                             try {
                                 copyFile(scr, dest);
                             } catch (IOException ioe) {
@@ -224,7 +224,7 @@ public class AddDeleteSpecFrame extends JFrame {
                                     specInfoPanel.getEmailText(),
                                     specInfoPanel.getPhoneText(),
                                     specInfoPanel.getPassword(),
-                                    specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
+                                    "specialist_images/"+specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
                             listPanel.updateList();
                             specInfoPanel.clear();
                         }

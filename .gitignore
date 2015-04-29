@@ -32,3 +32,4 @@ nblibraries.properties
 #eclipse
 .classpath
 .project
+/nbdist/
