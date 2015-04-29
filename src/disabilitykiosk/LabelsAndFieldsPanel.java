@@ -48,7 +48,8 @@ public class LabelsAndFieldsPanel extends JPanel {
     private JLabel date, time, first, last, email, phone, reason, followUp, role, dateI, timeI, location;
     private JButton firstButton, locationButton, lastButton, emailButton, phoneButton, reasonButton, followUpButton, roleButton;
     private ArrayList<JButton> buttonList;
-    private ImageIcon microphone = new ImageIcon(StartupManger.class.getResource("/microphone.jpg"));
+    private ImageIcon microphone = new ImageIcon(StartupManger.class.getResource("microphone.jpg"));
+    //private ImageIcon microphone = new ImageIcon(this.getClass().getClassLoader().getResource("../resources/microphone.jpg"));
     public JCheckBox cancelSpeech;
 
     /*

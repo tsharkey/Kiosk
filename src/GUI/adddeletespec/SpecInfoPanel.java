@@ -256,6 +256,7 @@ public class SpecInfoPanel extends JPanel{
      * Select photo from file as icon
      */
     private class Listener implements ActionListener{
+        @Override
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == fileselector){
                 JFileChooser fc = new JFileChooser();

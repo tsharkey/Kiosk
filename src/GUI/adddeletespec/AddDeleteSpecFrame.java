@@ -10,6 +10,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -20,12 +25,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 /**
- * AddDeleteSpecFrame Class is part or the Kiosk implementation.
- * it is a graphic interface that allows to add or delete a specialist from the database
- * The frame will have three buttons to add, delete and edit the specialist
+ * AddDeleteSpecFrame Class is part or the Kiosk implementation. it is a graphic
+ * interface that allows to add or delete a specialist from the database The
+ * frame will have three buttons to add, delete and edit the specialist
+ *
  * @author Spconway 4/26/2014
  */
-public class AddDeleteSpecFrame extends JFrame{
+public class AddDeleteSpecFrame extends JFrame {
 
     private final int WINDOW_WIDTH = 800;
     private final int WINDOW_HEIGHT = 500;
@@ -39,8 +45,8 @@ public class AddDeleteSpecFrame extends JFrame{
 //    private JList<String> list;
 //    private DefaultListModel<String> dlm;
     private JScrollPane scroll;
-    
-    public AddDeleteSpecFrame(){
+
+    public AddDeleteSpecFrame() {
         //Window title
         setTitle("Add/Delete Specialists");
         //Set default close operation
@@ -58,7 +64,7 @@ public class AddDeleteSpecFrame extends JFrame{
     /**
      *
      */
-    private void buildMainFrame(){
+    private void buildMainFrame() {
 //        dlm = new DefaultListModel<String>();
 //        updateList();
         listPanel = new ListPanel();
@@ -67,7 +73,7 @@ public class AddDeleteSpecFrame extends JFrame{
         updatePanel = new UpdatePanel();
         //listPanel = new ListPanel();
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        
+
         setLayout(new BorderLayout());
 
         add(listPanel);
@@ -104,7 +110,7 @@ public class AddDeleteSpecFrame extends JFrame{
         c.weighty = 0.05;
         buttonPanel.add(deleteBtn, c);
         add(buttonPanel, BorderLayout.EAST);
-        
+
         cancelBtn = new JButton("Go Back");
         cancelBtn.addActionListener(new submitOrDeleteListener());
         c.gridx = 0;
@@ -117,23 +123,50 @@ public class AddDeleteSpecFrame extends JFrame{
 
     /**
      * Return the email of a specialist
+     *
      * @return String
      */
-	private String getSpecialist() {
-		if (listPanel.getSelectedSpec() != null) {
+    private String getSpecialist() {
+        if (listPanel.getSelectedSpec() != null) {
             String[] nameArray = listPanel.getSelectedSpec();
             String fname = nameArray[0];
             String lname = nameArray[1];
 
-			return SpecialistTable.getEmailFromName(fname,lname);
-		}
-		return null;
-	}
+            return SpecialistTable.getEmailFromName(fname, lname);
+        }
+        return null;
+    }
+
+    public static void copyFile(File sourceFile, File destFile)
+            throws IOException {
+        if (!sourceFile.exists()) {
+            return;
+        }
+        if (!destFile.exists()) {
+            destFile.createNewFile();
+        }
+        FileChannel source = null;
+        FileChannel destination = null;
+        source = new FileInputStream(sourceFile).getChannel();
+        destination = new FileOutputStream(destFile).getChannel();
+        if (destination != null && source != null) {
+            destination.transferFrom(source, 0, source.size());
+        }
+        if (source != null) {
+            source.close();
+        }
+        if (destination != null) {
+            destination.close();
+        }
+
+    }
 
     /**
      * ActionListener for Add, Edit, and Delete Specialist
      */
     private class submitOrDeleteListener implements ActionListener {
+
+        @Override
         public void actionPerformed(ActionEvent e) {
 
             //If Add Specialist is pressed
@@ -159,43 +192,50 @@ public class AddDeleteSpecFrame extends JFrame{
                         JOptionPane.showMessageDialog(null, "Fail to create a Specialist.", "Invalid E-mail", JOptionPane.ERROR_MESSAGE);
                     } else if (specInfoPanel.getPassword().length() == 0 && specInfoPanel.getCPassword().length() == 0) {
                         JOptionPane.showMessageDialog(null, "No Password Input", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if(specInfoPanel.getPassword().length() == 0) {
+                    } else if (specInfoPanel.getPassword().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Password should include 1 Upper Case, 1 Lower Case,1 number, 1 of @#$% and 6-20 letters.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }else if (specInfoPanel.getPassword().length() < 6) {
+                    } else if (specInfoPanel.getPassword().length() < 6) {
                         JOptionPane.showMessageDialog(null, "Password too Short", "Error", JOptionPane.ERROR_MESSAGE);
                     } else if (!specInfoPanel.confirmPassword()) {
                         JOptionPane.showMessageDialog(null, "Password doesn't match", "Error", JOptionPane.ERROR_MESSAGE);
-                    }  else {
+                    } else {
                         ImageIcon i = new ImageIcon(specInfoPanel.getPhoto());
                         if (i.getIconHeight() > 250 || i.getIconWidth() > 250) {
 
                             JOptionPane.showMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
 
                         } else if (specInfoPanel.getPhoto().length() > 100) {
-                        	
-                        	JOptionPane.showMessageDialog(null, "Photo file name is too large. Please rename it and try again.", "Image Error", JOptionPane.ERROR_MESSAGE);
-                        	
+
+                            JOptionPane.showMessageDialog(null, "Photo file name is too large. Please rename it and try again.", "Image Error", JOptionPane.ERROR_MESSAGE);
+
                         } else {
+                            //copy the image to the project folder for using later
+                            //save the relative path to the image into the db
+                            File scr = new File(specInfoPanel.getPhoto());
+                            File dest = new File(specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
+                            try {
+                                copyFile(scr, dest);
+                            } catch (IOException ioe) {
+                                ioe.printStackTrace();
+                            }
                             SpecialistTable.addSpecialist(
                                     specInfoPanel.getFirstName(),
                                     specInfoPanel.getLastName(),
                                     specInfoPanel.getEmailText(),
                                     specInfoPanel.getPhoneText(),
                                     specInfoPanel.getPassword(),
-                                    specInfoPanel.getPhoto());
+                                    specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
                             listPanel.updateList();
                             specInfoPanel.clear();
                         }
                     }
                 }
-            }
-
-            //If Edit button is pressed
+            } //If Edit button is pressed
             else if (e.getSource() == editBtn) {
                 String[] temp = listPanel.getSelectedSpec();
                 if (getSpecialist() != null) {
                     updatePanel.setEditUser(temp);
-                    int submitted = JOptionPane.showConfirmDialog(null, updatePanel , "Please enter the updated information.", JOptionPane.OK_CANCEL_OPTION);
+                    int submitted = JOptionPane.showConfirmDialog(null, updatePanel, "Please enter the updated information.", JOptionPane.OK_CANCEL_OPTION);
 
                     //update specialist info
                     if (submitted == JOptionPane.OK_OPTION) {
@@ -204,17 +244,21 @@ public class AddDeleteSpecFrame extends JFrame{
                             SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
                             //if new password inputted
                             if (updatePanel.getPassword().length() != 0 || updatePanel.getCPassword().length() != 0) {
-                                if (updatePanel.getPassword().length() < 6)
+                                if (updatePanel.getPassword().length() < 6) {
                                     JOptionPane.showMessageDialog(null, "Password too Short", "Error", JOptionPane.ERROR_MESSAGE);
-                                if (updatePanel.getCPassword().length() == 0)
+                                }
+                                if (updatePanel.getCPassword().length() == 0) {
                                     JOptionPane.showMessageDialog(null, "Password should include 1 Upper Case, 1 Lower Case, 1 number, 1 of @#$% and 6-20 letters.", "Error", JOptionPane.ERROR_MESSAGE);
-                                if(updatePanel.confirmPassword())
+                                }
+                                if (updatePanel.confirmPassword()) {
                                     SpecialistTable.updatePassword(getSpecialist(), updatePanel.getPassword());
-                                else
+                                } else {
                                     JOptionPane.showMessageDialog(null, "Passwords Not Matched", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
                             }
-                            if (updatePanel.getPhoneText().length() != 0)
+                            if (updatePanel.getPhoneText().length() != 0) {
                                 SpecialistTable.updatePhone(getSpecialist(), updatePanel.getPhoneText());
+                            }
                             listPanel.updateList();
                             updatePanel.clear();
                         } else {
@@ -223,16 +267,17 @@ public class AddDeleteSpecFrame extends JFrame{
 
                                 JOptionPane.showMessageDialog(null, "Image too Large. Maximum size is 250px by 250px.", "Image Error", JOptionPane.ERROR_MESSAGE);
 
-                            }  else if (updatePanel.getPhoto().length() > 100) {
-                            	
-                            	JOptionPane.showMessageDialog(null, "Photo file name is too large. Please rename it and try again.", "Image Error", JOptionPane.ERROR_MESSAGE);
-                            	
+                            } else if (updatePanel.getPhoto().length() > 100) {
+
+                                JOptionPane.showMessageDialog(null, "Photo file name is too large. Please rename it and try again.", "Image Error", JOptionPane.ERROR_MESSAGE);
+
                             } else {
                                 SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
                                 SpecialistTable.updatePassword(getSpecialist(), updatePanel.getPassword());
                                 SpecialistTable.updatePhoto(getSpecialist(), updatePanel.getPhoto());
-                                if (updatePanel.getPhoneText().length() != 0)
+                                if (updatePanel.getPhoneText().length() != 0) {
                                     SpecialistTable.updatePhone(getSpecialist(), updatePanel.getPhoneText());
+                                }
 
                                 listPanel.updateList();
                                 updatePanel.clear();
@@ -241,31 +286,29 @@ public class AddDeleteSpecFrame extends JFrame{
                             listPanel.updateList();
                             specInfoPanel.clear();
 
-                        } 
-                    } 
+                        }
+                    }
                 } else {
-                        JOptionPane.showMessageDialog(null, "Please select a specialist first", "Selection", JOptionPane.ERROR_MESSAGE);
-                  }
-            } 
-            //If Delete button is pressed
+                    JOptionPane.showMessageDialog(null, "Please select a specialist first", "Selection", JOptionPane.ERROR_MESSAGE);
+                }
+            } //If Delete button is pressed
             else if (e.getSource() == deleteBtn) {
                 if (getSpecialist() != null) {
                     String[] name = listPanel.getSelectedSpec();
                     String fname = name[0];
                     String lname = name[1];
-                    int submitted = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " +fname+" "+lname  , "Delete Warning", JOptionPane.OK_CANCEL_OPTION);
-                    if(submitted == JOptionPane.OK_OPTION) {
+                    int submitted = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + fname + " " + lname, "Delete Warning", JOptionPane.OK_CANCEL_OPTION);
+                    if (submitted == JOptionPane.OK_OPTION) {
                         SpecialistTable.deleteSpecialist(getSpecialist());
                         listPanel.updateList();
                         listPanel.repaint();
                     }
 
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Please select a specialist", "No Selection", JOptionPane.ERROR_MESSAGE);
                 }
             } else if (e.getSource() == cancelBtn) {
-            	dispose();
+                dispose();
                 new AdminFrame();
             }
         }
