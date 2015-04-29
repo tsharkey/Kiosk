@@ -19,8 +19,6 @@ import java.util.Scanner;
 
 import javax.swing.*;
 
-import disabilitykiosk.DisabilityKiosk;
-
 /**
  * ReportWindow Class display a window with a Report for all the visits to the
  * Kiosk Application It will display date, time, first and last name of the
@@ -51,7 +49,6 @@ public class ReportWindow extends JFrame {
 	private JScrollPane scrollPane;
 
 	private JButton printFileBtn;
-	private JButton closeBtn;
 	private JButton goBackBtn;
 	private JButton csvBtn;
 
@@ -198,10 +195,6 @@ public class ReportWindow extends JFrame {
 		csvBtn.addActionListener(new ReportWindow.ButtonListener());
 		southPanel.add(csvBtn);
 
-		closeBtn = new JButton("Log Out");
-		closeBtn.addActionListener(new ReportWindow.ButtonListener());
-		southPanel.add(closeBtn);
-
 		goBackBtn = new JButton("Go Back");
 		goBackBtn.addActionListener(new ReportWindow.ButtonListener());
 		southPanel.add(goBackBtn);
@@ -265,12 +258,6 @@ public class ReportWindow extends JFrame {
 				} catch (PrinterException exception) {
 					JOptionPane.showMessageDialog(null, exception);
 				}
-			} else if (e.getSource() == closeBtn) {
-				setVisible(false);
-				dispose();
-				DisabilityKiosk.isAdminWorking = false;
-				DisabilityKiosk.workingAdmin = "";
-				new DisabilityKiosk();
 			} else if (e.getSource() == goBackBtn) {
 				new AdminFrame();
 				dispose();

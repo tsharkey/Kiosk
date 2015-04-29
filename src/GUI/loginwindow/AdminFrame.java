@@ -26,7 +26,7 @@ import java.io.IOException;
 @SuppressWarnings("serial")
 public class AdminFrame extends JFrame {
     //size of the window
-    private final int WINDOW_WIDTH = 500;
+    private final int WINDOW_WIDTH = 250;
     private final int WINDOW_HEIGHT = 200;
     //Jbuttons fields for each of the buttons
     private final JButton reportButton = new JButton("VIEW REPORT");
@@ -38,7 +38,7 @@ public class AdminFrame extends JFrame {
     public AdminFrame() {
     	
     	Container c = this.getContentPane();
-    	c.setLayout(new GridLayout(0,3));
+    	c.setLayout(new GridLayout(0,1));
     	c.add(reportButton);
     	c.add(specialist);
     	c.add(createNewAdmin);
