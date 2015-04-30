@@ -203,8 +203,12 @@ public class AddDeleteSpecFrame extends JFrame {
                         } else {
                             //copy the image to the project folder for using later
                             //save the relative path to the image into the db
+                            File dir = new File("specialist_images");
+                            if (!dir.exists() || !dir.isDirectory()) {
+                                dir.mkdir();
+                            }
                             File scr = new File(specInfoPanel.getPhoto());
-                            File dest = new File("specialist_images/"+specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
+                            File dest = new File("specialist_images/" + specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
                             try {
                                 copyFile(scr, dest);
                             } catch (IOException ioe) {
@@ -216,7 +220,7 @@ public class AddDeleteSpecFrame extends JFrame {
                                     specInfoPanel.getEmailText(),
                                     specInfoPanel.getPhoneText(),
                                     specInfoPanel.getPassword(),
-                                    "specialist_images/"+specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
+                                    "specialist_images/" + specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
                             listPanel.updateList();
                             specInfoPanel.clear();
                         }
@@ -266,7 +270,25 @@ public class AddDeleteSpecFrame extends JFrame {
                             } else {
                                 SpecialistTable.updateEmail(getSpecialist(), updatePanel.getEmailText());
                                 SpecialistTable.updatePassword(getSpecialist(), updatePanel.getPassword());
-                                SpecialistTable.updatePhoto(getSpecialist(), updatePanel.getPhoto());
+                                //create folder if neccessary
+                                File dir = new File("specialist_images");
+                                if (!dir.exists() || !dir.isDirectory()) {
+                                    dir.mkdir();
+                                }
+                                //delete old picture
+                                File oldFile = new File("specialist_images/" + listPanel.getSelectedSpec()[0] + "_" + listPanel.getSelectedSpec()[1] + ".jpg");
+                                if (oldFile.exists()) {
+                                    oldFile.delete();
+                                }
+                                //replace with new picture
+                                File newOriginFile = new File(updatePanel.getPhoto());
+                                try {
+                                    copyFile(newOriginFile, oldFile);
+                                } catch (IOException ioe) {
+                                    ioe.printStackTrace();
+                                }
+                                //no need to update relative picture's path
+                                //SpecialistTable.updatePhoto(getSpecialist(), updatePanel.getPhoto());
                                 if (updatePanel.getPhoneText().length() != 0) {
                                     SpecialistTable.updatePhone(getSpecialist(), updatePanel.getPhoneText());
                                 }
