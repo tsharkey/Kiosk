@@ -129,7 +129,7 @@ public class AddDeleteSpecFrame extends JFrame {
         return null;
     }
 
-    public static void copyFile(File sourceFile, File destFile)
+    public void copyFile(File sourceFile, File destFile)
             throws IOException {
         if (!sourceFile.exists()) {
             return;
@@ -150,9 +150,15 @@ public class AddDeleteSpecFrame extends JFrame {
         if (destination != null) {
             destination.close();
         }
-
     }
 
+    public String getFileExtension(File file){
+         String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+        return fileName.substring(fileName.lastIndexOf("."));
+        else return "";
+    }
+    
     /**
      * ActionListener for Add, Edit, and Delete Specialist
      */
@@ -208,7 +214,7 @@ public class AddDeleteSpecFrame extends JFrame {
                                 dir.mkdir();
                             }
                             File scr = new File(specInfoPanel.getPhoto());
-                            File dest = new File("specialist_images/" + specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
+                            File dest = new File("specialist_images/" + specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + getFileExtension(scr));
                             try {
                                 copyFile(scr, dest);
                             } catch (IOException ioe) {
@@ -280,10 +286,17 @@ public class AddDeleteSpecFrame extends JFrame {
                                 if (oldFile.exists()) {
                                     oldFile.delete();
                                 }
+                                
+                                File oldFile1 = new File("specialist_images/" + listPanel.getSelectedSpec()[0] + "_" + listPanel.getSelectedSpec()[1] + ".png");
+                                if (oldFile1.exists()) {
+                                    oldFile1.delete();
+                                }
+                                
                                 //replace with new picture
-                                File newOriginFile = new File(updatePanel.getPhoto());
+                                File src = new File(updatePanel.getPhoto());
+                                File dest = new File("specialist_images/" + listPanel.getSelectedSpec()[0] + "_" + listPanel.getSelectedSpec()[1] + getFileExtension(src));
                                 try {
-                                    copyFile(newOriginFile, oldFile);
+                                    copyFile(src, dest);
                                 } catch (IOException ioe) {
                                     ioe.printStackTrace();
                                 }
