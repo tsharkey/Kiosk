@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import java.awt.*;
 
 /**
  * AddDeleteSpecFrame Class is part or the Kiosk implementation. it is a graphic

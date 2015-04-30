@@ -36,10 +36,13 @@ public class SubmitPanel extends JPanel
 //        closeSpeech = new JButton(microphone);
 //        adminSpeech = new JButton(microphone);
         //create action buttons
-        submit = new JButton("Submit");
-        submit.setPreferredSize(new Dimension(100,20));
+        submit = new JButton("SUBMIT");
+        submit.setPreferredSize(new Dimension(100,50));
+        submit.setFont(new Font("Verdana", Font.BOLD, 30));
 //        close = new JButton("Close");
-        admin = new JButton("Administrator");
+        admin = new JButton("ADMINISTRATOR");
+        admin.setPreferredSize(new Dimension(100,50));
+
 
         //add them to each panel
 //      panel_1.add(submitSpeech);
