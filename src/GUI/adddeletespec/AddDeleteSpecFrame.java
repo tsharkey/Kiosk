@@ -226,7 +226,7 @@ public class AddDeleteSpecFrame extends JFrame {
                                     specInfoPanel.getEmailText(),
                                     specInfoPanel.getPhoneText(),
                                     specInfoPanel.getPassword(),
-                                    "specialist_images/" + specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + ".jpg");
+                                    "specialist_images/" + specInfoPanel.getFirstName() + "_" + specInfoPanel.getLastName() + getFileExtension(scr));
                             listPanel.updateList();
                             specInfoPanel.clear();
                         }
