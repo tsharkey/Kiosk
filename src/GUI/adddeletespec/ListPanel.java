@@ -37,6 +37,7 @@ public class ListPanel extends JPanel{
     private void buildPanel(){
         
        specLabel = new JLabel("Specialists");
+        specLabel.setFont(new Font("Verdana", Font.BOLD, 15));
 
        //to hold names for the Scroll Pane
        //ArrayList<String> namesList = new ArrayList<String>();
@@ -55,7 +56,7 @@ public class ListPanel extends JPanel{
        scroll = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
             JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-       scroll.setPreferredSize(new Dimension(300, 490));
+       scroll.setPreferredSize(new Dimension(300, 500));
 
        add(specLabel, BorderLayout.NORTH);
        add(scroll, BorderLayout.CENTER);

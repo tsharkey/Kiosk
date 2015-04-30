@@ -49,9 +49,12 @@ public class AddDeleteSpecFrame extends JFrame {
 
     public AddDeleteSpecFrame() {
         //Window title
-        setTitle("Add/Delete Specialists");
+        setTitle("ADD/DELETE SPECIALIST");
+        setLayout(new BorderLayout());
         //Set default close operation
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         //Build the main frame and add components
         buildMainFrame();
         //Set location
@@ -70,56 +73,44 @@ public class AddDeleteSpecFrame extends JFrame {
 //        updateList();
         listPanel = new ListPanel();
         listPanel.updateList();
+
         specInfoPanel = new SpecInfoPanel();
         updatePanel = new UpdatePanel();
-        //listPanel = new ListPanel();
+
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-        setLayout(new BorderLayout());
-
         add(listPanel);
-        //add(specInfoPanel, BorderLayout.EAST);
-//        add(submitPanel, BorderLayout.SOUTH);
+
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+        buttonPanel.setLayout(new GridLayout(4,0,0,10));
+
+        Container c = this.getContentPane();
+
 
         //creating the Add button and adding the listener to it
-        addBtn = new JButton("Add New Specialist");
+        addBtn = new JButton("ADD NEW SPECIALIST");
+        addBtn.setPreferredSize(new Dimension(150, 30));
         addBtn.addActionListener(new submitOrDeleteListener());
-        c.gridx = 0;
-        c.gridy = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty = 0.05;
-        buttonPanel.add(addBtn, c);
+        buttonPanel.add(addBtn);
 
         //creating the Edit button and adding the listener to it
-        editBtn = new JButton("Edit Specialist");
+        editBtn = new JButton("EDIT SPECIALIST");
+        editBtn.setPreferredSize(new Dimension(150, 30));
         editBtn.addActionListener(new submitOrDeleteListener());
-        c.gridx = 0;
-        c.gridy = 1;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty = 0.05;
-        buttonPanel.add(editBtn, c);
+        buttonPanel.add(editBtn);
 
         //creating the Delete button and adding the listener to it
-        deleteBtn = new JButton("Remove Specialist");
+        deleteBtn = new JButton("REMOVE SPECIALIST");
+        deleteBtn.setPreferredSize(new Dimension(150, 30));
         deleteBtn.addActionListener(new submitOrDeleteListener());
-        c.gridx = 0;
-        c.gridy = 2;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty = 0.05;
-        buttonPanel.add(deleteBtn, c);
+        buttonPanel.add(deleteBtn);
+
+        cancelBtn = new JButton("GO BACK");
+        cancelBtn.setPreferredSize(new Dimension(150, 30));
+        cancelBtn.addActionListener(new submitOrDeleteListener());
+        buttonPanel.add(cancelBtn);
+
         add(buttonPanel, BorderLayout.EAST);
 
-        cancelBtn = new JButton("Go Back");
-        cancelBtn.addActionListener(new submitOrDeleteListener());
-        c.gridx = 0;
-        c.gridy = 3;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty = 0.05;
-        buttonPanel.add(cancelBtn, c);
-        add(buttonPanel, BorderLayout.EAST);
     }
 
     /**
