@@ -156,7 +156,7 @@ public class AddDeleteSpecFrame extends JFrame {
          String fileName = file.getName();
         if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
         return fileName.substring(fileName.lastIndexOf("."));
-        else return "";
+        else return ".jpg";
     }
     
     /**
