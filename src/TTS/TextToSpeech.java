@@ -2,6 +2,8 @@ package TTS;
 
 import com.sun.speech.freetts.VoiceManager;
 
+import com.sun.speech.freetts.VoiceManager;
+
 /**
  *
  * @author pat, Eric Sullivan

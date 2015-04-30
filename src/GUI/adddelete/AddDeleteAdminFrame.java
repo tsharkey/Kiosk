@@ -23,13 +23,14 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import java.awt.*;
 
 
 // Created by Pat and Cyrus
 public class AddDeleteAdminFrame extends JFrame {
 
-    private final int WINDOW_WIDTH = 800;
-    private final int WINDOW_HEIGHT = 500;
+    private final int WINDOW_WIDTH = 300;
+    private final int WINDOW_HEIGHT = 200;
 
     private JList<String> list;
     private DefaultListModel<String> listModel;
@@ -39,9 +40,10 @@ public class AddDeleteAdminFrame extends JFrame {
     private JButton addBtn, editBtn, deleteBtn, cancelBtn;
 
     public AddDeleteAdminFrame() {
-        setTitle("Add/Delete Administrators");
+        setTitle("ADD/DELETE ADMINISTRATORS");
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLayout(new BorderLayout());
+        setLayout(new GridLayout(0, 1));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         buildMainFrame();
         setLocationRelativeTo(null);
@@ -57,44 +59,28 @@ public class AddDeleteAdminFrame extends JFrame {
         //list.setLayoutOrientation(JList.VERTICAL);
         //listScroller = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         //add(listScroller, BorderLayout.CENTER);
-        buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+       // buttonPanel = new JPanel();
+        //buttonPanel.setLayout(new GridBagLayout());
+        //GridBagConstraints c = new GridBagConstraints();
 
-        addBtn = new JButton("Add New Admin");
+        Container c = this.getContentPane();
+        c.setLayout(new GridLayout(0, 1));
+
+        addBtn = new JButton("ADD NEW ADMIN");
         addBtn.addActionListener(new ButtonListener());
-        c.gridx = 0;
-        c.gridy = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty = 0.05;
-        buttonPanel.add(addBtn, c);
+        c.add(addBtn);
 
-        editBtn = new JButton("Edit Current Admin's Password");
+        editBtn = new JButton("EDIT CURRENT ADMIN'S PASSWORD");
         editBtn.addActionListener(new ButtonListener());
-        c.gridx = 0;
-        c.gridy = 1;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty = 0.05;
-        buttonPanel.add(editBtn, c);
+        c.add(editBtn);
 
-        deleteBtn = new JButton("Remove Current Admin");
+        deleteBtn = new JButton("REMOVE CURRENT ADMIIN");
         deleteBtn.addActionListener(new ButtonListener());
-        c.gridx = 0;
-        c.gridy = 2;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty = 0.05;
-        buttonPanel.add(deleteBtn, c);
-        
-        cancelBtn = new JButton("Go Back");
-        cancelBtn.addActionListener(new ButtonListener());
-        c.gridx = 0;
-        c.gridy = 3;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty = 0.05;
-        buttonPanel.add(cancelBtn, c);
+        c.add(deleteBtn);
 
-        //add(buttonPanel, BorderLayout.EAST);
-        add(buttonPanel);
+        cancelBtn = new JButton("GO BACK");
+        cancelBtn.addActionListener(new ButtonListener());
+        c.add(cancelBtn);
     }
 
 
