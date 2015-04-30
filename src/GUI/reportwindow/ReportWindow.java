@@ -3,10 +3,13 @@ package GUI.reportwindow;
 import Backend.*;
 import GUI.loginwindow.AdminFrame;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.print.PrinterException;
@@ -35,7 +38,7 @@ import javax.swing.*;
  */
 
 @SuppressWarnings("serial")
-public class ReportWindow extends JFrame {
+public class ReportWindow extends JFrame implements FocusListener {
 	// gui panels
 	private JPanel northPanel;
 	private JPanel comboPanel;
@@ -75,12 +78,14 @@ public class ReportWindow extends JFrame {
 			"Professional Consultation (Faculty, Staff, Administration, Department)",
 			"Other" };
 	private String[] datesPastYr;
+	
+	private ArrayList<VisitData> csvStore;
 
 	/**
 	 * Constructor of the ReportWindow.
 	 */
 	public ReportWindow() throws IOException {
-		super("Administrator Window");
+		super("Report Window");
 
 		// date and time formatting
 		dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -126,15 +131,15 @@ public class ReportWindow extends JFrame {
 		JLabel startLabel = new JLabel("Start Date:");
 		JLabel endLabel = new JLabel("End Date:");
 		startInput = new JTextField("YYYY-MM-DD", 10);
-		//startInput.addFocusListener(this);
+		startInput.addFocusListener(this);
 		endInput = new JTextField("YYYY-MM-DD", 10);
-		//endInput.addFocusListener(this);
+		endInput.addFocusListener(this);
 
 		JLabel reasonLabel = new JLabel("Search by Reason:");
 
 		// create search box
 		searchBox = new JTextField("Search by Name", 10);
-		//searchBox.addFocusListener(this);
+		searchBox.addFocusListener(this);
 
 		// add action listener to search box
 		searchBox.addActionListener(new ActionListener() {
@@ -262,7 +267,37 @@ public class ReportWindow extends JFrame {
 				new AdminFrame();
 				dispose();
 			} else if (e.getSource() == csvBtn) {
-				//System.out.println(textArea.getText());
+				String csvFileName = "REPORT_" + new SimpleDateFormat("yyyyMMddhhmm'.csv'").format(new Date());
+				try(FileWriter csv = new FileWriter(csvFileName)){
+					csv.append("Date,Time,FirstName,LastName,Email,Phone,Reason,Follow Up,Role,Specialist,Location\n");
+					for (VisitData visit : getCSVData()) {
+						csv.append(dateFormat.format(visit.getVisitDate()));
+						csv.append(",");
+						csv.append(timeFormat.format(visit.getVisitTime()));
+						csv.append(",");
+						csv.append(visit.getFirstName());
+						csv.append(",");
+						csv.append(visit.getLastName());
+						csv.append(",");
+						csv.append(visit.getEmail());
+						csv.append(",");
+						csv.append(visit.getPhone());
+						csv.append(",");
+						csv.append("\"" + visit.getReason() + "\""); // commas
+						csv.append(",");
+						csv.append(String.valueOf(visit.isFollowUp()));
+						csv.append(",");
+						csv.append(visit.getRole());
+						csv.append(",");
+						csv.append(visit.getSpecialist());
+						csv.append(",");
+						csv.append(visit.getLocation());
+						csv.append("\n");
+					}
+					JOptionPane.showMessageDialog(null, "CSV successfully exported: " + csvFileName, "Information", JOptionPane.INFORMATION_MESSAGE);
+				}catch (IOException e1){
+					e1.printStackTrace();
+				}
 			}
 		}
 	}
@@ -318,6 +353,7 @@ public class ReportWindow extends JFrame {
 	 * @param visitData
 	 */
 	public void displayVisitData(ArrayList<VisitData> visitData) {
+		this.csvStore = visitData; // store value for csv export on update display
 		String visitsInfo = "";
 		for (VisitData visit : visitData) {
 			visitsInfo += addBuffer(dateFormat.format(visit.getVisitDate()), 15)
@@ -336,19 +372,39 @@ public class ReportWindow extends JFrame {
 		textArea.append(visitsInfo);
 	}
 
-	/*
+	/**
+	 * Clearing search fields from hint text on focus
+	 */
 	@Override
 	public void focusGained(FocusEvent e) {
 		Object source = e.getSource();
-		if (source instanceof JTextField) {
-			((JTextField) source).setText("");
+		if(source == startInput || source == endInput){
+			if(((JTextField) source).getText().equals("YYYY-MM-DD")){
+				((JTextField) source).setText("");
+			}
+		}else if(source == searchBox){
+			if(((JTextField) source).getText().equals("Search by Name")){
+				((JTextField) source).setText("");
+			}
 		}
 	}
 
+	/**
+	 * Set hint text to search fields on loss of focus if empty
+	 */
 	@Override
 	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
+		Object source = e.getSource();
+		if(source == startInput || source == endInput){
+			if(((JTextField) source).getText().isEmpty()){
+				((JTextField) source).setText("YYYY-MM-DD");
+			}
+		}else if(source == searchBox){
+			if(((JTextField) source).getText().isEmpty()){
+				((JTextField) source).setText("Search by Name");
+			}
+		}
 	}
-	*/
+	
+	ArrayList<VisitData> getCSVData() { return this.csvStore; }
 }
