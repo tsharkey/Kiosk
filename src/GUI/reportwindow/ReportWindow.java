@@ -3,6 +3,7 @@ package GUI.reportwindow;
 import Backend.*;
 import GUI.loginwindow.AdminFrame;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.*;
@@ -37,8 +38,10 @@ import javax.swing.*;
  * del Mar Moncaleano
  */
 
-@SuppressWarnings("serial")
-public class ReportWindow extends JFrame implements FocusListener {
+public class ReportWindow implements FocusListener {
+	// frame
+	private JFrame frame;
+	
 	// gui panels
 	private JPanel northPanel;
 	private JPanel comboPanel;
@@ -85,19 +88,19 @@ public class ReportWindow extends JFrame implements FocusListener {
 	 * Constructor of the ReportWindow.
 	 */
 	public ReportWindow() throws IOException {
-		super("Report Window");
+		frame = new JFrame("Report Window");
 
 		// date and time formatting
 		dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		timeFormat = new SimpleDateFormat("h:mm a");
 
-		setExtendedState(Frame.MAXIMIZED_BOTH);
+		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		// setUndecorated(true);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-		setLayout(new BorderLayout());
+		frame.setLayout(new BorderLayout());
 		buildPanels();
-		setVisible(true);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -205,9 +208,9 @@ public class ReportWindow extends JFrame implements FocusListener {
 		southPanel.add(goBackBtn);
 
 		// adding all panels to frame
-		add(northPanel, BorderLayout.NORTH);
-		add(centerPanel, BorderLayout.CENTER);
-		add(southPanel, BorderLayout.SOUTH);
+		frame.add(northPanel, BorderLayout.NORTH);
+		frame.add(centerPanel, BorderLayout.CENTER);
+		frame.add(southPanel, BorderLayout.SOUTH);
 	}
 
 	/**
@@ -264,39 +267,54 @@ public class ReportWindow extends JFrame implements FocusListener {
 					JOptionPane.showMessageDialog(null, exception);
 				}
 			} else if (e.getSource() == goBackBtn) {
+				frame.dispose();
 				new AdminFrame();
-				dispose();
 			} else if (e.getSource() == csvBtn) {
 				String csvFileName = "REPORT_" + new SimpleDateFormat("yyyyMMddhhmm'.csv'").format(new Date());
-				try(FileWriter csv = new FileWriter(csvFileName)){
-					csv.append("Date,Time,FirstName,LastName,Email,Phone,Reason,Follow Up,Role,Specialist,Location\n");
-					for (VisitData visit : getCSVData()) {
-						csv.append(dateFormat.format(visit.getVisitDate()));
-						csv.append(",");
-						csv.append(timeFormat.format(visit.getVisitTime()));
-						csv.append(",");
-						csv.append(visit.getFirstName());
-						csv.append(",");
-						csv.append(visit.getLastName());
-						csv.append(",");
-						csv.append(visit.getEmail());
-						csv.append(",");
-						csv.append(visit.getPhone());
-						csv.append(",");
-						csv.append("\"" + visit.getReason() + "\""); // commas
-						csv.append(",");
-						csv.append(String.valueOf(visit.isFollowUp()));
-						csv.append(",");
-						csv.append(visit.getRole());
-						csv.append(",");
-						csv.append(visit.getSpecialist());
-						csv.append(",");
-						csv.append(visit.getLocation());
-						csv.append("\n");
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setSelectedFile(new File(csvFileName));
+				fileChooser.setDialogTitle("Specify log location to save..."); 
+				int selection = fileChooser.showSaveDialog(getFrame());
+				
+				if(selection == JFileChooser.APPROVE_OPTION){
+					// making sure to add file extension if not set
+					File file = fileChooser.getSelectedFile();
+					String fName = file.getAbsolutePath();
+					if(!fName.endsWith(".csv")){
+		                file = new File(fName + ".csv");
 					}
-					JOptionPane.showMessageDialog(null, "CSV successfully exported: " + csvFileName, "Information", JOptionPane.INFORMATION_MESSAGE);
-				}catch (IOException e1){
-					e1.printStackTrace();
+					
+					try(FileWriter csv = new FileWriter(file)){
+						csv.append("Date,Time,FirstName,LastName,Email,Phone,Reason,Follow Up,Role,Specialist,Location\n");
+						for (VisitData visit : getCSVData()) {
+							csv.append(dateFormat.format(visit.getVisitDate()));
+							csv.append(",");
+							csv.append(timeFormat.format(visit.getVisitTime()));
+							csv.append(",");
+							csv.append(visit.getFirstName());
+							csv.append(",");
+							csv.append(visit.getLastName());
+							csv.append(",");
+							csv.append(visit.getEmail());
+							csv.append(",");
+							csv.append(visit.getPhone());
+							csv.append(",");
+							csv.append("\"" + visit.getReason() + "\""); // commas
+							csv.append(",");
+							csv.append(String.valueOf(visit.isFollowUp()));
+							csv.append(",");
+							csv.append(visit.getRole());
+							csv.append(",");
+							csv.append(visit.getSpecialist());
+							csv.append(",");
+							csv.append(visit.getLocation());
+							csv.append("\n");
+						}
+						JOptionPane.showMessageDialog(null, "CSV successfully exported...", "Information", JOptionPane.INFORMATION_MESSAGE);
+					}catch (IOException e1){
+						JOptionPane.showMessageDialog(null, "Error exporting CSV. Check permissions.", "Error", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
 				}
 			}
 		}
@@ -407,4 +425,6 @@ public class ReportWindow extends JFrame implements FocusListener {
 	}
 	
 	ArrayList<VisitData> getCSVData() { return this.csvStore; }
+	
+	JFrame getFrame() { return this.frame; }
 }
