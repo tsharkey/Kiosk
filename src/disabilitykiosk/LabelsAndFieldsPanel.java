@@ -64,8 +64,8 @@ public class LabelsAndFieldsPanel extends JPanel{
     /*
      * Font for gridbag
      */
-    public Font font = new Font("SERIF", Font.BOLD, 24);
-    public Font textFieldFont = new Font("SERIF", Font.PLAIN, 18);
+    public Font font = new Font("SERIF", Font.BOLD, 28);
+    public Font textFieldFont = new Font("SERIF", Font.PLAIN, 20 );
 
     Thread t = null;
 
@@ -198,8 +198,9 @@ public class LabelsAndFieldsPanel extends JPanel{
         roleI.addFocusListener(new MyFocusListener());
         grid.gridx = GridBagConstraints.RELATIVE;
         grid.gridy = 4;
-        grid.gridwidth = 4;
+        grid.gridwidth = 2;
         add(roleI, grid);
+
 
         //email
         emailButton = new JButton();
@@ -267,7 +268,7 @@ public class LabelsAndFieldsPanel extends JPanel{
         reasonI.addFocusListener(new MyFocusListener());
         reasonI.setFont(textFieldFont);
         grid.gridx = GridBagConstraints.RELATIVE;
-        grid.gridy = 7;
+        //grid.gridy = 7;
         grid.gridwidth = 4;
         add(reasonI, grid);
 
@@ -290,11 +291,13 @@ public class LabelsAndFieldsPanel extends JPanel{
         followUpI.addFocusListener(new MyFocusListener());
         grid.gridx = GridBagConstraints.RELATIVE;
         grid.gridy = 8;
-        grid.gridwidth = 4;
+        grid.gridwidth = 1;
         add(followUpI, grid);
+
 
         //location
         locationButton = new JButton();
+        JButton emptyButton = new JButton();
         locationButton.addActionListener(new locationButtonListener());
         locationButton.setIcon(microphone);
         location = new JLabel("Location: ");
@@ -305,6 +308,7 @@ public class LabelsAndFieldsPanel extends JPanel{
         add(locationButton, grid);
         add(location, grid);
 
+
         //LocationI
         String[] locations = {"Framingham", "Wellesley", "Ashland"};
         locationI = new JComboBox(locations);
@@ -312,8 +316,9 @@ public class LabelsAndFieldsPanel extends JPanel{
         locationI.addFocusListener(new MyFocusListener());
         grid.gridx = GridBagConstraints.RELATIVE;
         grid.gridy = 9;
-        grid.gridwidth = 4;
+        grid.gridwidth = 2;
         add(locationI, grid);
+        
 
         //Text slider
         //textSlider = new JSlider(JSlider.VERTICAL, TEXT_MIN, TEXT_MAX, TEXT_INIT);
