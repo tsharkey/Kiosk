@@ -1,1 +1,1 @@
-107.170.166.28/kioskdb2
+localhost/kioskdb2
