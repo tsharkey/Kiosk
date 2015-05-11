@@ -69,7 +69,7 @@ public class SpecialistSelectionWindow extends JFrame {
         ImageIcon picture;
         for (int i = 0; i < specName.size(); i++) {
         	if (specPhoto.get(i).equals("search.jpg")) {
-        		picture = new ImageIcon(StartupManger.class.getResource("/search.jpg"));
+        		picture = new ImageIcon(getClass().getResource("/search.jpg"));
         	}else {
         		picture = new ImageIcon("./" + specPhoto.get(i));
         	}

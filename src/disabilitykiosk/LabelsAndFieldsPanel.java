@@ -7,14 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+//import Main.Games.ninestones.Interface;
+
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -44,7 +49,7 @@ public class LabelsAndFieldsPanel extends JPanel{
     private JLabel date, time, first, last, email, phone, reason, followUp, role, dateI, timeI, location;
     private JButton firstButton, locationButton, lastButton, emailButton, phoneButton, reasonButton, followUpButton, roleButton;
     private ArrayList<JButton> buttonList;
-    private ImageIcon microphone = new ImageIcon("resources/microphone.jpg");
+    private ImageIcon microphone = new ImageIcon(getClass().getResource("/microphone.jpg"));
     public JCheckBox cancelSpeech;
     private boolean firstNameBool,
                     lastNameBool;
